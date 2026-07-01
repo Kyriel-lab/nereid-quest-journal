@@ -2507,4 +2507,9 @@
   border-radius: 18px;
 }
 
+/* v1.1 — Evolution II Requirement Foundation */
+.evolution-slot.sealed .evolution-slot-copy {
+  min-height: 2.2em;
+}
+
 

@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.1 — Evolution II Requirement Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Clarified Evolution II as the next sealed milestone after Lantern Jelly awakens Evolution I.
+- Updated post-awakening companion card hint to:
+  - `A deeper ritual has not formed yet.`
+- Updated Evolution II slot copy after Evolution I awakens to:
+  - `A deeper ritual has not formed yet.`
+- Added light CSS stability for sealed milestone copy height.
+
+### Preserved
+
+- Evolution I Asset Integration from v1.0.
+- Awakened State Polish from v0.9c.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution II button.
+- No Evolution II ritual.
+- No Evolution II requirements.
+- No Evolution II unlock state.
+- No Evolution II asset integration.
+- No Evolution I ritual logic changes.
+- No fragment ledger changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.0 — Evolution I Asset Integration
 
 **Status:** Patch candidate.

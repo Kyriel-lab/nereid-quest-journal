@@ -855,7 +855,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         ? "Evolution II sleeping"
         : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping");
       const evolutionIHint = evolutionIUnlocked
-        ? "A deeper awakening remains sealed."
+        ? "A deeper ritual has not formed yet."
         : (
             evolutionIProgress.ready
               ? "Awakening ritual pending."
@@ -1402,7 +1402,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 ? "Previous form archived."
                 : (
                     isEvolutionII && evolutionIUnlocked
-                      ? "Requires a future ritual."
+                      ? "A deeper ritual has not formed yet."
                       : slot.copy
                   )
             );
