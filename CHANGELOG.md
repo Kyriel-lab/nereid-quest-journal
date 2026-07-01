@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.4b — Hide Companion Registry UI
+
+**Status:** Patch candidate.
+
+### Changed
+
+- Hid the early Companion Registry UI from the right sidebar.
+- Kept the Active Companion card as the main companion display.
+- Restored the sidebar focus to:
+  - Today
+  - Active Companion
+  - Daily Progress
+  - Today’s Reward
+
+### Preserved
+
+- Companion Registry code foundation for possible later reuse.
+- Companion Registry Render Hotfix from v0.4a.
+- Companion Registry Foundation from v0.4.
+- Stats Dashboard Hotfix from v0.3a.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Daily Quest logic changes.
+- No Stats Dashboard changes.
+- No Quest Library changes.
+- No new assets.
+- No companion switching.
+- No evolution stages.
+
+---
+
 ## v0.4a — Companion Registry Render Hotfix
 
 **Status:** Patch candidate.
