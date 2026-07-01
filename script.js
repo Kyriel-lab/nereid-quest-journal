@@ -1071,12 +1071,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
 
     function renderEvolutionSeals() {
-      if (!elements.evolutionSealsList) {
+      const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
+
+      if (!evolutionSealsList) {
         return;
       }
 
       const active = EVOLUTION_SEALS.activeCompanion;
-      elements.evolutionSealsList.innerHTML = "";
+      evolutionSealsList.innerHTML = "";
 
       const activeCard = document.createElement("article");
       activeCard.className = "evolution-active-card";
@@ -1117,7 +1119,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         });
       });
 
-      elements.evolutionSealsList.appendChild(activeCard);
+      evolutionSealsList.appendChild(activeCard);
 
       const sealedGrid = document.createElement("div");
       sealedGrid.className = "sealed-starters-grid";
@@ -1140,7 +1142,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         sealedGrid.appendChild(starterCard);
       });
 
-      elements.evolutionSealsList.appendChild(sealedGrid);
+      evolutionSealsList.appendChild(sealedGrid);
     }
 
 

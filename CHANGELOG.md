@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.6a — Evolution Seals Render Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Companion Evolution section showing only the header without revealed/sealed content.
+- Ensured `renderEvolutionSeals()` runs during the main render cycle.
+- Added a direct element fallback for `evolutionSealsList` so the section can render safely.
+- Companion Evolution now renders:
+  - Lantern Jelly Dormant Form — Revealed
+  - Sealed Stage I
+  - Sealed Stage II
+  - Sealed Stage III
+  - Apex Seal
+  - Tideback / Shellfin / Moon Otter as Sealed Starters
+
+### Preserved
+
+- Companion Evolution Seals from v0.6.
+- Achievement Foundation from v0.5.
+- Moonlit Fragment Tracking from v0.4c.
+- Active Companion Focus from v0.4b.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No resource costs.
+- No future form reveal.
+- No stats, achievements, quest, or history logic changes.
+
+---
+
 ## v0.6 — Companion Evolution Seals
 
 **Status:** Patch candidate.
