@@ -1803,4 +1803,10 @@
   }
 }
 
+/* v0.3a — Stats Dashboard Hotfix */
+.stats-empty-state[hidden],
+.stats-content[hidden] {
+  display: none !important;
+}
+
 

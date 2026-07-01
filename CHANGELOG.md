@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.3a — Stats Dashboard Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Stats Dashboard empty state staying visible after stats exist.
+- Added explicit hidden-state CSS for Stats Dashboard panels.
+- Fixed `Best Day` showing `undefined`.
+- Added safer date fallbacks for older Journal History entries.
+- Fixed Recent 7-Day Snapshot rows missing the date label when older entries do not have `displayDate`.
+
+### Preserved
+
+- Stats Dashboard Foundation from v0.3.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing Journal History entries.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No new features.
+- No history reset.
+- No Daily Quest logic changes.
+- No Quest Library changes.
+
+---
+
 ## v0.3 — Stats Dashboard Foundation
 
 **Status:** Patch candidate.

@@ -615,6 +615,20 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       return Math.round((entry.completedCount / entry.totalCount) * 100);
     }
 
+
+    function getEntryDisplayDate(entry) {
+      if (!entry) {
+        return "Today";
+      }
+
+      return entry.displayDate ||
+        entry.dateLabel ||
+        entry.shortDate ||
+        entry.date ||
+        entry.dateKey ||
+        "Today";
+    }
+
     function calculateLongTermStats() {
       const history = Array.isArray(state.history) ? state.history : [];
       const validEntries = history.filter((entry) => entry && entry.totalCount > 0);
@@ -653,7 +667,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         ) {
           acc.bestDay = {
             dateKey: entry.dateKey,
-            displayDate: entry.displayDate || entry.dateKey,
+            displayDate: getEntryDisplayDate(entry),
             completionPercent
           };
         }
@@ -678,7 +692,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       const recentEntries = validEntries.slice(0, 7).map((entry) => ({
         dateKey: entry.dateKey,
-        displayDate: entry.displayDate || entry.dateKey,
+        displayDate: getEntryDisplayDate(entry),
         completedCount: entry.completedCount || 0,
         totalCount: entry.totalCount || 0,
         completionPercent: getCompletionPercent(entry)
@@ -717,7 +731,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.statTotalExp.textContent = stats.totalExp;
       elements.statAverageCompletion.textContent = `${stats.averageCompletion}%`;
       elements.statBestDay.textContent = stats.bestDay
-        ? `${stats.bestDay.displayDate} — ${stats.bestDay.completionPercent}%`
+        ? `${stats.bestDay.displayDate || stats.bestDay.dateKey || "Today"} — ${stats.bestDay.completionPercent}%`
         : "—";
       elements.statMostUsedType.textContent = stats.mostUsedType;
 
@@ -731,7 +745,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           <span class="recent-stats-count">${entry.completedCount}/${entry.totalCount}</span>
           <span class="recent-stats-rate">${entry.completionPercent}%</span>
         `;
-        row.querySelector(".recent-stats-date").textContent = entry.displayDate;
+        row.querySelector(".recent-stats-date").textContent = entry.displayDate || entry.dateKey || "Today";
         elements.recentStatsList.appendChild(row);
       });
     }
