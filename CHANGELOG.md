@@ -1,5 +1,47 @@
 # Changelog
 
+## v0.8 — Save Data Safety Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a Save Data section after Journal History.
+- Added `Export Save` to download the current local journal save as `.json`.
+- Added `Import Save` to restore a journal save from `.json`.
+- Exported save files include:
+  - `app`
+  - `saveKey`
+  - `exportedAt`
+  - `data`
+- Import supports both:
+  - wrapped Nereid Quest Journal export files
+  - raw localStorage-style save objects
+- Import confirms before replacing the current browser save.
+- Import reloads the journal after a successful restore.
+
+### Preserved
+
+- Evolution I Render Hotfix from v0.7d.
+- Evolution I Awakening Signs UI from v0.7c.
+- Evolution Wording Alignment from v0.7b.
+- Restore Dashboard Render Hotfix from v0.7a.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No cloud sync.
+- No save merge.
+- No localStorage migration.
+- No gameplay changes.
+- No evolution changes.
+- No asset changes.
+- No EXP restoration.
+
+---
+
 ## v0.7d — Evolution I Render Hotfix
 
 **Status:** Patch candidate.

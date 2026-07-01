@@ -2384,4 +2384,27 @@
   background: rgba(255, 243, 213, 0.78);
 }
 
+/* v0.8 — Save Data Safety Foundation */
+.save-data-card {
+  overflow: hidden;
+}
+
+.save-data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.save-data-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.save-data-card .secondary-button {
+  min-width: 132px;
+}
+
 
