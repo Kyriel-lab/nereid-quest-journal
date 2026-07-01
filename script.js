@@ -130,6 +130,46 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
     ];
 
+    const COMPANION_REGISTRY = [
+      {
+        id: "lantern-jelly",
+        name: "Lantern Jelly",
+        status: "Active",
+        form: "Dormant Form",
+        role: "Gentle guide",
+        description: "A celestial lantern jellyfish that glows softly beside your daily rituals.",
+        asset: "assets/lantern-jelly-dormant.png"
+      },
+      {
+        id: "tideback",
+        name: "Tideback",
+        status: "Dormant",
+        form: "Dormant Form",
+        role: "Guardian shell",
+        description: "A shrine-backed tide creature that carries quiet protection across the water.",
+        asset: null
+      },
+      {
+        id: "shellfin",
+        name: "Shellfin",
+        status: "Dormant",
+        form: "Dormant Form",
+        role: "Echo keeper",
+        description: "A shell-like spirit that listens to small promises and stores them like songs.",
+        asset: null
+      },
+      {
+        id: "moon-otter",
+        name: "Moon Otter",
+        status: "Dormant",
+        form: "Dormant Form",
+        role: "Pearl bearer",
+        description: "A moonlit otter companion that carries a soft pearl of comfort and curiosity.",
+        asset: null
+      }
+    ];
+
+
     let state = loadState();
 
     const elements = {
@@ -181,6 +221,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statBestDay: document.getElementById("statBestDay"),
       statMostUsedType: document.getElementById("statMostUsedType"),
       recentStatsList: document.getElementById("recentStatsList"),
+      companionRegistryList: document.getElementById("companionRegistryList"),
     };
 
     function getTodayKey() {
@@ -810,6 +851,46 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.dateText.textContent = getReadableDate();
     }
 
+
+    function renderCompanionRegistry() {
+      if (!elements.companionRegistryList) {
+        return;
+      }
+
+      elements.companionRegistryList.innerHTML = "";
+
+      COMPANION_REGISTRY.forEach((companion) => {
+        const item = document.createElement("article");
+        item.className = "companion-registry-item";
+
+        const isActive = companion.status === "Active";
+        const thumbContent = companion.asset
+          ? `<img src="${companion.asset}" alt="${companion.name} dormant form">`
+          : "✧";
+        const assetNote = companion.asset
+          ? ""
+          : `<span class="companion-asset-note">Asset pending</span>`;
+
+        item.innerHTML = `
+          <div class="companion-registry-thumb">${thumbContent}</div>
+          <div class="companion-registry-info">
+            <div class="companion-registry-topline">
+              <span class="companion-registry-name"></span>
+              <span class="companion-status-pill${isActive ? " active" : ""}">${companion.status}</span>
+            </div>
+            <div class="companion-registry-meta">${companion.form} · ${companion.role}</div>
+            <div class="companion-registry-role"></div>
+            ${assetNote}
+          </div>
+        `;
+
+        item.querySelector(".companion-registry-name").textContent = companion.name;
+        item.querySelector(".companion-registry-role").textContent = companion.description;
+        elements.companionRegistryList.appendChild(item);
+      });
+    }
+
+
     function renderAll() {
       const stats = calculateStats();
       renderHeader();
@@ -821,6 +902,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderDailyEntry(stats);
       renderHistory();
       renderStatsDashboard();
+      renderCompanionRegistry();
       renderReflection();
     }
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nereid Quest Journal v0.3</title>
+  <title>Nereid Quest Journal v0.4</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -27,7 +27,20 @@
           <div class="date-text" id="dateText">Wednesday, July 1</div>
         </div>
         <div class="season-pill">Nereid Season · <span id="questCountText">4 quests</span></div>
-      </aside>
+      
+          <section class="card companion-registry-card" aria-label="Companion registry">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">Archive</p>
+                <h2>Companion Registry</h2>
+                <p>Starter companions waiting in the current archive.</p>
+              </div>
+            </div>
+
+            <div id="companionRegistryList" class="companion-registry-list"></div>
+          </section>
+
+</aside>
     </section>
 
     <section class="layout">
@@ -308,7 +321,7 @@
       </div>
     </section>
 
-    <p class="footer-note">v0.3 Stats Dashboard Foundation · Official Lantern Jelly Asset · Stored locally in this browser</p>
+    <p class="footer-note">v0.4 Companion Registry Foundation · Official Lantern Jelly Asset · Stored locally in this browser</p>
   </main>
   <script src="script.js"></script>
 </body>

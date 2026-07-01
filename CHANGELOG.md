@@ -1,5 +1,46 @@
 # Changelog
 
+## v0.4 — Companion Registry Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a static Companion Registry card.
+- Added the four starter companions:
+  - Lantern Jelly
+  - Tideback
+  - Shellfin
+  - Moon Otter
+- Marked Lantern Jelly as `Active`.
+- Marked Tideback, Shellfin, and Moon Otter as `Dormant`.
+- Added role/form/description metadata for each starter companion.
+- Lantern Jelly uses the official existing dormant asset:
+  - `assets/lantern-jelly-dormant.png`
+- Non-active starter companions use safe placeholder handling with `Asset pending`.
+- Added registry styles for compact right-sidebar display.
+
+### Preserved
+
+- Stats Dashboard Hotfix from v0.3a.
+- Stats Dashboard Foundation from v0.3.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Daily Entry and Journal History.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No companion switching.
+- No companion selection.
+- No evolution stages.
+- No new image assets.
+- No achievements.
+- No monthly theme or hidden creatures system.
+
+---
+
 ## v0.3a — Stats Dashboard Hotfix
 
 **Status:** Patch candidate.

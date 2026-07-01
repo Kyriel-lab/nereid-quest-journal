@@ -1809,4 +1809,117 @@
   display: none !important;
 }
 
+/* v0.4 — Companion Registry Foundation */
+.companion-registry-card {
+  overflow: hidden;
+}
+
+.companion-registry-list {
+  display: grid;
+  gap: 10px;
+}
+
+.companion-registry-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(216, 226, 223, 0.72);
+  border-radius: 20px;
+  padding: 11px;
+  background:
+    radial-gradient(circle at 95% 8%, rgba(111, 174, 199, 0.11), transparent 7rem),
+    rgba(255, 253, 247, 0.78);
+  box-shadow: 0 10px 22px rgba(47, 101, 119, 0.045);
+}
+
+.companion-registry-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(111, 174, 199, 0.24);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.95), rgba(233, 244, 246, 0.62));
+  color: var(--gold);
+  font-size: 1.25rem;
+  box-shadow: inset 0 0 16px rgba(111, 174, 199, 0.08);
+}
+
+.companion-registry-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+}
+
+.companion-registry-info {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.companion-registry-topline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.companion-registry-name {
+  color: var(--deep-tide);
+  font-family: Nunito, Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.companion-status-pill {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(111, 174, 199, 0.24);
+  color: var(--deep-tide);
+  background: rgba(233, 244, 246, 0.72);
+  white-space: nowrap;
+}
+
+.companion-status-pill.active {
+  color: #6d4a00;
+  border-color: rgba(215, 168, 79, 0.34);
+  background: rgba(255, 243, 213, 0.78);
+}
+
+.companion-registry-meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.companion-registry-role {
+  color: var(--ink);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.companion-asset-note {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+@media (min-width: 980px) {
+  .companion-registry-card .card-header {
+    margin-bottom: 14px;
+  }
+}
+
 
