@@ -1,39 +1,6 @@
 const STORAGE_KEY = "nereidQuestJournal_v01";
 
-    const DEFAULT_QUESTS = [
-      {
-        id: "korean-study",
-        title: "Korean Study — 30 minutes",
-        type: "Study Quest",
-        rewardType: "bond",
-        rewardValue: 10,
-        custom: false
-      },
-      {
-        id: "piano-practice",
-        title: "Piano Practice — 20 minutes",
-        type: "Skill Quest",
-        rewardType: "exp",
-        rewardValue: 8,
-        custom: false
-      },
-      {
-        id: "skincare-routine",
-        title: "Skincare Routine",
-        type: "Care Quest",
-        rewardType: "bond",
-        rewardValue: 5,
-        custom: false
-      },
-      {
-        id: "clean-desk",
-        title: "Clean Desk",
-        type: "Home Quest",
-        rewardType: "exp",
-        rewardValue: 5,
-        custom: false
-      }
-    ];
+    const DEFAULT_QUESTS = [];
 
     const feedbackByStage = [
       "The shore is quiet.",
@@ -378,6 +345,21 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     function renderQuests(stats) {
       elements.questList.innerHTML = "";
 
+      if (stats.allQuests.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "quest-empty-state";
+        emptyState.innerHTML = `
+          <div class="quest-empty-mark">✧</div>
+          <strong>No quests chosen yet.</strong>
+          <span>Pick a ritual from the Quest Library or add a small quest.</span>
+        `;
+        elements.questList.appendChild(emptyState);
+
+        elements.questCountText.textContent = "0 quests";
+        elements.questsWaitingText.textContent = "Choose quests";
+        return;
+      }
+
       stats.allQuests.forEach((quest) => {
         const completed = state.completedQuestIds.includes(quest.id);
         const questCard = document.createElement("div");
@@ -548,7 +530,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
 
     function renderDailyEntry(stats) {
-      const shouldShowEntry = state.ended === true;
+      const shouldShowEntry = state.ended === true && stats.totalCount > 0;
       elements.dailyEntryCard.hidden = !shouldShowEntry;
 
       if (!shouldShowEntry) {
@@ -730,6 +712,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     function endDay() {
       const stats = calculateStats();
+
+      if (stats.totalCount === 0) {
+        showToast("Choose at least one quest before ending the day.");
+        return;
+      }
+
       state.ended = true;
       upsertTodayHistoryEntry(stats);
       saveState();

@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.2e — Flexible Daily Start
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Removed fixed daily default quests.
+- Each day now starts with 0 selected quests.
+- Today’s Quests now shows an empty state when no quests are selected:
+  - `No quests chosen yet.`
+  - `Pick a ritual from the Quest Library or add a small quest.`
+- Updated Today’s Quests subtitle to:
+  - `Choose and complete today’s rituals.`
+- Updated quest count / waiting badge behavior:
+  - 0 quests → `Choose quests`
+  - incomplete quests → `N waiting`
+  - all complete → `All complete`
+- End Day is now blocked when there are 0 selected quests.
+- Empty End Day attempts show:
+  - `Choose at least one quest before ending the day.`
+- Reward stays locked when there are 0 quests.
+- Reset Today now returns the current day to a flexible empty board while preserving Journal History.
+
+### Preserved
+
+- Quest Library content from v0.2d.
+- Quest Library duplicate prevention from v0.2b.
+- Daily History Lite from v0.2a.
+- Daily Entry Feel from v0.1d.
+- Desktop Daily Use Polish from v0.2c.
+- Custom Quest flow.
+- Official Lantern Jelly Dormant Form asset.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No recurring quests.
+- No editable daily templates.
+- No calendar, streak, achievement, or evolution system.
+- No cloud sync.
+
+---
+
 ## v0.2d — Quest Library Content Polish
 
 **Status:** Patch candidate.

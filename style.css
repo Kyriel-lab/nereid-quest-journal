@@ -1586,4 +1586,41 @@
   }
 }
 
+/* v0.2e — Flexible Daily Start */
+.quest-empty-state {
+  border: 1px dashed rgba(111, 174, 199, 0.42);
+  border-radius: 24px;
+  padding: 22px;
+  background:
+    radial-gradient(circle at 92% 18%, rgba(215, 168, 79, 0.12), transparent 9rem),
+    linear-gradient(145deg, rgba(233, 244, 246, 0.54), rgba(255, 253, 247, 0.86));
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+}
+
+.quest-empty-state strong {
+  color: var(--deep-tide);
+  font-family: Nunito, Inter, sans-serif;
+  font-size: 1.04rem;
+  letter-spacing: -0.01em;
+}
+
+.quest-empty-state span {
+  line-height: 1.45;
+}
+
+.quest-empty-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 253, 247, 0.92);
+  color: var(--gold);
+  border: 1px solid rgba(215, 168, 79, 0.28);
+  box-shadow: 0 10px 22px rgba(47, 101, 119, 0.06);
+  margin-bottom: 4px;
+}
+
 
