@@ -1,5 +1,40 @@
 # Changelog
 
+## v0.6c — Companion Fragment Count Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed the Active Companion card Moonlit Fragment count.
+- Removed the overly strict `totalCount` filter from the companion fragment helper.
+- Companion Moonlit Fragments now count compatible history fields:
+  - `moonlitFragments`
+  - `fragmentsEarned`
+  - `moonlitFragmentCount`
+  - `moonlitFragmentEarned`
+  - `rewardUnlocked`
+
+### Preserved
+
+- Active Companion Card Polish from v0.6b.
+- Companion Evolution Seals Render Hotfix from v0.6a.
+- Companion Evolution Seals from v0.6.
+- Achievement Foundation from v0.5.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No UI layout changes.
+- No actual evolution.
+- No evolve button.
+- No resource costs.
+- No future form reveal.
+- No stats, achievements, quest, or history logic changes.
+
+---
+
 ## v0.6b — Active Companion Card Polish
 
 **Status:** Patch candidate.

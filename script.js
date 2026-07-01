@@ -705,13 +705,26 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       const history = Array.isArray(state.history) ? state.history : [];
 
       return history.reduce((total, entry) => {
-        if (!entry || !entry.totalCount) {
+        if (!entry) {
           return total;
+        }
+
+        if (typeof entry.moonlitFragments === "number") {
+          return total + entry.moonlitFragments;
+        }
+
+        if (typeof entry.fragmentsEarned === "number") {
+          return total + entry.fragmentsEarned;
+        }
+
+        if (typeof entry.moonlitFragmentCount === "number") {
+          return total + entry.moonlitFragmentCount;
         }
 
         return total + ((entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0);
       }, 0);
     }
+
 
     function renderCompanion(stats) {
       elements.moodBadge.textContent = stats.mood;
