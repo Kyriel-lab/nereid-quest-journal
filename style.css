@@ -2498,4 +2498,13 @@
   box-shadow: 0 0 0 3px rgba(170, 131, 46, 0.14);
 }
 
+/* v1.0 — Evolution I Asset Integration */
+.companion-image-card img {
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.evolution-slot.awakened .evolution-slot-thumb img {
+  border-radius: 18px;
+}
+
 

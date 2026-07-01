@@ -1,5 +1,44 @@
 # Changelog
 
+## v1.0 — Evolution I Asset Integration
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Integrated the official Lantern Jelly Evolution I asset from the Stage 2 asset pack.
+- Added:
+  - `assets/lantern-jelly-evolution-1.png`
+- Mapped old Stage 2 Lantern Oracle art to the new Evolution I system.
+- Active Companion card now switches image after Evolution I awakens:
+  - Dormant: `assets/lantern-jelly-dormant.png`
+  - Evolution I: `assets/lantern-jelly-evolution-1.png`
+- Evolution I slot now reveals the Evolution I image after awakening.
+- Removed the post-awakening placeholder copy:
+  - `Image pending future asset pass.`
+
+### Preserved
+
+- Awakened State Polish from v0.9c.
+- Current Form Meta Hotfix from v0.9b-ui.
+- Evolution I Awakening Ritual from v0.9b.
+- Fragment Ledger Visibility Hotfix from v0.9a-ui.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No ritual logic changes.
+- No fragment logic changes.
+- No companion evolution state changes.
+- No Evolution II requirement logic.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.9c — Awakened State Polish
 
 **Status:** Patch candidate.
