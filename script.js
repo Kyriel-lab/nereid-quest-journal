@@ -62,28 +62,58 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     const QUEST_LIBRARY = [
       {
-        id: "lib-korean-study",
-        title: "Korean Study — 30 minutes",
+        id: "lib-daily-korean",
+        title: "Daily Korean",
         type: "Study Quest"
       },
       {
-        id: "lib-logistics-review",
-        title: "Logistics Review",
+        id: "lib-korean-review",
+        title: "Korean Review",
         type: "Study Quest"
       },
       {
-        id: "lib-read-10-pages",
-        title: "Read 10 pages",
+        id: "lib-new-vocabulary",
+        title: "New Vocabulary",
         type: "Study Quest"
       },
       {
-        id: "lib-piano-practice",
-        title: "Piano Practice — 20 minutes",
+        id: "lib-new-grammar",
+        title: "New Grammar",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-listening-practice",
+        title: "Listening Practice",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-lecture-review",
+        title: "Lecture Review",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-study-notes",
+        title: "Study Notes",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-work-on-assignment",
+        title: "Work on Assignment",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-organize-study-files",
+        title: "Organize Study Files",
+        type: "Home Quest"
+      },
+      {
+        id: "lib-piano-practice-30",
+        title: "Piano Practice — 30 minutes",
         type: "Skill Quest"
       },
       {
-        id: "lib-drawing-practice",
-        title: "Drawing Practice",
+        id: "lib-nereid-project-work",
+        title: "Nereid Project Work",
         type: "Skill Quest"
       },
       {
@@ -92,13 +122,23 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         type: "Care Quest"
       },
       {
-        id: "lib-drink-water",
-        title: "Drink Water",
+        id: "lib-drink-water-1",
+        title: "Drink Water 1",
         type: "Care Quest"
       },
       {
-        id: "lib-stretching",
-        title: "Stretching",
+        id: "lib-drink-water-2",
+        title: "Drink Water 2",
+        type: "Care Quest"
+      },
+      {
+        id: "lib-drink-water-3",
+        title: "Drink Water 3",
+        type: "Care Quest"
+      },
+      {
+        id: "lib-workout",
+        title: "Workout",
         type: "Care Quest"
       },
       {
@@ -114,6 +154,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       {
         id: "lib-tidy-room",
         title: "Tidy Room",
+        type: "Home Quest"
+      },
+      {
+        id: "lib-check-tomorrows-schedule",
+        title: "Check Tomorrow’s Schedule",
         type: "Home Quest"
       }
     ];

@@ -1,5 +1,66 @@
 # Changelog
 
+## v0.2d — Quest Library Content Polish
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Updated Quest Library presets to better match daily use.
+- Korean presets now include:
+  - Daily Korean
+  - Korean Review
+  - New Vocabulary
+  - New Grammar
+  - Listening Practice
+- Logistics / university presets now include:
+  - Lecture Review
+  - Study Notes
+  - Work on Assignment
+  - Organize Study Files
+- Skill presets now include:
+  - Piano Practice — 30 minutes
+  - Nereid Project Work
+- Care presets now include:
+  - Skincare Routine
+  - Drink Water 1
+  - Drink Water 2
+  - Drink Water 3
+  - Workout
+- Dorm / life admin presets remain:
+  - Clean Desk
+  - Laundry
+  - Tidy Room
+  - Check Tomorrow’s Schedule
+
+### Removed / Replaced
+
+- Removed generic presets:
+  - Drawing Practice
+  - Read 10 pages
+  - Stretching
+- Replaced `Workout — Light Session` with `Workout`.
+- Replaced older Korean/logistics preset wording with the revised library list.
+
+### Preserved
+
+- Quest Library logic from v0.2b.
+- Duplicate prevention.
+- Daily History Lite from v0.2a.
+- Daily Entry Feel from v0.1d.
+- Desktop Daily Use Polish from v0.2c.
+- Existing app logic and `localStorage` behavior.
+- Official Lantern Jelly Dormant Form asset.
+
+### Not Changed
+
+- No HTML changes.
+- No CSS changes.
+- No localStorage key changes.
+- No new feature systems.
+
+---
+
 ## v0.2c — Desktop Daily Use Polish
 
 **Status:** Patch candidate.
