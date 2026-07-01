@@ -1,5 +1,49 @@
 # Changelog
 
+## v1.2 — Evolution II Requirement Signs
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added `Lantern Rite` achievement:
+  - Earn 7 Moonlit Fragments from perfect days.
+- Added Evolution II requirement foundation:
+  - Evolution I awakened
+  - Bond 300
+  - Available Moonlit Fragments 5
+  - Lantern Rite unlocked
+- Added Evolution II signs after Evolution I awakens.
+- Companion Card can now show:
+  - `Evolution II sleeping`
+  - `Evolution II ready`
+- Evolution II slot can now show:
+  - `A deeper ritual is forming.`
+  - `The second lantern is ready to awaken.`
+- No Evolution II ritual button is added yet.
+
+### Preserved
+
+- Evolution II Requirement Foundation copy from v1.1.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution II button.
+- No Evolution II ritual.
+- No Evolution II unlock state.
+- No Evolution II asset integration.
+- No Evolution I ritual logic changes.
+- No fragment ledger changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.1 — Evolution II Requirement Foundation
 
 **Status:** Patch candidate.

@@ -2512,4 +2512,15 @@
   min-height: 2.2em;
 }
 
+/* v1.2 — Evolution II Requirement Signs */
+.awakening-signs.evolution-ii {
+  border-color: rgba(55, 92, 130, 0.22);
+  background: rgba(242, 249, 252, 0.74);
+}
+
+.awakening-signs.evolution-ii.ready {
+  border-color: rgba(170, 131, 46, 0.42);
+  background: rgba(255, 248, 227, 0.84);
+}
+
 

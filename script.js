@@ -208,6 +208,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         getProgress: (stats) => stats.moonlitFragments
       },
       {
+        id: "lantern-rite",
+        name: "Lantern Rite",
+        description: "Earn 7 Moonlit Fragments from perfect days.",
+        target: 7,
+        icon: "✦",
+        getProgress: (stats) => stats.moonlitFragments
+      },
+      {
         id: "korean-spark",
         name: "Korean Spark",
         description: "Complete 5 Study quests.",
@@ -851,11 +859,16 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
 
       const evolutionIProgress = getEvolutionIProgress(stats);
+      const evolutionIIProgress = getEvolutionIIProgress(stats);
       const evolutionIStatus = evolutionIUnlocked
-        ? "Evolution II sleeping"
+        ? (evolutionIIProgress.ready ? "Evolution II ready" : "Evolution II sleeping")
         : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping");
       const evolutionIHint = evolutionIUnlocked
-        ? "A deeper ritual has not formed yet."
+        ? (
+            evolutionIIProgress.ready
+              ? "The second lantern is ready to awaken."
+              : "A deeper ritual is forming."
+          )
         : (
             evolutionIProgress.ready
               ? "Awakening ritual pending."
@@ -1284,6 +1297,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       achievementId: "first-ripple"
     };
 
+    const EVOLUTION_II_REQUIREMENTS = {
+      bond: 300,
+      moonlitFragments: 5,
+      achievementId: "lantern-rite"
+    };
+
     function getAchievementState(achievementId) {
       if (typeof getAchievements === "function") {
         const achievements = getAchievements();
@@ -1366,6 +1385,68 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       `;
     }
 
+    function getEvolutionIIProgress(stats) {
+      const currentStats = stats || getCurrentStats();
+      const bond = Math.max(0, currentStats?.bond || 0);
+      const moonlitLedger = getMoonlitFragmentLedger();
+      const moonlitFragments = moonlitLedger.available;
+      const lanternRite = getAchievementState(EVOLUTION_II_REQUIREMENTS.achievementId);
+      const lanternRiteUnlocked = Boolean(lanternRite?.unlocked);
+      const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
+
+      return {
+        evolutionIUnlocked,
+        bond,
+        bondRequired: EVOLUTION_II_REQUIREMENTS.bond,
+        bondReady: bond >= EVOLUTION_II_REQUIREMENTS.bond,
+        moonlitFragments,
+        moonlitFragmentsEarned: moonlitLedger.earned,
+        moonlitFragmentsSpent: moonlitLedger.spent,
+        moonlitFragmentsAvailable: moonlitLedger.available,
+        moonlitFragmentsRequired: EVOLUTION_II_REQUIREMENTS.moonlitFragments,
+        moonlitFragmentsReady: moonlitFragments >= EVOLUTION_II_REQUIREMENTS.moonlitFragments,
+        lanternRiteUnlocked,
+        ready:
+          evolutionIUnlocked &&
+          bond >= EVOLUTION_II_REQUIREMENTS.bond &&
+          moonlitFragments >= EVOLUTION_II_REQUIREMENTS.moonlitFragments &&
+          lanternRiteUnlocked
+      };
+    }
+
+    function createEvolutionIISignsMarkup(progress) {
+      const alignmentCopy = progress.ready
+        ? "The second lantern is ready to awaken."
+        : "A deeper ritual is forming.";
+
+      return `
+        <div class="awakening-signs evolution-ii ${progress.ready ? "ready" : "sleeping"}" aria-label="Evolution II requirement signs">
+          <span class="awakening-signs-title">Evolution II Signs</span>
+          <span class="awakening-sign ${progress.evolutionIUnlocked ? "complete" : ""}">
+            <span>Evolution I</span>
+            <strong>${progress.evolutionIUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
+            <span>Bond</span>
+            <strong>${progress.bond} / ${progress.bondRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
+            <span>Moonlit Fragments</span>
+            <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-ledger">
+            Available ${progress.moonlitFragmentsAvailable} · Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
+          </span>
+          <span class="awakening-sign ${progress.lanternRiteUnlocked ? "complete" : ""}">
+            <span>Lantern Rite</span>
+            <strong>${progress.lanternRiteUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-signs-copy">${alignmentCopy}</span>
+        </div>
+      `;
+    }
+
+
     
     function renderEvolutionSeals(stats = getCurrentStats()) {
       const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
@@ -1381,20 +1462,30 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       activeCard.className = "evolution-active-card";
 
       const evolutionIProgress = getEvolutionIProgress(stats);
+      const evolutionIIProgress = getEvolutionIIProgress(stats);
 
       const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
 
       const slotsMarkup = active.slots.map((slot) => {
         const isDormant = slot.id === "lantern-jelly-dormant";
         const isEvolutionI = slot.id === "lantern-jelly-stage-1";
+        const isEvolutionII = slot.id === "lantern-jelly-stage-2";
+
         const slotStatus = isEvolutionI
           ? (evolutionIUnlocked ? "awakened" : (evolutionIProgress.ready ? "ready" : slot.status))
-          : slot.status;
+          : (
+              isEvolutionII && evolutionIUnlocked
+                ? (evolutionIIProgress.ready ? "ready" : "sealed")
+                : slot.status
+            );
         const statusLabel = isEvolutionI
           ? (evolutionIUnlocked ? "Awakened" : (evolutionIProgress.ready ? "Ready" : slot.statusLabel))
-          : slot.statusLabel;
+          : (
+              isEvolutionII && evolutionIUnlocked
+                ? (evolutionIIProgress.ready ? "Ready" : "Sleeping")
+                : slot.statusLabel
+            );
         const slotLabel = isEvolutionI && evolutionIUnlocked ? "Evolution I" : slot.label;
-        const isEvolutionII = slot.id === "lantern-jelly-stage-2";
         const slotCopy = isEvolutionI && evolutionIUnlocked
           ? "A new form has surfaced from the lantern light."
           : (
@@ -1402,7 +1493,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 ? "Previous form archived."
                 : (
                     isEvolutionII && evolutionIUnlocked
-                      ? "A deeper ritual has not formed yet."
+                      ? (
+                          evolutionIIProgress.ready
+                            ? "The second lantern is ready to awaken."
+                            : "A deeper ritual is forming."
+                        )
                       : slot.copy
                   )
             );
@@ -1417,11 +1512,20 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                   )
             )
           : (
-              isDormant && evolutionIUnlocked
-                ? "Dormant Form remains revealed in the archive."
-                : slot.hint
+              isEvolutionII && evolutionIUnlocked
+                ? (
+                    evolutionIIProgress.ready
+                      ? "Evolution II is ready, but its ritual will be added later."
+                      : "Evolution II requirements are forming."
+                  )
+                : (
+                    isDormant && evolutionIUnlocked
+                      ? "Dormant Form remains revealed in the archive."
+                      : slot.hint
+                  )
             );
         const awakeningMarkup = isEvolutionI && !evolutionIUnlocked ? createAwakeningSignsMarkup(evolutionIProgress) : "";
+        const evolutionIIMarkup = isEvolutionII && evolutionIUnlocked ? createEvolutionIISignsMarkup(evolutionIIProgress) : "";
         const ritualMarkup = isEvolutionI && !evolutionIUnlocked && evolutionIProgress.ready
           ? `<span class="ritual-button" role="button" tabindex="0" data-ritual="evolution-1">Begin Awakening Ritual</span>`
           : "";
@@ -1438,6 +1542,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             <span class="evolution-slot-label">${slotLabel}</span>
             <span class="evolution-slot-copy">${slotCopy}</span>
             ${awakeningMarkup}
+            ${evolutionIIMarkup}
             ${ritualMarkup}
             <span class="evolution-slot-status ${slotStatus}">${statusLabel}</span>
           </button>
