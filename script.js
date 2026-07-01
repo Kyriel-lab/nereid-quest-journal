@@ -1110,6 +1110,29 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
 
 
+
+    function getCurrentStats() {
+      if (typeof calculateStats === "function") {
+        return calculateStats();
+      }
+
+      if (typeof getStats === "function") {
+        return getStats();
+      }
+
+      const completedQuests = state.quests.filter((quest) => quest.completed);
+      const bond = completedQuests.reduce((total, quest) => (
+        quest.rewardType === "bond" ? total + quest.rewardValue : total
+      ), 0);
+
+      return {
+        completedCount: completedQuests.length,
+        totalCount: state.quests.length,
+        bond,
+        mood: getMood(bond, completedQuests.length, state.quests.length)
+      };
+    }
+
     const EVOLUTION_I_REQUIREMENTS = {
       bond: 150,
       moonlitFragments: 3,
@@ -1117,13 +1140,36 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     };
 
     function getAchievementState(achievementId) {
-      const achievements = getAchievements();
+      if (typeof getAchievements === "function") {
+        const achievements = getAchievements();
+        return achievements.find((achievement) => achievement.id === achievementId) || null;
+      }
 
-      return achievements.find((achievement) => achievement.id === achievementId) || null;
+      if (typeof buildAchievements === "function") {
+        const achievements = buildAchievements();
+        return achievements.find((achievement) => achievement.id === achievementId) || null;
+      }
+
+      const history = Array.isArray(state.history) ? state.history : [];
+      const completedDays = history.filter((entry) => entry && entry.totalCount > 0).length;
+
+      if (achievementId === "first-ripple") {
+        return {
+          id: "first-ripple",
+          unlocked: completedDays >= 1
+        };
+      }
+
+      return {
+        id: achievementId,
+        unlocked: false
+      };
     }
 
+
     function getEvolutionIProgress(stats) {
-      const bond = Math.max(0, stats?.bond || 0);
+      const currentStats = stats || getCurrentStats();
+      const bond = Math.max(0, currentStats?.bond || 0);
       const moonlitFragments = getMoonlitFragmentTotal();
       const firstRipple = getAchievementState(EVOLUTION_I_REQUIREMENTS.achievementId);
       const firstRippleUnlocked = Boolean(firstRipple?.unlocked);
@@ -1163,7 +1209,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       `;
     }
 
-    function renderEvolutionSeals(stats = getStats()) {
+    function renderEvolutionSeals(stats = getCurrentStats()) {
       const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
 
       if (!evolutionSealsList) {

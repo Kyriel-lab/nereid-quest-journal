@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.7d — Evolution I Render Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Companion Evolution becoming blank after v0.7c.
+- Replaced the unsafe `getStats()` render fallback with a safe `getCurrentStats()` helper.
+- Made Evolution I progress robust when achievement helper naming differs across versions.
+- Kept Awakening Signs for Evolution I without revealing assets or adding an evolve button.
+
+### Preserved
+
+- Evolution I Awakening Signs UI from v0.7c.
+- Evolution Wording Alignment from v0.7b.
+- Restore Dashboard Render Hotfix from v0.7a.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No Evolution I image reveal.
+- No Moonlit Fragment consumption.
+- No Evolution II / III / Apex Crest requirement UI.
+- No asset renaming.
+- No localStorage migration.
+
+---
+
 ## v0.7c — Evolution I Awakening Signs UI
 
 **Status:** Patch candidate.
