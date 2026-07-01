@@ -324,6 +324,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       companionMood: document.getElementById("companionMood"),
       companionCurrentForm: document.getElementById("companionCurrentForm"),
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
+      companionEvolutionHint: document.getElementById("companionEvolutionHint"),
       companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
@@ -725,8 +726,21 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         elements.companionCurrentForm.textContent = "Dormant Form · Revealed";
       }
 
+      const evolutionIProgress = getEvolutionIProgress(stats);
+      const evolutionIStatus = evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping";
+      const evolutionIHint = evolutionIProgress.ready
+        ? "Awakening ritual pending."
+        : "Awakening signs are still aligning.";
+
       if (elements.companionEvolutionSeal) {
-        elements.companionEvolutionSeal.textContent = "Evolution I sleeping";
+        elements.companionEvolutionSeal.textContent = evolutionIStatus;
+        elements.companionEvolutionSeal.classList.toggle("ready", evolutionIProgress.ready);
+        elements.companionEvolutionSeal.classList.toggle("sleeping", !evolutionIProgress.ready);
+      }
+
+      if (elements.companionEvolutionHint) {
+        elements.companionEvolutionHint.textContent = evolutionIHint;
+        elements.companionEvolutionHint.classList.toggle("ready", evolutionIProgress.ready);
       }
 
       if (elements.companionMoonlitFragments) {
@@ -735,6 +749,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     }
 
+    
     function renderReward(stats) {
       elements.rewardCard.classList.toggle("unlocked", stats.rewardUnlocked);
       elements.rewardStatus.classList.toggle("unlocked", stats.rewardUnlocked);
@@ -1190,8 +1205,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     function createAwakeningSignsMarkup(progress) {
+      const alignmentCopy = progress.ready
+        ? "All awakening signs are aligned."
+        : "Complete all signs to prepare Evolution I.";
+
       return `
-        <div class="awakening-signs" aria-label="Evolution I awakening signs">
+        <div class="awakening-signs ${progress.ready ? "ready" : "sleeping"}" aria-label="Evolution I awakening signs">
           <span class="awakening-signs-title">Awakening Signs</span>
           <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
             <span>Bond</span>
@@ -1205,10 +1224,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             <span>First Ripple</span>
             <strong>${progress.firstRippleUnlocked ? "✓" : "Sleeping"}</strong>
           </span>
+          <span class="awakening-signs-copy">${alignmentCopy}</span>
         </div>
       `;
     }
 
+    
     function renderEvolutionSeals(stats = getCurrentStats()) {
       const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
 
@@ -1231,7 +1252,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         const hint = isEvolutionI
           ? (
               evolutionIProgress.ready
-                ? "Evolution I is ready to awaken. The awakening ritual will be added later."
+                ? "Evolution I is ready. Awakening ritual can begin."
                 : "Evolution I is still sleeping. Follow its Awakening Signs to prepare the seal."
             )
           : slot.hint;

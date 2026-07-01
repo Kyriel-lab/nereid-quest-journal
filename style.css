@@ -2384,4 +2384,40 @@
   background: rgba(255, 243, 213, 0.78);
 }
 
+/* v0.8 — Evolution Ready State Foundation */
+.companion-evolution-status-row {
+  align-items: flex-start;
+}
+
+.companion-status-hint {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.companion-status-hint.ready,
+.companion-status-value.ready {
+  color: var(--accent-strong);
+}
+
+.awakening-signs.ready {
+  border-color: rgba(170, 131, 46, 0.42);
+}
+
+.awakening-signs-copy {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.awakening-signs.ready .awakening-signs-copy {
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
 

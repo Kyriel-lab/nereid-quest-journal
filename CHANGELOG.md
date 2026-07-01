@@ -1,5 +1,47 @@
 # Changelog
 
+## v0.8 — Evolution Ready State Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added ready-aware copy to the Active Companion card.
+- `Next Evolution` now displays:
+  - `Evolution I sleeping` when Awakening Signs are incomplete.
+  - `Evolution I ready` when all requirements are met.
+- Added companion-card hint text:
+  - `Awakening signs are still aligning.`
+  - `Awakening ritual pending.`
+- Enhanced Evolution I Awakening Signs copy:
+  - `Complete all signs to prepare Evolution I.`
+  - `All awakening signs are aligned.`
+- Updated Evolution I ready toast copy to:
+  - `Evolution I is ready. Awakening ritual can begin.`
+
+### Preserved
+
+- Evolution I Render Hotfix from v0.7d.
+- Evolution I Awakening Signs UI from v0.7c.
+- Evolution Wording Alignment from v0.7b.
+- Restore Dashboard Render Hotfix from v0.7a.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolve button.
+- No Evolution I image reveal.
+- No Moonlit Fragment consumption.
+- No companion form unlock state.
+- No Evolution II / III logic.
+- No asset changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.7d — Evolution I Render Hotfix
 
 **Status:** Patch candidate.
