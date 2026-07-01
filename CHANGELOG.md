@@ -1,5 +1,50 @@
 # Changelog
 
+## v0.7b — Evolution Wording Alignment
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Aligned companion evolution wording to the current canon structure:
+  - Dormant Form
+  - Evolution I
+  - Evolution II
+  - Evolution III
+  - Apex Crest
+- Renamed sealed stage labels:
+  - `Sealed Stage I` → `Sealed Evolution I`
+  - `Sealed Stage II` → `Sealed Evolution II`
+  - `Sealed Stage III` → `Sealed Evolution III`
+- Renamed `Apex Seal` to `Apex Crest`.
+- Updated Active Companion card:
+  - `Evolution Seal` → `Next Evolution`
+  - `Stage I sleeping` → `Evolution I sleeping`
+- Preserved the Dormant Form as the base/current form.
+
+### Preserved
+
+- Restore Dashboard Render Hotfix from v0.7a.
+- Remove EXP Foundation from v0.7.
+- Active Companion Card Polish from v0.6b.
+- Companion Evolution Seals Render Hotfix from v0.6a.
+- Achievement Foundation from v0.5.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No asset renaming.
+- No Evolution IV.
+- No actual evolution.
+- No evolve button.
+- No requirement UI.
+- No companion switching.
+- No future form reveal.
+- No localStorage migration.
+
+---
+
 ## v0.7a — Restore Dashboard Render Hotfix
 
 **Status:** Patch candidate.

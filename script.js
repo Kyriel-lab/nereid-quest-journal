@@ -247,7 +247,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           },
           {
             id: "lantern-jelly-stage-1",
-            label: "Sealed Stage I",
+            label: "Sealed Evolution I",
             status: "sealed",
             statusLabel: "Sleeping",
             copy: "A future form sleeps behind this seal.",
@@ -256,7 +256,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           },
           {
             id: "lantern-jelly-stage-2",
-            label: "Sealed Stage II",
+            label: "Sealed Evolution II",
             status: "sealed",
             statusLabel: "Sleeping",
             copy: "The next tide of growth is hidden.",
@@ -265,7 +265,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           },
           {
             id: "lantern-jelly-stage-3",
-            label: "Sealed Stage III",
+            label: "Sealed Evolution III",
             status: "sealed",
             statusLabel: "Sleeping",
             copy: "A deeper awakening remains unrevealed.",
@@ -274,12 +274,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           },
           {
             id: "lantern-jelly-apex",
-            label: "Apex Seal",
+            label: "Apex Crest",
             status: "apex",
             statusLabel: "Later",
-            copy: "A distant seal beyond the current archive.",
+            copy: "A distant crest beyond the current archive.",
             icon: "☾",
-            hint: "Apex remains beyond the current archive."
+            hint: "The Apex Crest remains beyond the current archive."
           }
         ]
       },
@@ -726,7 +726,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
 
       if (elements.companionEvolutionSeal) {
-        elements.companionEvolutionSeal.textContent = "Stage I sleeping";
+        elements.companionEvolutionSeal.textContent = "Evolution I sleeping";
       }
 
       if (elements.companionMoonlitFragments) {
