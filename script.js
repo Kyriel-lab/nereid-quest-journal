@@ -215,6 +215,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statsContent: document.getElementById("statsContent"),
       statJournalDays: document.getElementById("statJournalDays"),
       statCompletedQuests: document.getElementById("statCompletedQuests"),
+      statMoonlitFragments: document.getElementById("statMoonlitFragments"),
       statTotalBond: document.getElementById("statTotalBond"),
       statTotalExp: document.getElementById("statTotalExp"),
       statAverageCompletion: document.getElementById("statAverageCompletion"),
@@ -597,7 +598,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (stats.rewardUnlocked) {
         elements.entryStatusTitle.textContent = "The day is complete.";
-        elements.entryStatusCopy.textContent = "Moonlit Fragment unlocked.";
+        elements.entryStatusCopy.textContent = "Moonlit Fragment earned.";
       } else {
         elements.entryStatusTitle.textContent = "The day has been saved.";
         elements.entryStatusCopy.textContent = "Small rituals still count.";
@@ -627,6 +628,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         bond: stats.bond,
         exp: stats.exp,
         rewardUnlocked: stats.rewardUnlocked,
+        moonlitFragmentEarned: stats.rewardUnlocked,
         reflection: (state.reflection || "").trim(),
         endedAt: new Date().toISOString()
       };
@@ -681,6 +683,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           completedQuests: 0,
           totalBond: 0,
           totalExp: 0,
+          moonlitFragments: 0,
           averageCompletion: 0,
           bestDay: null,
           mostUsedType: "Not enough data yet",
@@ -694,6 +697,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         acc.completedQuests += entry.completedCount || 0;
         acc.totalBond += entry.bond || 0;
         acc.totalExp += entry.exp || 0;
+        acc.moonlitFragments += (entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0;
         acc.completionSum += completionPercent;
 
         const typeCounts = entry.completedTypeCounts || {};
@@ -718,6 +722,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         completedQuests: 0,
         totalBond: 0,
         totalExp: 0,
+        moonlitFragments: 0,
         completionSum: 0,
         typeCounts: {},
         bestDay: null
@@ -745,6 +750,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         completedQuests: totals.completedQuests,
         totalBond: totals.totalBond,
         totalExp: totals.totalExp,
+        moonlitFragments: totals.moonlitFragments,
         averageCompletion: Math.round(totals.completionSum / validEntries.length),
         bestDay: totals.bestDay,
         mostUsedType,
@@ -768,6 +774,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       elements.statJournalDays.textContent = stats.journalDays;
       elements.statCompletedQuests.textContent = stats.completedQuests;
+      elements.statMoonlitFragments.textContent = stats.moonlitFragments;
       elements.statTotalBond.textContent = stats.totalBond;
       elements.statTotalExp.textContent = stats.totalExp;
       elements.statAverageCompletion.textContent = `${stats.averageCompletion}%`;
@@ -978,7 +985,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       saveState();
 
       if (stats.rewardUnlocked) {
-        showToast("The day is complete. Moonlit Fragment unlocked.");
+        showToast("The day is complete. Moonlit Fragment earned.");
       } else {
         showToast("The day has been saved. Small rituals still count.");
       }

@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.4c — Moonlit Fragment Tracking
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added Moonlit Fragment tracking as a perfect-day reward token.
+- Added a Stats Dashboard tile:
+  - `Moonlit Fragments`
+- New valid history entries now save:
+  - `moonlitFragmentEarned: true / false`
+- Moonlit Fragment total is calculated from Journal History.
+- Added backward compatibility for older history entries:
+  - `moonlitFragmentEarned ?? rewardUnlocked`
+- Clarified Daily Entry reward wording from unlocked to earned where applicable.
+
+### Preserved
+
+- Active Companion Focus from v0.4b.
+- Companion Registry code foundation from v0.4/v0.4a for possible later reuse.
+- Stats Dashboard Hotfix from v0.3a.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No inventory.
+- No fragment spending.
+- No shop.
+- No evolution cost.
+- No achievements.
+- No new assets.
+- No Daily Quest logic changes.
+
+---
+
 ## v0.4b — Hide Companion Registry UI
 
 **Status:** Patch candidate.
