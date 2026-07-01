@@ -2534,4 +2534,9 @@
   color: var(--text);
 }
 
+/* v1.4 — Evolution II Asset Integration */
+.evolution-slot.awakened .evolution-slot-thumb img {
+  object-fit: cover;
+}
+
 

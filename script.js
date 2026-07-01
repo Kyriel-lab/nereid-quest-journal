@@ -1,7 +1,8 @@
 const STORAGE_KEY = "nereidQuestJournal_v01";
     const LANTERN_JELLY_ASSETS = {
       dormant: "assets/lantern-jelly-dormant.png",
-      evolution1: "assets/lantern-jelly-evolution-1.png"
+      evolution1: "assets/lantern-jelly-evolution-1.png",
+      evolution2: "assets/lantern-jelly-evolution-2.png"
     };
 
 
@@ -887,7 +888,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (elements.companionRole) {
         elements.companionRole.textContent = evolutionIIUnlocked
-          ? "Evolution II · A deeper lantern form has awakened. Image pending future asset pass."
+          ? "Evolution II · A deeper lantern form has awakened."
           : (
               evolutionIUnlocked
                 ? "Evolution I · A newly awakened lantern spirit, glowing with deeper ritual light."
@@ -896,17 +897,25 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
 
       if (elements.companionImage) {
-        const nextImage = evolutionIUnlocked
-          ? LANTERN_JELLY_ASSETS.evolution1
-          : LANTERN_JELLY_ASSETS.dormant;
+        const nextImage = evolutionIIUnlocked
+          ? LANTERN_JELLY_ASSETS.evolution2
+          : (
+              evolutionIUnlocked
+                ? LANTERN_JELLY_ASSETS.evolution1
+                : LANTERN_JELLY_ASSETS.dormant
+            );
 
         if (elements.companionImage.getAttribute("src") !== nextImage) {
           elements.companionImage.src = nextImage;
         }
 
-        elements.companionImage.alt = evolutionIUnlocked
-          ? "Lantern Jelly Evolution I awakened form"
-          : "Lantern Jelly dormant form";
+        elements.companionImage.alt = evolutionIIUnlocked
+          ? "Lantern Jelly Evolution II awakened form"
+          : (
+              evolutionIUnlocked
+                ? "Lantern Jelly Evolution I awakened form"
+                : "Lantern Jelly dormant form"
+            );
       }
 
       const evolutionIProgress = getEvolutionIProgress(stats);
@@ -1565,7 +1574,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           ? "A new form has surfaced from the lantern light."
           : (
               isEvolutionII && evolutionIIUnlocked
-                ? "A deeper lantern has opened within the current. Image pending future asset pass."
+                ? "A deeper lantern has opened within the current."
                 : (
                     isDormant && evolutionIUnlocked
                       ? "Previous form archived."
@@ -1598,7 +1607,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
               isEvolutionII && evolutionIUnlocked
                 ? (
                     evolutionIIUnlocked
-                      ? "Evolution II has awakened. Its image will be added in a later asset pass."
+                      ? "Evolution II has awakened."
                       : (
                           evolutionIIProgress.ready
                             ? "Evolution II is ready. Second awakening ritual can begin."
@@ -1620,9 +1629,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 ? `<span class="ritual-button second-ritual" role="button" tabindex="0" data-ritual="evolution-2">Begin Second Awakening Ritual</span>`
                 : ""
             );
-        const slotAsset = isEvolutionI && evolutionIUnlocked
-          ? LANTERN_JELLY_ASSETS.evolution1
-          : slot.asset;
+        const slotAsset = isEvolutionII && evolutionIIUnlocked
+          ? LANTERN_JELLY_ASSETS.evolution2
+          : (
+              isEvolutionI && evolutionIUnlocked
+                ? LANTERN_JELLY_ASSETS.evolution1
+                : slot.asset
+            );
         const thumb = slotAsset
           ? `<img src="${slotAsset}" alt="${active.name} ${slotLabel}">`
           : (slot.icon || "✧");

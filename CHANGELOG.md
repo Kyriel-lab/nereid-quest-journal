@@ -1,5 +1,47 @@
 # Changelog
 
+## v1.4 — Evolution II Asset Integration
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Integrated official Lantern Jelly Evolution II asset:
+  - Source: `02_Abyssal_Star_Lantern_stage_3.png`
+  - App path: `assets/lantern-jelly-evolution-2.png`
+- Added Evolution II asset mapping to `LANTERN_JELLY_ASSETS`.
+- Companion Card now switches to Evolution II image after Evolution II awakens.
+- Evolution II slot now reveals the Evolution II image after unlock.
+- Removed Evolution II placeholder copy:
+  - `Image pending future asset pass.`
+- Evolution II awakened copy is now:
+  - `Evolution II · A deeper lantern form has awakened.`
+  - `A deeper lantern has opened within the current.`
+
+### Preserved
+
+- Evolution II Awakening Ritual from v1.3.
+- Evolution II Requirement Signs from v1.2.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution II ritual logic changes.
+- No fragment logic changes.
+- No evolution state logic changes.
+- No Evolution III requirement logic.
+- No Evolution III ritual.
+- No Evolution I asset change.
+- No Dormant asset change.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.3 — Evolution II Awakening Ritual
 
 **Status:** Patch candidate.
