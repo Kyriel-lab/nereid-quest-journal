@@ -1405,10 +1405,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         `;
       }).join("");
 
+      const currentFormMeta = evolutionIUnlocked
+        ? "Evolution I · Awakened"
+        : active.currentForm;
+
       activeCard.innerHTML = `
         <div class="evolution-active-header">
           <span class="evolution-active-name"></span>
-          <span class="evolution-active-meta">Current Form: ${active.currentForm}</span>
+          <span class="evolution-active-meta">Current Form: ${currentFormMeta}</span>
           <span class="evolution-active-description"></span>
         </div>
         <div class="evolution-slot-grid">${slotsMarkup}</div>

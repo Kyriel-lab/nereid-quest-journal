@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.9b-ui — Current Form Meta Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed the Companion Evolution header continuing to show `Current Form: Dormant Form` after Evolution I awakens.
+- The Companion Evolution header now displays:
+  - `Current Form: Dormant Form` before awakening.
+  - `Current Form: Evolution I · Awakened` after awakening.
+
+### Preserved
+
+- Evolution I Awakening Ritual from v0.9b.
+- Fragment Ledger Visibility Hotfix from v0.9a-ui.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No ritual logic changes.
+- No fragment logic changes.
+- No companion evolution state changes.
+- No Evolution I image reveal.
+- No new asset integration.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.9b — Evolution I Awakening Ritual
 
 **Status:** Patch candidate.
