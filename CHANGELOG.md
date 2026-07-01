@@ -1,19 +1,21 @@
 # Changelog
 
-## v0.6c — Companion Fragment Count Hotfix
+## v0.7 — Remove EXP Foundation
 
 **Status:** Patch candidate.
 
-### Fixed
+### Added / Changed
 
-- Fixed the Active Companion card Moonlit Fragment count.
-- Removed the overly strict `totalCount` filter from the companion fragment helper.
-- Companion Moonlit Fragments now count compatible history fields:
-  - `moonlitFragments`
-  - `fragmentsEarned`
-  - `moonlitFragmentCount`
-  - `moonlitFragmentEarned`
-  - `rewardUnlocked`
+- Removed EXP from the visible core journal system.
+- Converted quest rewards to Bond-focused progression:
+  - Study Quest: `+10 Bond`
+  - Skill Quest: `+8 Bond`
+  - Care Quest: `+5 Bond`
+  - Home Quest: `+5 Bond`
+- Removed the EXP row from the Active Companion card.
+- Removed the fake `/100` Bond cap from the Active Companion card.
+- Removed visible EXP summary/render targets from companion, entry, and stats UI.
+- Preserved existing saved EXP data without migration or conversion.
 
 ### Preserved
 
@@ -21,17 +23,19 @@
 - Companion Evolution Seals Render Hotfix from v0.6a.
 - Companion Evolution Seals from v0.6.
 - Achievement Foundation from v0.5.
+- Moonlit Fragment Tracking from v0.4c.
 - Existing `localStorage` key:
   - `nereidQuestJournal_v01`
 
 ### Not Changed
 
-- No UI layout changes.
 - No actual evolution.
 - No evolve button.
-- No resource costs.
+- No companion switching.
+- No Stage I requirement UI yet.
+- No new resource.
+- No localStorage migration.
 - No future form reveal.
-- No stats, achievements, quest, or history logic changes.
 
 ---
 

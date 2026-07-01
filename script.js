@@ -21,9 +21,9 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     const rewardRules = {
       "Study Quest": { rewardType: "bond", rewardValue: 10 },
-      "Skill Quest": { rewardType: "exp", rewardValue: 8 },
+      "Skill Quest": { rewardType: "bond", rewardValue: 8 },
       "Care Quest": { rewardType: "bond", rewardValue: 5 },
-      "Home Quest": { rewardType: "exp", rewardValue: 5 }
+      "Home Quest": { rewardType: "bond", rewardValue: 5 }
     };
 
 
@@ -326,7 +326,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
       companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
       bondValue: document.getElementById("bondValue"),
-      expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
       rewardCopy: document.getElementById("rewardCopy"),
       rewardStatus: document.getElementById("rewardStatus"),
@@ -341,7 +340,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       entryStatusCopy: document.getElementById("entryStatusCopy"),
       entryQuestSummary: document.getElementById("entryQuestSummary"),
       entryBondSummary: document.getElementById("entryBondSummary"),
-      entryExpSummary: document.getElementById("entryExpSummary"),
       entryRewardChip: document.getElementById("entryRewardChip"),
       entryRewardSummary: document.getElementById("entryRewardSummary"),
       entryReflectionText: document.getElementById("entryReflectionText"),
@@ -355,7 +353,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statCompletedQuests: document.getElementById("statCompletedQuests"),
       statMoonlitFragments: document.getElementById("statMoonlitFragments"),
       statTotalBond: document.getElementById("statTotalBond"),
-      statTotalExp: document.getElementById("statTotalExp"),
       statAverageCompletion: document.getElementById("statAverageCompletion"),
       statBestDay: document.getElementById("statBestDay"),
       statMostUsedType: document.getElementById("statMostUsedType"),
@@ -569,9 +566,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           }
         });
 
-        const rewardLabel = quest.rewardType === "bond"
-          ? `+${quest.rewardValue} Bond`
-          : `+${quest.rewardValue} EXP`;
+        const rewardLabel = `+${quest.rewardValue} Bond`;
 
         const icon = questIcons[quest.type] || "✧";
 
@@ -705,32 +700,18 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       const history = Array.isArray(state.history) ? state.history : [];
 
       return history.reduce((total, entry) => {
-        if (!entry) {
+        if (!entry || !entry.totalCount) {
           return total;
-        }
-
-        if (typeof entry.moonlitFragments === "number") {
-          return total + entry.moonlitFragments;
-        }
-
-        if (typeof entry.fragmentsEarned === "number") {
-          return total + entry.fragmentsEarned;
-        }
-
-        if (typeof entry.moonlitFragmentCount === "number") {
-          return total + entry.moonlitFragmentCount;
         }
 
         return total + ((entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0);
       }, 0);
     }
 
-
     function renderCompanion(stats) {
       elements.moodBadge.textContent = stats.mood;
       elements.companionMood.textContent = stats.mood;
       elements.bondValue.textContent = stats.bond;
-      elements.expValue.textContent = stats.exp;
 
       if (elements.companionCurrentForm) {
         elements.companionCurrentForm.textContent = "Dormant Form · Revealed";
@@ -771,7 +752,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.entryDateStamp.textContent = getReadableDate();
       elements.entryQuestSummary.textContent = `${stats.completedCount} / ${stats.totalCount}`;
       elements.entryBondSummary.textContent = `+${stats.bond}`;
-      elements.entryExpSummary.textContent = `+${stats.exp}`;
       elements.entryRewardSummary.textContent = stats.rewardUnlocked ? "Unlocked" : "Locked";
       elements.entryRewardChip.classList.toggle("reward-unlocked", stats.rewardUnlocked);
 
@@ -955,7 +935,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.statCompletedQuests.textContent = stats.completedQuests;
       elements.statMoonlitFragments.textContent = stats.moonlitFragments;
       elements.statTotalBond.textContent = stats.totalBond;
-      elements.statTotalExp.textContent = stats.totalExp;
       elements.statAverageCompletion.textContent = `${stats.averageCompletion}%`;
       elements.statBestDay.textContent = stats.bestDay
         ? `${stats.bestDay.displayDate || stats.bestDay.dateKey || "Today"} — ${stats.bestDay.completionPercent}%`
@@ -1017,7 +996,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           <div class="history-meta">
             <span>${entry.completedCount} / ${entry.totalCount} quests</span>
             <span>+${entry.bond} Bond</span>
-            <span>+${entry.exp} EXP</span>
+            <span></span>
           </div>
           <p class="history-reflection${entry.reflection ? "" : " empty"}"></p>
         `;
