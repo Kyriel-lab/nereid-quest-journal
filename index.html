@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nereid Quest Journal v0.2-dev</title>
+  <title>Nereid Quest Journal v0.2a</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -121,6 +121,27 @@
 
           <div class="entry-reflection empty" id="entryReflectionText">No reflection written yet.</div>
         </section>
+
+        <section class="card history-card" id="historyCard" aria-label="Journal history">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark gold">✦</span>
+              <div>
+                <h2 class="card-title">Journal History</h2>
+                <p class="card-subtitle">Recent pages saved from your daily tides.</p>
+              </div>
+            </div>
+            <span class="mini-badge" id="historyCountBadge">0 saved</span>
+          </div>
+
+          <div class="history-empty" id="historyEmpty">
+            No saved journal entries yet.<br />
+            End a day to save your first page.
+          </div>
+
+          <div class="history-list" id="historyList"></div>
+        </section>
+
       </div>
 
       <div class="column right-column">
@@ -206,7 +227,7 @@
       </div>
     </section>
 
-    <p class="footer-note">v0.2-dev Project Folder · Daily Entry Feel · Official Lantern Jelly Asset · Stored locally in this browser</p>
+    <p class="footer-note">v0.2a Daily History Lite · Official Lantern Jelly Asset · Stored locally in this browser</p>
   </main>
   <script src="script.js"></script>
 </body>

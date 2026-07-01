@@ -94,7 +94,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       entryExpSummary: document.getElementById("entryExpSummary"),
       entryRewardChip: document.getElementById("entryRewardChip"),
       entryRewardSummary: document.getElementById("entryRewardSummary"),
-      entryReflectionText: document.getElementById("entryReflectionText")
+      entryReflectionText: document.getElementById("entryReflectionText"),
+      historyCard: document.getElementById("historyCard"),
+      historyCountBadge: document.getElementById("historyCountBadge"),
+      historyEmpty: document.getElementById("historyEmpty"),
+      historyList: document.getElementById("historyList")
     };
 
     function getTodayKey() {
@@ -113,11 +117,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }).format(new Date());
     }
 
-    function createDefaultState() {
+    function createDefaultState(history = []) {
       return {
         date: getTodayKey(),
         completedQuestIds: [],
         customQuests: [],
+        history: normalizeHistoryEntries(history),
         reflection: "",
         lastSavedAt: "",
         ended: false
@@ -146,6 +151,29 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         });
     }
 
+
+    function normalizeHistoryEntries(history) {
+      if (!Array.isArray(history)) {
+        return [];
+      }
+
+      return history
+        .filter((entry) => entry && typeof entry.date === "string")
+        .map((entry) => ({
+          date: entry.date,
+          readableDate: typeof entry.readableDate === "string" ? entry.readableDate : entry.date,
+          completedCount: Number.isFinite(Number(entry.completedCount)) ? Number(entry.completedCount) : 0,
+          totalCount: Number.isFinite(Number(entry.totalCount)) ? Number(entry.totalCount) : 0,
+          progress: Number.isFinite(Number(entry.progress)) ? Number(entry.progress) : 0,
+          bond: Number.isFinite(Number(entry.bond)) ? Number(entry.bond) : 0,
+          exp: Number.isFinite(Number(entry.exp)) ? Number(entry.exp) : 0,
+          rewardUnlocked: entry.rewardUnlocked === true,
+          reflection: typeof entry.reflection === "string" ? entry.reflection : "",
+          endedAt: typeof entry.endedAt === "string" ? entry.endedAt : new Date().toISOString()
+        }))
+        .sort((a, b) => new Date(b.endedAt) - new Date(a.endedAt));
+    }
+
     function loadState() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -156,17 +184,24 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
         const parsed = JSON.parse(saved);
 
-        if (!parsed || parsed.date !== getTodayKey()) {
+        if (!parsed) {
           return createDefaultState();
         }
 
-        const base = createDefaultState();
+        const history = normalizeHistoryEntries(parsed.history);
+
+        if (parsed.date !== getTodayKey()) {
+          return createDefaultState(history);
+        }
+
+        const base = createDefaultState(history);
         const customQuests = normalizeCustomQuests(parsed.customQuests);
         const validQuestIds = new Set([...DEFAULT_QUESTS, ...customQuests].map((quest) => quest.id));
 
         return {
           ...base,
           ...parsed,
+          history,
           customQuests,
           completedQuestIds: Array.isArray(parsed.completedQuestIds)
             ? parsed.completedQuestIds.filter((id) => validQuestIds.has(id))
@@ -367,6 +402,73 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
     }
 
+
+    function createHistoryEntry(stats) {
+      return {
+        date: state.date || getTodayKey(),
+        readableDate: getReadableDate(),
+        completedCount: stats.completedCount,
+        totalCount: stats.totalCount,
+        progress: stats.progress,
+        bond: stats.bond,
+        exp: stats.exp,
+        rewardUnlocked: stats.rewardUnlocked,
+        reflection: (state.reflection || "").trim(),
+        endedAt: new Date().toISOString()
+      };
+    }
+
+    function upsertTodayHistoryEntry(stats) {
+      const entry = createHistoryEntry(stats);
+      const history = normalizeHistoryEntries(state.history);
+      const existingIndex = history.findIndex((item) => item.date === entry.date);
+
+      if (existingIndex >= 0) {
+        history[existingIndex] = entry;
+      } else {
+        history.unshift(entry);
+      }
+
+      state.history = normalizeHistoryEntries(history);
+    }
+
+    function renderHistory() {
+      const history = normalizeHistoryEntries(state.history).slice(0, 7);
+      elements.historyList.innerHTML = "";
+
+      elements.historyCountBadge.textContent = history.length === 1
+        ? "1 saved"
+        : `${history.length} saved`;
+
+      elements.historyEmpty.hidden = history.length > 0;
+
+      history.forEach((entry) => {
+        const item = document.createElement("article");
+        item.className = "history-entry";
+
+        const rewardLabel = entry.rewardUnlocked ? "Reward: Unlocked" : "Reward: Locked";
+        const reflectionText = entry.reflection ? entry.reflection : "No reflection written.";
+
+        item.innerHTML = `
+          <div class="history-entry-header">
+            <h3 class="history-date"></h3>
+            <span class="history-reward${entry.rewardUnlocked ? " unlocked" : ""}">${rewardLabel}</span>
+          </div>
+          <div class="history-meta">
+            <span>${entry.completedCount} / ${entry.totalCount} quests</span>
+            <span>+${entry.bond} Bond</span>
+            <span>+${entry.exp} EXP</span>
+          </div>
+          <p class="history-reflection${entry.reflection ? "" : " empty"}"></p>
+        `;
+
+        item.querySelector(".history-date").textContent = entry.readableDate;
+        item.querySelector(".history-reflection").textContent = reflectionText;
+
+        elements.historyList.appendChild(item);
+      });
+    }
+
     function renderReflection() {
       elements.reflectionInput.value = state.reflection || "";
     }
@@ -383,6 +485,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderCompanion(stats);
       renderReward(stats);
       renderDailyEntry(stats);
+      renderHistory();
       renderReflection();
     }
 
@@ -442,6 +545,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     function endDay() {
       const stats = calculateStats();
       state.ended = true;
+      upsertTodayHistoryEntry(stats);
       saveState();
 
       if (stats.rewardUnlocked) {
@@ -454,7 +558,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     function resetToday() {
-      state = createDefaultState();
+      const history = normalizeHistoryEntries(state.history);
+      state = createDefaultState(history);
       saveState("Today has been reset.");
       renderAll();
     }

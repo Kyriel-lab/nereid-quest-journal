@@ -1161,3 +1161,109 @@
       .actions .button { flex: 1 1 auto; }
       .soft-divider::before, .soft-divider::after { flex-basis: 42px; }
     }
+
+/* v0.2a — Daily History Lite */
+.history-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 95% 10%, rgba(215, 168, 79, 0.12), transparent 12rem),
+    linear-gradient(145deg, rgba(255, 253, 247, 0.96), rgba(233, 244, 246, 0.32)),
+    var(--surface);
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+}
+
+.history-empty {
+  border: 1px dashed rgba(111, 174, 199, 0.38);
+  border-radius: 22px;
+  padding: 18px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.52);
+  line-height: 1.5;
+}
+
+.history-empty[hidden] {
+  display: none;
+}
+
+.history-entry {
+  border: 1px solid rgba(216, 226, 223, 0.84);
+  border-radius: 22px;
+  padding: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(255, 253, 247, 0.92)),
+    var(--surface);
+  box-shadow: 0 10px 24px rgba(36, 49, 58, 0.05);
+}
+
+.history-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.history-date {
+  margin: 0;
+  color: var(--deep-tide);
+  font-family: Nunito, Inter, sans-serif;
+  font-size: 1.03rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.history-reward {
+  border-radius: var(--radius-pill);
+  padding: 7px 10px;
+  background: var(--soft-coral);
+  color: #8A4B3F;
+  font-size: 0.74rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.history-reward.unlocked {
+  background: var(--soft-gold);
+  color: #7A5A15;
+}
+
+.history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.history-meta span {
+  border-radius: var(--radius-pill);
+  padding: 7px 10px;
+  background: rgba(233, 244, 246, 0.72);
+  color: var(--deep-tide);
+  border: 1px solid rgba(111, 174, 199, 0.16);
+  font-size: 0.78rem;
+  font-weight: 780;
+}
+
+.history-reflection {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.48;
+  font-size: 0.9rem;
+  padding: 12px 13px;
+  border-left: 3px solid rgba(215, 168, 79, 0.42);
+  background: rgba(255, 243, 213, 0.24);
+  border-radius: 0 16px 16px 0;
+  white-space: pre-wrap;
+}
+
+.history-reflection.empty {
+  font-style: italic;
+  color: rgba(111, 125, 131, 0.82);
+}
+
+
