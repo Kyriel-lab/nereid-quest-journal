@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.2c — Desktop Daily Use Polish
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Improved desktop/laptop layout rhythm.
+- Expanded the main app shell slightly for wider screens.
+- Strengthened Today’s Quests as the primary daily-use board.
+- Improved quest card spacing and reward chip alignment.
+- Made Add Quest and Quest Library feel more compact and secondary to the quest list.
+- Added sticky right sidebar behavior on desktop for Companion / Progress / Reward.
+- Tuned Companion card sizing, stats spacing, and sidebar balance.
+- Improved Reflection, Daily Entry, and Journal History desktop readability.
+- Displayed Journal History entries in a two-column desktop grid.
+- Softened long reflection previews in History cards.
+
+### Preserved
+
+- Quest Library Lite from v0.2b.
+- Daily History Lite from v0.2a.
+- Daily Entry Feel from v0.1d.
+- Custom Quest Basic from v0.1c.
+- Official Lantern Jelly Dormant Form asset.
+- Existing app logic and `localStorage` behavior.
+
+### Not Changed
+
+- No JavaScript logic changes.
+- No localStorage key changes.
+- No new features.
+- No asset changes.
+- No mobile deep polish.
+
+---
+
 ## v0.2b — Quest Library Lite
 
 **Status:** Patch candidate.

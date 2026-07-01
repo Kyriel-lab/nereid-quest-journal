@@ -1347,4 +1347,243 @@
   flex: 0 0 auto;
 }
 
+/* v0.2c — Desktop Daily Use Polish */
+@media (min-width: 980px) {
+  .app-shell {
+    width: min(1260px, calc(100% - 44px));
+    padding: 34px 0 42px;
+  }
+
+  .topbar {
+    margin-bottom: 26px;
+  }
+
+  .hero-card {
+    padding: 24px 30px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.35rem, 3.35vw, 3.45rem);
+  }
+
+  .hero-copy {
+    max-width: 720px;
+  }
+
+  .date-card {
+    width: 300px;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1.48fr) minmax(360px, 0.78fr);
+    gap: 26px;
+  }
+
+  .column {
+    gap: 20px;
+  }
+
+  .left-column > .card:first-child {
+    padding: 28px;
+    border-color: rgba(111, 174, 199, 0.26);
+    background:
+      radial-gradient(circle at 96% 4%, rgba(111, 174, 199, 0.12), transparent 12rem),
+      linear-gradient(145deg, rgba(255, 253, 247, 0.98), rgba(233, 244, 246, 0.20)),
+      var(--surface);
+  }
+
+  .left-column > .card:first-child .card-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(216, 226, 223, 0.72);
+    margin-bottom: 20px;
+  }
+
+  .quest-list {
+    gap: 11px;
+  }
+
+  .quest {
+    padding: 15px 16px;
+    min-height: 74px;
+  }
+
+  .quest-title-row {
+    gap: 8px;
+  }
+
+  .quest-title {
+    font-size: 0.99rem;
+  }
+
+  .quest-meta {
+    font-size: 0.83rem;
+  }
+
+  .reward-chip {
+    justify-self: end;
+  }
+
+  .quest.custom::after {
+    top: 8px;
+    right: 52px;
+    opacity: 0.58;
+  }
+
+  .add-quest-panel {
+    margin-top: 18px;
+    padding: 15px;
+  }
+
+  .add-quest-title {
+    margin-bottom: 9px;
+  }
+
+  .add-quest-form {
+    grid-template-columns: minmax(260px, 1fr) 160px auto;
+  }
+
+  .library-panel {
+    margin-top: 15px;
+    padding-top: 14px;
+  }
+
+  .library-list {
+    gap: 7px;
+  }
+
+  .library-chip {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .right-column {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  .right-column .card {
+    padding: 22px;
+  }
+
+  .right-column .card:not(:first-child) {
+    box-shadow: 0 10px 24px rgba(36, 49, 58, 0.055);
+  }
+
+  .companion-visual {
+    min-height: 245px;
+    margin-bottom: 16px;
+  }
+
+  .companion-image {
+    max-height: 300px;
+  }
+
+  .companion-name {
+    font-size: 1.26rem;
+  }
+
+  .companion-role {
+    margin-bottom: 12px;
+  }
+
+  .stat-row {
+    padding: 10px 0;
+  }
+
+  .progress-track {
+    height: 18px;
+    margin: 14px 0 14px;
+  }
+
+  .reward-card {
+    padding-top: 21px;
+    padding-bottom: 21px;
+  }
+
+  .reward-title {
+    font-size: 1.14rem;
+  }
+
+  .left-column > .card:nth-child(n+2) {
+    background:
+      linear-gradient(145deg, rgba(255, 253, 247, 0.96), rgba(255, 255, 255, 0.62)),
+      var(--surface);
+  }
+
+  textarea {
+    min-height: 112px;
+  }
+
+  .actions {
+    margin-top: 13px;
+  }
+
+  .daily-entry-card {
+    padding: 25px;
+  }
+
+  .entry-summary-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .entry-summary-chip {
+    padding: 12px 13px;
+  }
+
+  .history-card {
+    padding: 23px;
+  }
+
+  .history-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .history-entry {
+    padding: 15px;
+  }
+
+  .history-entry-header {
+    margin-bottom: 9px;
+  }
+
+  .history-meta {
+    gap: 7px;
+    margin: 9px 0 11px;
+  }
+
+  .history-meta span {
+    padding: 6px 9px;
+  }
+
+  .history-reflection {
+    max-height: 96px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .history-reflection::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 24px;
+    background: linear-gradient(180deg, transparent, rgba(255, 243, 213, 0.86));
+    pointer-events: none;
+  }
+
+  .history-reflection.empty::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1180px) {
+  .history-list {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+  }
+}
+
 
