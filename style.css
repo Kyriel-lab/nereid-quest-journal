@@ -1150,6 +1150,8 @@
       .delete-quest { grid-column: 2; justify-self: start; }
       .add-quest-form { grid-template-columns: 1fr; }
       .add-quest-button { width: 100%; }
+      .library-list { flex-direction: column; }
+      .library-chip { width: 100%; justify-content: flex-start; }
 
       .hero-card, .date-card, .card {
         border-radius: 24px;
@@ -1264,6 +1266,85 @@
 .history-reflection.empty {
   font-style: italic;
   color: rgba(111, 125, 131, 0.82);
+}
+
+/* v0.2b — Quest Library Lite */
+.library-panel {
+  margin-top: 14px;
+  border-top: 1px solid rgba(216, 226, 223, 0.70);
+  padding-top: 13px;
+}
+
+.library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.library-title {
+  color: var(--deep-tide);
+  font-weight: 880;
+  font-size: 0.88rem;
+  letter-spacing: -0.01em;
+}
+
+.library-subtitle {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.library-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.library-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(111, 174, 199, 0.26);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--deep-tide);
+  padding: 9px 11px;
+  font-size: 0.82rem;
+  font-weight: 820;
+  cursor: pointer;
+  transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, opacity 170ms ease;
+}
+
+.library-chip:hover {
+  transform: translateY(-1px);
+  background: rgba(233, 244, 246, 0.86);
+  border-color: rgba(111, 174, 199, 0.48);
+}
+
+.library-chip:focus-visible {
+  outline: 3px solid rgba(111, 174, 199, 0.32);
+  outline-offset: 3px;
+}
+
+.library-chip.added {
+  opacity: 0.54;
+  cursor: not-allowed;
+  background: rgba(216, 226, 223, 0.38);
+}
+
+.library-chip-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(233, 244, 246, 0.82);
+  border: 1px solid rgba(111, 174, 199, 0.18);
+  font-size: 0.72rem;
+  flex: 0 0 auto;
 }
 
 

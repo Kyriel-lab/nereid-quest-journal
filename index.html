@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nereid Quest Journal v0.2a</title>
+  <title>Nereid Quest Journal v0.2b</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -57,6 +57,16 @@
                 <option value="Home Quest">Home Quest</option>
               </select>
               <button id="addQuestButton" class="add-quest-button" type="button">Add Quest</button>
+            </div>
+
+            <div class="library-panel" aria-label="Quest library">
+              <div class="library-header">
+                <div>
+                  <div class="library-title">Quest Library</div>
+                  <p class="library-subtitle">Choose a familiar ritual for today.</p>
+                </div>
+              </div>
+              <div class="library-list" id="questLibrary"></div>
             </div>
           </div>
         </section>
@@ -227,7 +237,7 @@
       </div>
     </section>
 
-    <p class="footer-note">v0.2a Daily History Lite · Official Lantern Jelly Asset · Stored locally in this browser</p>
+    <p class="footer-note">v0.2b Quest Library Lite · Official Lantern Jelly Asset · Stored locally in this browser</p>
   </main>
   <script src="script.js"></script>
 </body>

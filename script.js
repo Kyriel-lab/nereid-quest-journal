@@ -59,6 +59,65 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       "Home Quest": { rewardType: "exp", rewardValue: 5 }
     };
 
+
+    const QUEST_LIBRARY = [
+      {
+        id: "lib-korean-study",
+        title: "Korean Study — 30 minutes",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-logistics-review",
+        title: "Logistics Review",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-read-10-pages",
+        title: "Read 10 pages",
+        type: "Study Quest"
+      },
+      {
+        id: "lib-piano-practice",
+        title: "Piano Practice — 20 minutes",
+        type: "Skill Quest"
+      },
+      {
+        id: "lib-drawing-practice",
+        title: "Drawing Practice",
+        type: "Skill Quest"
+      },
+      {
+        id: "lib-skincare-routine",
+        title: "Skincare Routine",
+        type: "Care Quest"
+      },
+      {
+        id: "lib-drink-water",
+        title: "Drink Water",
+        type: "Care Quest"
+      },
+      {
+        id: "lib-stretching",
+        title: "Stretching",
+        type: "Care Quest"
+      },
+      {
+        id: "lib-clean-desk",
+        title: "Clean Desk",
+        type: "Home Quest"
+      },
+      {
+        id: "lib-laundry",
+        title: "Laundry",
+        type: "Home Quest"
+      },
+      {
+        id: "lib-tidy-room",
+        title: "Tidy Room",
+        type: "Home Quest"
+      }
+    ];
+
     let state = loadState();
 
     const elements = {
@@ -69,6 +128,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       customQuestInput: document.getElementById("customQuestInput"),
       customQuestType: document.getElementById("customQuestType"),
       addQuestButton: document.getElementById("addQuestButton"),
+      questLibrary: document.getElementById("questLibrary"),
       progressCount: document.getElementById("progressCount"),
       progressPercent: document.getElementById("progressPercent"),
       progressFill: document.getElementById("progressFill"),
@@ -146,7 +206,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             type,
             rewardType: reward.rewardType,
             rewardValue: reward.rewardValue,
-            custom: true
+            custom: true,
+            source: quest.source === "library" ? "library" : "custom"
           };
         });
     }
@@ -336,6 +397,79 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         : `${waiting} waiting`;
     }
 
+
+    function normalizeQuestTitle(title) {
+      return String(title || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+    }
+
+    function isDuplicateQuestTitle(title) {
+      const normalizedTitle = normalizeQuestTitle(title);
+
+      if (!normalizedTitle) {
+        return false;
+      }
+
+      return getAllQuests().some((quest) => normalizeQuestTitle(quest.title) === normalizedTitle);
+    }
+
+    function renderQuestLibrary() {
+      elements.questLibrary.innerHTML = "";
+
+      QUEST_LIBRARY.forEach((preset) => {
+        const chip = document.createElement("button");
+        const alreadyAdded = isDuplicateQuestTitle(preset.title);
+        const icon = questIcons[preset.type] || "✧";
+
+        chip.type = "button";
+        chip.className = `library-chip${alreadyAdded ? " added" : ""}`;
+        chip.disabled = alreadyAdded;
+        chip.title = alreadyAdded ? "Quest already added" : `Add ${preset.title}`;
+        chip.innerHTML = `
+          <span class="library-chip-icon">${icon}</span>
+          <span></span>
+        `;
+        chip.querySelector("span:last-child").textContent = preset.title;
+
+        chip.addEventListener("click", () => addLibraryQuest(preset.id));
+
+        elements.questLibrary.appendChild(chip);
+      });
+    }
+
+    function addLibraryQuest(presetId) {
+      const preset = QUEST_LIBRARY.find((item) => item.id === presetId);
+
+      if (!preset) {
+        showToast("Quest preset not found.");
+        return;
+      }
+
+      if (isDuplicateQuestTitle(preset.title)) {
+        showToast("Quest already added.");
+        return;
+      }
+
+      const reward = rewardRules[preset.type] || rewardRules["Study Quest"];
+
+      const quest = {
+        id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        title: preset.title,
+        type: preset.type,
+        rewardType: reward.rewardType,
+        rewardValue: reward.rewardValue,
+        custom: true,
+        source: "library"
+      };
+
+      state.customQuests = [...normalizeCustomQuests(state.customQuests), quest];
+
+      saveState("Quest added from library.");
+      renderAll();
+    }
+
     function renderProgress(stats) {
       const questWord = stats.totalCount === 1 ? "quest" : "quests";
 
@@ -481,6 +615,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       const stats = calculateStats();
       renderHeader();
       renderQuests(stats);
+      renderQuestLibrary();
       renderProgress(stats);
       renderCompanion(stats);
       renderReward(stats);
@@ -511,6 +646,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         return;
       }
 
+      if (isDuplicateQuestTitle(title)) {
+        showToast("Quest already added.");
+        return;
+      }
+
       const type = elements.customQuestType.value;
       const reward = rewardRules[type] || rewardRules["Study Quest"];
 
@@ -520,7 +660,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         type,
         rewardType: reward.rewardType,
         rewardValue: reward.rewardValue,
-        custom: true
+        custom: true,
+        source: "custom"
       };
 
       state.customQuests = [...normalizeCustomQuests(state.customQuests), quest];

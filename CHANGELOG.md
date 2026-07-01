@@ -1,5 +1,51 @@
 # Changelog
 
+## v0.2b — Quest Library Lite
+
+**Status:** Patch candidate.
+
+### Added
+
+- Added `Quest Library` section inside Today’s Quests.
+- Added preset quest chips for quick daily use:
+  - Korean Study — 30 minutes
+  - Logistics Review
+  - Read 10 pages
+  - Piano Practice — 20 minutes
+  - Drawing Practice
+  - Skincare Routine
+  - Drink Water
+  - Stretching
+  - Clean Desk
+  - Laundry
+  - Tidy Room
+- Library quests are added as custom quests with `source: "library"`.
+- Added duplicate-title prevention across default, custom, and library quests.
+- Duplicate presets become disabled in the library UI.
+- Added toast messages:
+  - `Quest added from library.`
+  - `Quest already added.`
+- Library-added quests can still be ticked, unticked, and deleted like normal custom quests.
+
+### Preserved
+
+- Daily History Lite from v0.2a.
+- Daily Entry Feel from v0.1d.
+- Custom Quest Basic from v0.1c.
+- Official Lantern Jelly Dormant Form asset.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Added
+
+- No editable quest library.
+- No custom user-defined library presets.
+- No recurring quests.
+- No quest difficulty.
+- No calendar or streak system.
+
+---
+
 ## v0.2a — Daily History Lite
 
 **Status:** Patch candidate.
