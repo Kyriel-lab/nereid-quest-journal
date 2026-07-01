@@ -228,6 +228,81 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
     ];
 
+    const EVOLUTION_SEALS = {
+      activeCompanion: {
+        id: "lantern-jelly",
+        name: "Lantern Jelly",
+        currentForm: "Dormant Form",
+        description: "A soft celestial guide for small daily rituals.",
+        asset: "assets/lantern-jelly-dormant.png",
+        slots: [
+          {
+            id: "lantern-jelly-dormant",
+            label: "Dormant Form",
+            status: "revealed",
+            statusLabel: "Revealed",
+            copy: "Current form",
+            asset: "assets/lantern-jelly-dormant.png",
+            hint: "Lantern Jelly is currently resting in its Dormant Form."
+          },
+          {
+            id: "lantern-jelly-stage-1",
+            label: "Sealed Stage I",
+            status: "sealed",
+            statusLabel: "Sleeping",
+            copy: "A future form sleeps behind this seal.",
+            icon: "✧",
+            hint: "This form is still sealed. Keep journaling to awaken it later."
+          },
+          {
+            id: "lantern-jelly-stage-2",
+            label: "Sealed Stage II",
+            status: "sealed",
+            statusLabel: "Sleeping",
+            copy: "The next tide of growth is hidden.",
+            icon: "✧",
+            hint: "This form is still sealed. Keep journaling to awaken it later."
+          },
+          {
+            id: "lantern-jelly-stage-3",
+            label: "Sealed Stage III",
+            status: "sealed",
+            statusLabel: "Sleeping",
+            copy: "A deeper awakening remains unrevealed.",
+            icon: "✧",
+            hint: "This form is still sealed. Keep journaling to awaken it later."
+          },
+          {
+            id: "lantern-jelly-apex",
+            label: "Apex Seal",
+            status: "apex",
+            statusLabel: "Later",
+            copy: "A distant seal beyond the current archive.",
+            icon: "☾",
+            hint: "Apex remains beyond the current archive."
+          }
+        ]
+      },
+      sealedStarters: [
+        {
+          id: "tideback",
+          name: "Tideback",
+          copy: "Forms hidden until this companion joins the journal."
+        },
+        {
+          id: "shellfin",
+          name: "Shellfin",
+          copy: "Forms hidden until this companion joins the journal."
+        },
+        {
+          id: "moon-otter",
+          name: "Moon Otter",
+          copy: "Forms hidden until this companion joins the journal."
+        }
+      ]
+    };
+
+
 
 
     let state = loadState();
@@ -283,6 +358,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statMostUsedType: document.getElementById("statMostUsedType"),
       recentStatsList: document.getElementById("recentStatsList"),
       achievementsList: document.getElementById("achievementsList"),
+      evolutionSealsList: document.getElementById("evolutionSealsList"),
       companionRegistryList: document.getElementById("companionRegistryList"),
     };
 
@@ -993,6 +1069,81 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
 
+
+    function renderEvolutionSeals() {
+      if (!elements.evolutionSealsList) {
+        return;
+      }
+
+      const active = EVOLUTION_SEALS.activeCompanion;
+      elements.evolutionSealsList.innerHTML = "";
+
+      const activeCard = document.createElement("article");
+      activeCard.className = "evolution-active-card";
+
+      const slotsMarkup = active.slots.map((slot) => {
+        const thumb = slot.asset
+          ? `<img src="${slot.asset}" alt="${active.name} ${slot.label}">`
+          : (slot.icon || "✧");
+
+        return `
+          <button class="evolution-slot ${slot.status}" type="button" data-hint="${slot.hint}">
+            <span class="evolution-slot-thumb">${thumb}</span>
+            <span class="evolution-slot-label">${slot.label}</span>
+            <span class="evolution-slot-copy">${slot.copy}</span>
+            <span class="evolution-slot-status ${slot.status}">${slot.statusLabel}</span>
+          </button>
+        `;
+      }).join("");
+
+      activeCard.innerHTML = `
+        <div class="evolution-active-header">
+          <span class="evolution-active-name"></span>
+          <span class="evolution-active-meta">Current Form: ${active.currentForm}</span>
+          <span class="evolution-active-description"></span>
+        </div>
+        <div class="evolution-slot-grid">${slotsMarkup}</div>
+      `;
+
+      activeCard.querySelector(".evolution-active-name").textContent = active.name;
+      activeCard.querySelector(".evolution-active-description").textContent = active.description;
+
+      activeCard.querySelectorAll(".evolution-slot").forEach((slotButton) => {
+        slotButton.addEventListener("click", () => {
+          const hint = slotButton.dataset.hint;
+          if (hint) {
+            showToast(hint);
+          }
+        });
+      });
+
+      elements.evolutionSealsList.appendChild(activeCard);
+
+      const sealedGrid = document.createElement("div");
+      sealedGrid.className = "sealed-starters-grid";
+
+      EVOLUTION_SEALS.sealedStarters.forEach((starter) => {
+        const starterCard = document.createElement("button");
+        starterCard.className = "sealed-starter-card";
+        starterCard.type = "button";
+        starterCard.innerHTML = `
+          <span class="sealed-starter-name"></span>
+          <span class="sealed-starter-status">Sealed Starter</span>
+          <span class="sealed-starter-copy"></span>
+        `;
+        starterCard.querySelector(".sealed-starter-name").textContent = starter.name;
+        starterCard.querySelector(".sealed-starter-copy").textContent = starter.copy;
+        starterCard.addEventListener("click", () => {
+          showToast("This companion is still sealed. It may join the journal in a later phase.");
+        });
+
+        sealedGrid.appendChild(starterCard);
+      });
+
+      elements.evolutionSealsList.appendChild(sealedGrid);
+    }
+
+
     function renderCompanionRegistry() {
       if (!elements.companionRegistryList) {
         return;
@@ -1010,7 +1161,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           : "✧";
         const assetNote = companion.asset
           ? ""
-          : `<span class="companion-asset-note">Asset pending</span>`;
+          : `<span class="companion-asset-note">Sealed</span>`;
 
         item.innerHTML = `
           <div class="companion-registry-thumb">${thumbContent}</div>
@@ -1044,6 +1195,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderHistory();
       renderStatsDashboard();
       renderAchievements();
+      renderEvolutionSeals();
       renderCompanionRegistry();
       renderReflection();
     }

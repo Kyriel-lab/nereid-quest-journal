@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.6 — Companion Evolution Seals
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a sealed Companion Evolution section.
+- Revealed only Lantern Jelly’s current Dormant Form.
+- Added sealed future slots for Lantern Jelly:
+  - Sealed Stage I
+  - Sealed Stage II
+  - Sealed Stage III
+  - Apex Seal
+- Added compact sealed starter cards for:
+  - Tideback
+  - Shellfin
+  - Moon Otter
+- Sealed slots use fantasy UI labels instead of technical `asset pending` wording.
+- Clicking sealed slots shows a light hint through the existing toast system.
+- Future forms are not revealed through images, names, silhouettes, or lore.
+
+### Preserved
+
+- Achievement Foundation from v0.5.
+- Moonlit Fragment Tracking from v0.4c.
+- Active Companion Focus from v0.4b.
+- Stats Dashboard Hotfix from v0.3a.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No resource costs.
+- No EXP/Bond/Moonlit Fragment rules.
+- No future form assets.
+- No companion switching.
+- No Apex system.
+
+---
+
 ## v0.5 — Achievement Foundation
 
 **Status:** Patch candidate.
