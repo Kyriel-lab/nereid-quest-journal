@@ -334,9 +334,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       saveButton: document.getElementById("saveButton"),
       endButton: document.getElementById("endButton"),
       resetButton: document.getElementById("resetButton"),
-      exportSaveButton: document.getElementById("exportSaveButton"),
-      importSaveButton: document.getElementById("importSaveButton"),
-      importSaveInput: document.getElementById("importSaveInput"),
       toast: document.getElementById("toast"),
       dailyEntryCard: document.getElementById("dailyEntryCard"),
       entryDateStamp: document.getElementById("entryDateStamp"),
@@ -687,8 +684,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       state.customQuests = [...normalizeCustomQuests(state.customQuests), quest];
 
       saveState("Quest added from library.");
-
-    renderAll();
+      renderAll();
     }
 
     function renderProgress(stats) {
@@ -1368,169 +1364,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       safeRender("renderReflection", () => renderReflection());
     }
 
-
-    function getSaveExportDateStamp() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-
-      return `${year}-${month}-${day}`;
-    }
-
-    function getCurrentSaveData() {
-      const rawSave = localStorage.getItem(STORAGE_KEY);
-
-      if (!rawSave) {
-        return state;
-      }
-
-      try {
-        return JSON.parse(rawSave);
-      } catch (error) {
-        console.error("[Nereid Journal] Could not parse saved data for export", error);
-        return state;
-      }
-    }
-
-    function exportSaveData() {
-      const data = getCurrentSaveData();
-
-      const payload = {
-        app: "Nereid Quest Journal",
-        saveKey: STORAGE_KEY,
-        exportedAt: new Date().toISOString(),
-        data
-      };
-
-      const json = JSON.stringify(payload, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = `nereid-quest-journal-save-${getSaveExportDateStamp()}.json`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-
-      showToast("Save exported.");
-    }
-
-    function normalizeImportedSave(parsed) {
-      const candidate = parsed?.data || parsed;
-
-      if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
-        return null;
-      }
-
-      const hasKnownData =
-        Array.isArray(candidate.quests) ||
-        Array.isArray(candidate.history) ||
-        Array.isArray(candidate.customQuests) ||
-        Array.isArray(candidate.completedQuestIds);
-
-      if (!hasKnownData) {
-        return null;
-      }
-
-      return candidate;
-    }
-
-    function importSaveData(file) {
-      if (!file) {
-        showToast("No save file selected.");
-        return;
-      }
-
-      const confirmed = window.confirm(
-        "Importing this save will replace the journal data in this browser. Continue?"
-      );
-
-      if (!confirmed) {
-        showToast("Import cancelled.");
-        return;
-      }
-
-      showToast("Reading save file...");
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        try {
-          const parsed = JSON.parse(String(reader.result || ""));
-          const importedState = normalizeImportedSave(parsed);
-
-          if (!importedState) {
-            showToast("Invalid save file.");
-            return;
-          }
-
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(importedState));
-          showToast("Save imported. Reloading journal...");
-
-          window.setTimeout(() => {
-            window.location.reload();
-          }, 650);
-        } catch (error) {
-          console.error("[Nereid Journal] Import failed", error);
-          showToast("Could not import this save.");
-        }
-      };
-
-      reader.onerror = () => {
-        console.error("[Nereid Journal] Could not read selected import file", reader.error);
-        showToast("Could not read this save file.");
-      };
-
-      reader.readAsText(file);
-    }
-
-    function bindSaveDataEvents() {
-      const exportButton = elements.exportSaveButton || document.getElementById("exportSaveButton");
-      const importButton = elements.importSaveButton || document.getElementById("importSaveButton");
-      const importInput = elements.importSaveInput || document.getElementById("importSaveInput");
-
-      if (exportButton && exportButton.dataset.boundSaveExport !== "true") {
-        exportButton.addEventListener("click", exportSaveData);
-        exportButton.dataset.boundSaveExport = "true";
-      }
-
-      if (importButton && importButton.dataset.boundSaveImport !== "true") {
-        importButton.addEventListener("click", () => {
-          if (!importInput) {
-            showToast("Import control not found.");
-            return;
-          }
-
-          importInput.value = "";
-          importInput.click();
-        });
-        importButton.dataset.boundSaveImport = "true";
-      }
-
-      if (importInput && importInput.dataset.boundSaveInput !== "true") {
-        const handleImportFileChange = (event) => {
-          const file = event.target.files && event.target.files.length > 0
-            ? event.target.files[0]
-            : null;
-
-          if (!file) {
-            showToast("No save file selected.");
-            return;
-          }
-
-          importSaveData(file);
-        };
-
-        importInput.addEventListener("change", handleImportFileChange);
-        importInput.onchange = handleImportFileChange;
-        importInput.dataset.boundSaveInput = "true";
-      }
-    }
-
-
     function toggleQuest(id) {
       const alreadyCompleted = state.completedQuestIds.includes(id);
 
@@ -1649,8 +1482,5 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     elements.saveButton.addEventListener("click", saveDay);
     elements.endButton.addEventListener("click", endDay);
     elements.resetButton.addEventListener("click", resetToday);
-    bindSaveDataEvents();
-
-
 
     renderAll();
