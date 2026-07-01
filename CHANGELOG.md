@@ -1,5 +1,51 @@
 # Changelog
 
+## v0.5 — Achievement Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a lightweight Achievements section.
+- Added 7 foundation achievements:
+  - First Ripple
+  - Seven Ripples
+  - Ritual Keeper
+  - Moonlit Collector
+  - Korean Spark
+  - Carekeeper
+  - Moonlit Note
+- Achievements are derived from Journal History, not stored separately.
+- Achievement progress now uses:
+  - Journal days
+  - Completed quests
+  - Moonlit Fragments
+  - Quest type counts
+  - Reflection entries
+- Added locked/unlocked visual states and simple progress bars.
+
+### Preserved
+
+- Moonlit Fragment Tracking from v0.4c.
+- Active Companion Focus from v0.4b.
+- Stats Dashboard Hotfix from v0.3a.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No achievement rewards.
+- No Moonlit Fragment spending.
+- No inventory.
+- No companion evolution.
+- No companion switching.
+- No monthly achievements.
+- No unlock popups or heavy animations.
+
+---
+
 ## v0.4c — Moonlit Fragment Tracking
 
 **Status:** Patch candidate.

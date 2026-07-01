@@ -169,6 +169,66 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
     ];
 
+    const ACHIEVEMENTS = [
+      {
+        id: "first-ripple",
+        name: "First Ripple",
+        description: "End your first valid journal day.",
+        target: 1,
+        icon: "✧",
+        getProgress: (stats) => stats.journalDays
+      },
+      {
+        id: "seven-ripples",
+        name: "Seven Ripples",
+        description: "Record 7 journal days.",
+        target: 7,
+        icon: "〰",
+        getProgress: (stats) => stats.journalDays
+      },
+      {
+        id: "ritual-keeper",
+        name: "Ritual Keeper",
+        description: "Complete 20 quests across your journal.",
+        target: 20,
+        icon: "✓",
+        getProgress: (stats) => stats.completedQuests
+      },
+      {
+        id: "moonlit-collector",
+        name: "Moonlit Collector",
+        description: "Earn 5 Moonlit Fragments from perfect days.",
+        target: 5,
+        icon: "☾",
+        getProgress: (stats) => stats.moonlitFragments
+      },
+      {
+        id: "korean-spark",
+        name: "Korean Spark",
+        description: "Complete 5 Study quests.",
+        target: 5,
+        icon: "文",
+        getProgress: (stats) => stats.completedTypeCounts["Study Quest"] || 0
+      },
+      {
+        id: "carekeeper",
+        name: "Carekeeper",
+        description: "Complete 5 Care quests.",
+        target: 5,
+        icon: "♡",
+        getProgress: (stats) => stats.completedTypeCounts["Care Quest"] || 0
+      },
+      {
+        id: "moonlit-note",
+        name: "Moonlit Note",
+        description: "Write 3 reflections in your journal entries.",
+        target: 3,
+        icon: "✎",
+        getProgress: (stats) => stats.reflectionEntries
+      }
+    ];
+
+
 
     let state = loadState();
 
@@ -222,6 +282,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statBestDay: document.getElementById("statBestDay"),
       statMostUsedType: document.getElementById("statMostUsedType"),
       recentStatsList: document.getElementById("recentStatsList"),
+      achievementsList: document.getElementById("achievementsList"),
       companionRegistryList: document.getElementById("companionRegistryList"),
     };
 
@@ -859,6 +920,79 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
 
+
+    function calculateAchievementStats() {
+      const history = Array.isArray(state.history) ? state.history : [];
+      const validEntries = history.filter((entry) => entry && entry.totalCount > 0);
+
+      return validEntries.reduce((acc, entry) => {
+        acc.journalDays += 1;
+        acc.completedQuests += entry.completedCount || 0;
+        acc.moonlitFragments += (entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0;
+
+        const typeCounts = entry.completedTypeCounts || {};
+        Object.keys(typeCounts).forEach((type) => {
+          acc.completedTypeCounts[type] = (acc.completedTypeCounts[type] || 0) + typeCounts[type];
+        });
+
+        const reflection = (entry.reflection || "").trim();
+        if (reflection.length > 0) {
+          acc.reflectionEntries += 1;
+        }
+
+        return acc;
+      }, {
+        journalDays: 0,
+        completedQuests: 0,
+        moonlitFragments: 0,
+        completedTypeCounts: {},
+        reflectionEntries: 0
+      });
+    }
+
+    function renderAchievements() {
+      if (!elements.achievementsList) {
+        return;
+      }
+
+      const stats = calculateAchievementStats();
+      elements.achievementsList.innerHTML = "";
+
+      ACHIEVEMENTS.forEach((achievement) => {
+        const rawProgress = achievement.getProgress(stats) || 0;
+        const cappedProgress = Math.min(rawProgress, achievement.target);
+        const unlocked = rawProgress >= achievement.target;
+        const percent = achievement.target > 0
+          ? Math.round((cappedProgress / achievement.target) * 100)
+          : 0;
+
+        const item = document.createElement("article");
+        item.className = `achievement-item ${unlocked ? "unlocked" : "locked"}`;
+
+        item.innerHTML = `
+          <div class="achievement-icon">${achievement.icon}</div>
+          <div class="achievement-info">
+            <div class="achievement-topline">
+              <span class="achievement-name"></span>
+              <span class="achievement-status">${unlocked ? "Unlocked" : "Locked"}</span>
+            </div>
+            <div class="achievement-description"></div>
+            <div class="achievement-progress">
+              <span class="achievement-progress-text">${unlocked ? "Unlocked" : `${cappedProgress} / ${achievement.target}`}</span>
+              <div class="achievement-progress-track" aria-hidden="true">
+                <div class="achievement-progress-fill" style="width: ${percent}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        item.querySelector(".achievement-name").textContent = achievement.name;
+        item.querySelector(".achievement-description").textContent = achievement.description;
+        elements.achievementsList.appendChild(item);
+      });
+    }
+
+
     function renderCompanionRegistry() {
       if (!elements.companionRegistryList) {
         return;
@@ -909,6 +1043,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderDailyEntry(stats);
       renderHistory();
       renderStatsDashboard();
+      renderAchievements();
       renderCompanionRegistry();
       renderReflection();
     }
