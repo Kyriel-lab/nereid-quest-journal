@@ -1440,27 +1440,30 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     function importSaveData(file) {
       if (!file) {
+        showToast("No save file selected.");
         return;
       }
+
+      const confirmed = window.confirm(
+        "Importing this save will replace the journal data in this browser. Continue?"
+      );
+
+      if (!confirmed) {
+        showToast("Import cancelled.");
+        return;
+      }
+
+      showToast("Reading save file...");
 
       const reader = new FileReader();
 
       reader.onload = () => {
         try {
-          const parsed = JSON.parse(reader.result);
+          const parsed = JSON.parse(String(reader.result || ""));
           const importedState = normalizeImportedSave(parsed);
 
           if (!importedState) {
             showToast("Invalid save file.");
-            return;
-          }
-
-          const confirmed = window.confirm(
-            "Importing this save will replace the journal data in this browser. Continue?"
-          );
-
-          if (!confirmed) {
-            showToast("Import cancelled.");
             return;
           }
 
@@ -1469,7 +1472,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
           window.setTimeout(() => {
             window.location.reload();
-          }, 450);
+          }, 650);
         } catch (error) {
           console.error("[Nereid Journal] Import failed", error);
           showToast("Could not import this save.");
@@ -1477,7 +1480,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       };
 
       reader.onerror = () => {
-        showToast("Could not import this save.");
+        console.error("[Nereid Journal] Could not read selected import file", reader.error);
+        showToast("Could not read this save file.");
       };
 
       reader.readAsText(file);
@@ -1495,17 +1499,33 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (importButton && importButton.dataset.boundSaveImport !== "true") {
         importButton.addEventListener("click", () => {
-          importInput?.click();
+          if (!importInput) {
+            showToast("Import control not found.");
+            return;
+          }
+
+          importInput.value = "";
+          importInput.click();
         });
         importButton.dataset.boundSaveImport = "true";
       }
 
       if (importInput && importInput.dataset.boundSaveInput !== "true") {
-        importInput.addEventListener("change", (event) => {
-          const [file] = event.target.files || [];
+        const handleImportFileChange = (event) => {
+          const file = event.target.files && event.target.files.length > 0
+            ? event.target.files[0]
+            : null;
+
+          if (!file) {
+            showToast("No save file selected.");
+            return;
+          }
+
           importSaveData(file);
-          event.target.value = "";
-        });
+        };
+
+        importInput.addEventListener("change", handleImportFileChange);
+        importInput.onchange = handleImportFileChange;
         importInput.dataset.boundSaveInput = "true";
       }
     }
@@ -1630,6 +1650,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     elements.endButton.addEventListener("click", endDay);
     elements.resetButton.addEventListener("click", resetToday);
     bindSaveDataEvents();
+
 
 
     renderAll();

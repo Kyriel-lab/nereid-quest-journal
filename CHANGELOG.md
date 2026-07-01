@@ -1,5 +1,42 @@
 # Changelog
 
+## v0.8b — Import File Change Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Import Save appearing to do nothing after selecting a file.
+- Reset the hidden file input before opening the picker so selecting the same file can trigger import again.
+- Added immediate import feedback:
+  - `No save file selected.`
+  - `Reading save file...`
+  - `Invalid save file.`
+  - `Could not read this save file.`
+  - `Save imported. Reloading journal...`
+- Moved overwrite confirmation earlier in the import flow so a valid file selection is visibly acknowledged.
+- Bound file input import handling through both `addEventListener("change", ...)` and `onchange` fallback.
+
+### Preserved
+
+- Save Data Safety Foundation from v0.8.
+- Save Data Button Bind Hotfix from v0.8a.
+- Evolution I Render Hotfix from v0.7d.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No save format changes.
+- No save merge.
+- No localStorage migration.
+- No gameplay changes.
+- No evolution changes.
+- No asset changes.
+
+---
+
 ## v0.8a — Save Data Button Bind Hotfix
 
 **Status:** Patch candidate.
