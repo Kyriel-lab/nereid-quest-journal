@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nereid Quest Journal v0.2e</title>
+  <title>Nereid Quest Journal v0.3</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -132,6 +132,77 @@
           <div class="entry-reflection empty" id="entryReflectionText">No reflection written yet.</div>
         </section>
 
+          <section class="card stats-card" aria-label="Stats dashboard">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">Progress archive</p>
+                <h2>Stats Dashboard</h2>
+                <p>Your journal progress across completed days.</p>
+              </div>
+            </div>
+
+            <div id="statsEmptyState" class="stats-empty-state">
+              <div class="stats-empty-mark">✧</div>
+              <strong>No stats yet.</strong>
+              <span>End a day with at least one quest to start tracking your progress.</span>
+            </div>
+
+            <div id="statsContent" class="stats-content" hidden>
+              <div class="stats-grid">
+                <article class="stat-tile">
+                  <span class="stat-label">Journal Days</span>
+                  <strong id="statJournalDays" class="stat-value">0</strong>
+                  <span class="stat-note">completed entries</span>
+                </article>
+
+                <article class="stat-tile">
+                  <span class="stat-label">Completed Quests</span>
+                  <strong id="statCompletedQuests" class="stat-value">0</strong>
+                  <span class="stat-note">small rituals done</span>
+                </article>
+
+                <article class="stat-tile">
+                  <span class="stat-label">Total Bond</span>
+                  <strong id="statTotalBond" class="stat-value">0</strong>
+                  <span class="stat-note">bond earned</span>
+                </article>
+
+                <article class="stat-tile">
+                  <span class="stat-label">Total EXP</span>
+                  <strong id="statTotalExp" class="stat-value">0</strong>
+                  <span class="stat-note">EXP earned</span>
+                </article>
+
+                <article class="stat-tile">
+                  <span class="stat-label">Average Completion</span>
+                  <strong id="statAverageCompletion" class="stat-value">0%</strong>
+                  <span class="stat-note">across history</span>
+                </article>
+
+                <article class="stat-tile">
+                  <span class="stat-label">Best Day</span>
+                  <strong id="statBestDay" class="stat-value stat-value-small">—</strong>
+                  <span class="stat-note">highest completion</span>
+                </article>
+
+                <article class="stat-tile stat-tile-wide">
+                  <span class="stat-label">Most Used Quest Type</span>
+                  <strong id="statMostUsedType" class="stat-value stat-value-small">—</strong>
+                  <span class="stat-note">from completed quests</span>
+                </article>
+              </div>
+
+              <div class="recent-stats-panel">
+                <div class="recent-stats-header">
+                  <span>Recent 7-Day Snapshot</span>
+                  <small>completed / total / rate</small>
+                </div>
+                <div id="recentStatsList" class="recent-stats-list"></div>
+              </div>
+            </div>
+          </section>
+
+
         <section class="card history-card" id="historyCard" aria-label="Journal history">
           <div class="card-header">
             <div class="heading-wrap">
@@ -237,7 +308,7 @@
       </div>
     </section>
 
-    <p class="footer-note">v0.2e Flexible Daily Start · Official Lantern Jelly Asset · Stored locally in this browser</p>
+    <p class="footer-note">v0.3 Stats Dashboard Foundation · Official Lantern Jelly Asset · Stored locally in this browser</p>
   </main>
   <script src="script.js"></script>
 </body>

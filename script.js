@@ -170,7 +170,17 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       historyCard: document.getElementById("historyCard"),
       historyCountBadge: document.getElementById("historyCountBadge"),
       historyEmpty: document.getElementById("historyEmpty"),
-      historyList: document.getElementById("historyList")
+      historyList: document.getElementById("historyList"),
+      statsEmptyState: document.getElementById("statsEmptyState"),
+      statsContent: document.getElementById("statsContent"),
+      statJournalDays: document.getElementById("statJournalDays"),
+      statCompletedQuests: document.getElementById("statCompletedQuests"),
+      statTotalBond: document.getElementById("statTotalBond"),
+      statTotalExp: document.getElementById("statTotalExp"),
+      statAverageCompletion: document.getElementById("statAverageCompletion"),
+      statBestDay: document.getElementById("statBestDay"),
+      statMostUsedType: document.getElementById("statMostUsedType"),
+      recentStatsList: document.getElementById("recentStatsList"),
     };
 
     function getTodayKey() {
@@ -570,6 +580,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         readableDate: getReadableDate(),
         completedCount: stats.completedCount,
         totalCount: stats.totalCount,
+        completionPercent: stats.totalCount > 0 ? Math.round((stats.completedCount / stats.totalCount) * 100) : 0,
+        completedTypeCounts: getCompletedTypeCounts(stats),
         progress: stats.progress,
         bond: stats.bond,
         exp: stats.exp,
@@ -578,6 +590,152 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         endedAt: new Date().toISOString()
       };
     }
+
+
+    function getCompletedTypeCounts(stats) {
+      return stats.allQuests.reduce((counts, quest) => {
+        if (!state.completedQuestIds.includes(quest.id)) {
+          return counts;
+        }
+
+        counts[quest.type] = (counts[quest.type] || 0) + 1;
+        return counts;
+      }, {});
+    }
+
+    function getCompletionPercent(entry) {
+      if (!entry || !entry.totalCount) {
+        return 0;
+      }
+
+      if (typeof entry.completionPercent === "number") {
+        return entry.completionPercent;
+      }
+
+      return Math.round((entry.completedCount / entry.totalCount) * 100);
+    }
+
+    function calculateLongTermStats() {
+      const history = Array.isArray(state.history) ? state.history : [];
+      const validEntries = history.filter((entry) => entry && entry.totalCount > 0);
+
+      if (validEntries.length === 0) {
+        return {
+          hasStats: false,
+          journalDays: 0,
+          completedQuests: 0,
+          totalBond: 0,
+          totalExp: 0,
+          averageCompletion: 0,
+          bestDay: null,
+          mostUsedType: "Not enough data yet",
+          recentEntries: []
+        };
+      }
+
+      const totals = validEntries.reduce((acc, entry) => {
+        const completionPercent = getCompletionPercent(entry);
+
+        acc.completedQuests += entry.completedCount || 0;
+        acc.totalBond += entry.bond || 0;
+        acc.totalExp += entry.exp || 0;
+        acc.completionSum += completionPercent;
+
+        const typeCounts = entry.completedTypeCounts || {};
+        Object.keys(typeCounts).forEach((type) => {
+          acc.typeCounts[type] = (acc.typeCounts[type] || 0) + typeCounts[type];
+        });
+
+        if (
+          !acc.bestDay ||
+          completionPercent > acc.bestDay.completionPercent ||
+          (completionPercent === acc.bestDay.completionPercent && entry.dateKey > acc.bestDay.dateKey)
+        ) {
+          acc.bestDay = {
+            dateKey: entry.dateKey,
+            displayDate: entry.displayDate || entry.dateKey,
+            completionPercent
+          };
+        }
+
+        return acc;
+      }, {
+        completedQuests: 0,
+        totalBond: 0,
+        totalExp: 0,
+        completionSum: 0,
+        typeCounts: {},
+        bestDay: null
+      });
+
+      const typeEntries = Object.entries(totals.typeCounts)
+        .filter(([, count]) => count > 0)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+      const mostUsedType = typeEntries.length > 0
+        ? typeEntries[0][0]
+        : "Not enough data yet";
+
+      const recentEntries = validEntries.slice(0, 7).map((entry) => ({
+        dateKey: entry.dateKey,
+        displayDate: entry.displayDate || entry.dateKey,
+        completedCount: entry.completedCount || 0,
+        totalCount: entry.totalCount || 0,
+        completionPercent: getCompletionPercent(entry)
+      }));
+
+      return {
+        hasStats: true,
+        journalDays: validEntries.length,
+        completedQuests: totals.completedQuests,
+        totalBond: totals.totalBond,
+        totalExp: totals.totalExp,
+        averageCompletion: Math.round(totals.completionSum / validEntries.length),
+        bestDay: totals.bestDay,
+        mostUsedType,
+        recentEntries
+      };
+    }
+
+    function renderStatsDashboard() {
+      if (!elements.statsEmptyState || !elements.statsContent) {
+        return;
+      }
+
+      const stats = calculateLongTermStats();
+
+      elements.statsEmptyState.hidden = stats.hasStats;
+      elements.statsContent.hidden = !stats.hasStats;
+
+      if (!stats.hasStats) {
+        return;
+      }
+
+      elements.statJournalDays.textContent = stats.journalDays;
+      elements.statCompletedQuests.textContent = stats.completedQuests;
+      elements.statTotalBond.textContent = stats.totalBond;
+      elements.statTotalExp.textContent = stats.totalExp;
+      elements.statAverageCompletion.textContent = `${stats.averageCompletion}%`;
+      elements.statBestDay.textContent = stats.bestDay
+        ? `${stats.bestDay.displayDate} — ${stats.bestDay.completionPercent}%`
+        : "—";
+      elements.statMostUsedType.textContent = stats.mostUsedType;
+
+      elements.recentStatsList.innerHTML = "";
+
+      stats.recentEntries.forEach((entry) => {
+        const row = document.createElement("div");
+        row.className = "recent-stats-row";
+        row.innerHTML = `
+          <span class="recent-stats-date"></span>
+          <span class="recent-stats-count">${entry.completedCount}/${entry.totalCount}</span>
+          <span class="recent-stats-rate">${entry.completionPercent}%</span>
+        `;
+        row.querySelector(".recent-stats-date").textContent = entry.displayDate;
+        elements.recentStatsList.appendChild(row);
+      });
+    }
+
 
     function upsertTodayHistoryEntry(stats) {
       const entry = createHistoryEntry(stats);
@@ -648,6 +806,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderReward(stats);
       renderDailyEntry(stats);
       renderHistory();
+      renderStatsDashboard();
       renderReflection();
     }
 

@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.3 — Stats Dashboard Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a Stats Dashboard based on Journal History.
+- Added long-term progress metrics:
+  - Journal Days
+  - Completed Quests
+  - Total Bond
+  - Total EXP
+  - Average Completion
+  - Best Day
+  - Most Used Quest Type
+- Added a Recent 7-Day Snapshot based on the latest history entries.
+- Added an empty stats state when there is no Journal History yet.
+- Extended new history entries with:
+  - `completionPercent`
+  - `completedTypeCounts`
+- Preserved backward compatibility for older history entries without type-count data.
+
+### Preserved
+
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Desktop Daily Use Polish from v0.2c.
+- Quest Library duplicate prevention from v0.2b.
+- Daily History Lite from v0.2a.
+- Daily Entry Feel from v0.1d.
+- Existing app logic and `localStorage` key:
+  - `nereidQuestJournal_v01`
+- Official Lantern Jelly Dormant Form asset.
+
+### Not Changed
+
+- No achievements.
+- No companion registry.
+- No evolution system.
+- No charts.
+- No calendar, cloud sync, or export/import.
+
+---
+
 ## v0.2e — Flexible Daily Start
 
 **Status:** Patch candidate.
