@@ -326,6 +326,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
       companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
       bondValue: document.getElementById("bondValue"),
+      expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
       rewardCopy: document.getElementById("rewardCopy"),
       rewardStatus: document.getElementById("rewardStatus"),
@@ -340,6 +341,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       entryStatusCopy: document.getElementById("entryStatusCopy"),
       entryQuestSummary: document.getElementById("entryQuestSummary"),
       entryBondSummary: document.getElementById("entryBondSummary"),
+      entryExpSummary: document.getElementById("entryExpSummary"),
       entryRewardChip: document.getElementById("entryRewardChip"),
       entryRewardSummary: document.getElementById("entryRewardSummary"),
       entryReflectionText: document.getElementById("entryReflectionText"),
@@ -353,6 +355,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       statCompletedQuests: document.getElementById("statCompletedQuests"),
       statMoonlitFragments: document.getElementById("statMoonlitFragments"),
       statTotalBond: document.getElementById("statTotalBond"),
+      statTotalExp: document.getElementById("statTotalExp"),
       statAverageCompletion: document.getElementById("statAverageCompletion"),
       statBestDay: document.getElementById("statBestDay"),
       statMostUsedType: document.getElementById("statMostUsedType"),
@@ -712,6 +715,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.moodBadge.textContent = stats.mood;
       elements.companionMood.textContent = stats.mood;
       elements.bondValue.textContent = stats.bond;
+      if (elements.expValue) {
+
+        elements.expValue.textContent = stats.exp;
+
+      }
 
       if (elements.companionCurrentForm) {
         elements.companionCurrentForm.textContent = "Dormant Form · Revealed";
@@ -752,6 +760,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.entryDateStamp.textContent = getReadableDate();
       elements.entryQuestSummary.textContent = `${stats.completedCount} / ${stats.totalCount}`;
       elements.entryBondSummary.textContent = `+${stats.bond}`;
+      if (elements.entryExpSummary) {
+
+        elements.entryExpSummary.textContent = `+${stats.exp}`;
+
+      }
       elements.entryRewardSummary.textContent = stats.rewardUnlocked ? "Unlocked" : "Locked";
       elements.entryRewardChip.classList.toggle("reward-unlocked", stats.rewardUnlocked);
 
@@ -935,6 +948,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       elements.statCompletedQuests.textContent = stats.completedQuests;
       elements.statMoonlitFragments.textContent = stats.moonlitFragments;
       elements.statTotalBond.textContent = stats.totalBond;
+      if (elements.statTotalExp) {
+
+        elements.statTotalExp.textContent = stats.totalExp;
+
+      }
       elements.statAverageCompletion.textContent = `${stats.averageCompletion}%`;
       elements.statBestDay.textContent = stats.bestDay
         ? `${stats.bestDay.displayDate || stats.bestDay.dateKey || "Today"} — ${stats.bestDay.completionPercent}%`
@@ -996,7 +1014,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           <div class="history-meta">
             <span>${entry.completedCount} / ${entry.totalCount} quests</span>
             <span>+${entry.bond} Bond</span>
-            <span></span>
+            <span>+${entry.exp} Bond</span>
           </div>
           <p class="history-reflection${entry.reflection ? "" : " empty"}"></p>
         `;
@@ -1206,21 +1224,30 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
 
+
+    function safeRender(renderName, renderTask) {
+      try {
+        renderTask();
+      } catch (error) {
+        console.error(`[Nereid Journal] ${renderName} render failed`, error);
+      }
+    }
+
     function renderAll() {
       const stats = calculateStats();
-      renderHeader();
-      renderQuests(stats);
-      renderQuestLibrary();
-      renderProgress(stats);
-      renderCompanion(stats);
-      renderReward(stats);
-      renderDailyEntry(stats);
-      renderHistory();
-      renderStatsDashboard();
-      renderAchievements();
-      renderEvolutionSeals();
-      renderCompanionRegistry();
-      renderReflection();
+      safeRender("renderHeader", () => renderHeader());
+      safeRender("renderQuests", () => renderQuests(stats));
+      safeRender("renderQuestLibrary", () => renderQuestLibrary());
+      safeRender("renderProgress", () => renderProgress(stats));
+      safeRender("renderCompanion", () => renderCompanion(stats));
+      safeRender("renderReward", () => renderReward(stats));
+      safeRender("renderDailyEntry", () => renderDailyEntry(stats));
+      safeRender("renderHistory", () => renderHistory());
+      safeRender("renderStatsDashboard", () => renderStatsDashboard());
+      safeRender("renderAchievements", () => renderAchievements());
+      safeRender("renderEvolutionSeals", () => renderEvolutionSeals());
+      safeRender("renderCompanionRegistry", () => renderCompanionRegistry());
+      safeRender("renderReflection", () => renderReflection());
     }
 
     function toggleQuest(id) {

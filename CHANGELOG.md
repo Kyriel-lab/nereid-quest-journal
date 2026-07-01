@@ -1,5 +1,40 @@
 # Changelog
 
+## v0.7a — Restore Dashboard Render Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Restored the dynamic render chain after v0.7.
+- Prevented one render block from stopping Stats, Achievements, or Companion Evolution.
+- Added guarded rendering for removed EXP UI targets.
+- Kept EXP hidden from the visible core UI while preserving safe fallback behavior.
+
+### Preserved
+
+- Remove EXP Foundation from v0.7:
+  - Skill Quest: `+8 Bond`
+  - Home Quest: `+5 Bond`
+  - No visible EXP row/card in Companion or Stats UI
+- Active Companion Card Polish from v0.6b.
+- Companion Evolution Seals Render Hotfix from v0.6a.
+- Companion Evolution Seals from v0.6.
+- Achievement Foundation from v0.5.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No companion switching.
+- No Stage I requirement UI.
+- No localStorage migration.
+- No future form reveal.
+
+---
+
 ## v0.7 — Remove EXP Foundation
 
 **Status:** Patch candidate.
