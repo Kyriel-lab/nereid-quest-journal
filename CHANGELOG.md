@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.9c — Awakened State Polish
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished post-awakening copy for Lantern Jelly Evolution I.
+- Active Companion card now updates its role copy after Evolution I awakens:
+  - `Evolution I · A newly awakened lantern spirit, glowing with deeper ritual light.`
+- Dormant Form slot now clarifies its archived status after awakening:
+  - `Previous form archived.`
+- Evolution I awakened slot now clarifies that art is pending:
+  - `A new form has surfaced from the lantern light. Image pending future asset pass.`
+- Evolution II slot now hints that it requires a future ritual after Evolution I awakens:
+  - `Requires a future ritual.`
+- Added light CSS polish for awakened slot readability.
+
+### Preserved
+
+- Current Form Meta Hotfix from v0.9b-ui.
+- Evolution I Awakening Ritual from v0.9b.
+- Fragment Ledger Visibility Hotfix from v0.9a-ui.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No ritual logic changes.
+- No fragment logic changes.
+- No companion evolution state changes.
+- No Evolution I image reveal.
+- No new asset integration.
+- No Evolution II requirement logic.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.9b-ui — Current Form Meta Hotfix
 
 **Status:** Patch candidate.

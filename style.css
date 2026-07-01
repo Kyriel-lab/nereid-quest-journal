@@ -2484,4 +2484,18 @@
   outline-offset: 2px;
 }
 
+/* v0.9c — Awakened State Polish */
+.companion-role {
+  transition: color 160ms ease, opacity 160ms ease;
+}
+
+.evolution-slot.awakened .evolution-slot-copy {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.evolution-slot.awakened .evolution-slot-thumb {
+  box-shadow: 0 0 0 3px rgba(170, 131, 46, 0.14);
+}
+
 

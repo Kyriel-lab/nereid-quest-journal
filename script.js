@@ -322,6 +322,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       feedbackText: document.getElementById("feedbackText"),
       moodBadge: document.getElementById("moodBadge"),
       companionMood: document.getElementById("companionMood"),
+      companionRole: document.querySelector(".companion-role"),
       companionCurrentForm: document.getElementById("companionCurrentForm"),
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
       companionEvolutionHint: document.getElementById("companionEvolutionHint"),
@@ -821,6 +822,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         elements.companionCurrentForm.textContent = evolutionIUnlocked
           ? "Evolution I · Awakened"
           : "Dormant Form · Revealed";
+      }
+
+      if (elements.companionRole) {
+        elements.companionRole.textContent = evolutionIUnlocked
+          ? "Evolution I · A newly awakened lantern spirit, glowing with deeper ritual light."
+          : "Dormant Form · A small lantern-like jelly companion that glows brighter when daily rituals are completed.";
       }
 
       const evolutionIProgress = getEvolutionIProgress(stats);
@@ -1367,13 +1374,22 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           ? (evolutionIUnlocked ? "Awakened" : (evolutionIProgress.ready ? "Ready" : slot.statusLabel))
           : slot.statusLabel;
         const slotLabel = isEvolutionI && evolutionIUnlocked ? "Evolution I" : slot.label;
+        const isEvolutionII = slot.id === "lantern-jelly-stage-2";
         const slotCopy = isEvolutionI && evolutionIUnlocked
-          ? "A new form has surfaced from the lantern light."
-          : slot.copy;
+          ? "A new form has surfaced from the lantern light. Image pending future asset pass."
+          : (
+              isDormant && evolutionIUnlocked
+                ? "Previous form archived."
+                : (
+                    isEvolutionII && evolutionIUnlocked
+                      ? "Requires a future ritual."
+                      : slot.copy
+                  )
+            );
         const hint = isEvolutionI
           ? (
               evolutionIUnlocked
-                ? "Evolution I has awakened. Its image will be added in a later asset pass."
+                ? "Evolution I has awakened. Image pending future asset pass."
                 : (
                     evolutionIProgress.ready
                       ? "Evolution I is ready. Awakening ritual can begin."
