@@ -1,5 +1,53 @@
 # Changelog
 
+## v1.3 — Evolution II Awakening Ritual
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added guarded Evolution II awakening ritual.
+- Added:
+  - `isLanternJellyEvolutionIIUnlocked()`
+  - `canAwakenEvolutionII()`
+  - `awakenEvolutionII()`
+- Evolution II ritual appears only when all Evolution II signs are aligned.
+- The second ritual:
+  - confirms before action
+  - spends 5 available Moonlit Fragments through the existing spend ledger
+  - unlocks `evolution-2`
+  - sets Lantern Jelly current form to `evolution-2`
+- Active Companion card can now show:
+  - `Evolution II · Awakened`
+  - `Evolution III sleeping`
+- Evolution II slot can now show:
+  - `Evolution II`
+  - `Awakened`
+  - `A deeper lantern has opened within the current. Image pending future asset pass.`
+- Evolution III remains sealed with:
+  - `The third lantern remains sealed.`
+
+### Preserved
+
+- Evolution II Requirement Signs from v1.2.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution II image reveal.
+- No Evolution II asset integration.
+- No Evolution III requirement logic.
+- No Evolution I ritual logic changes.
+- No fragment earning logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.2 — Evolution II Requirement Signs
 
 **Status:** Patch candidate.
