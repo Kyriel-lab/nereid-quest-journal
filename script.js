@@ -1109,7 +1109,61 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
 
 
-    function renderEvolutionSeals() {
+
+    const EVOLUTION_I_REQUIREMENTS = {
+      bond: 150,
+      moonlitFragments: 3,
+      achievementId: "first-ripple"
+    };
+
+    function getAchievementState(achievementId) {
+      const achievements = getAchievements();
+
+      return achievements.find((achievement) => achievement.id === achievementId) || null;
+    }
+
+    function getEvolutionIProgress(stats) {
+      const bond = Math.max(0, stats?.bond || 0);
+      const moonlitFragments = getMoonlitFragmentTotal();
+      const firstRipple = getAchievementState(EVOLUTION_I_REQUIREMENTS.achievementId);
+      const firstRippleUnlocked = Boolean(firstRipple?.unlocked);
+
+      return {
+        bond,
+        bondRequired: EVOLUTION_I_REQUIREMENTS.bond,
+        bondReady: bond >= EVOLUTION_I_REQUIREMENTS.bond,
+        moonlitFragments,
+        moonlitFragmentsRequired: EVOLUTION_I_REQUIREMENTS.moonlitFragments,
+        moonlitFragmentsReady: moonlitFragments >= EVOLUTION_I_REQUIREMENTS.moonlitFragments,
+        firstRippleUnlocked,
+        ready:
+          bond >= EVOLUTION_I_REQUIREMENTS.bond &&
+          moonlitFragments >= EVOLUTION_I_REQUIREMENTS.moonlitFragments &&
+          firstRippleUnlocked
+      };
+    }
+
+    function createAwakeningSignsMarkup(progress) {
+      return `
+        <div class="awakening-signs" aria-label="Evolution I awakening signs">
+          <span class="awakening-signs-title">Awakening Signs</span>
+          <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
+            <span>Bond</span>
+            <strong>${progress.bond} / ${progress.bondRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
+            <span>Moonlit Fragments</span>
+            <strong>${progress.moonlitFragments} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.firstRippleUnlocked ? "complete" : ""}">
+            <span>First Ripple</span>
+            <strong>${progress.firstRippleUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+        </div>
+      `;
+    }
+
+    function renderEvolutionSeals(stats = getStats()) {
       const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
 
       if (!evolutionSealsList) {
@@ -1122,17 +1176,31 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       const activeCard = document.createElement("article");
       activeCard.className = "evolution-active-card";
 
+      const evolutionIProgress = getEvolutionIProgress(stats);
+
       const slotsMarkup = active.slots.map((slot) => {
+        const isEvolutionI = slot.id === "lantern-jelly-stage-1";
+        const slotStatus = isEvolutionI && evolutionIProgress.ready ? "ready" : slot.status;
+        const statusLabel = isEvolutionI && evolutionIProgress.ready ? "Ready" : slot.statusLabel;
+        const hint = isEvolutionI
+          ? (
+              evolutionIProgress.ready
+                ? "Evolution I is ready to awaken. The awakening ritual will be added later."
+                : "Evolution I is still sleeping. Follow its Awakening Signs to prepare the seal."
+            )
+          : slot.hint;
+        const awakeningMarkup = isEvolutionI ? createAwakeningSignsMarkup(evolutionIProgress) : "";
         const thumb = slot.asset
           ? `<img src="${slot.asset}" alt="${active.name} ${slot.label}">`
           : (slot.icon || "✧");
 
         return `
-          <button class="evolution-slot ${slot.status}" type="button" data-hint="${slot.hint}">
+          <button class="evolution-slot ${slotStatus}" type="button" data-hint="${hint}">
             <span class="evolution-slot-thumb">${thumb}</span>
             <span class="evolution-slot-label">${slot.label}</span>
             <span class="evolution-slot-copy">${slot.copy}</span>
-            <span class="evolution-slot-status ${slot.status}">${slot.statusLabel}</span>
+            ${awakeningMarkup}
+            <span class="evolution-slot-status ${slotStatus}">${statusLabel}</span>
           </button>
         `;
       }).join("");

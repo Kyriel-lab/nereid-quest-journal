@@ -1,5 +1,46 @@
 # Changelog
 
+## v0.7c — Evolution I Awakening Signs UI
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added Awakening Signs progress to Sealed Evolution I.
+- Evolution I now checks:
+  - Bond: `150`
+  - Moonlit Fragments: `3`
+  - Achievement: `First Ripple`
+- Sealed Evolution I can show:
+  - `Sleeping` when requirements are incomplete
+  - `Ready` when all Awakening Signs are complete
+- Updated Evolution I click hints:
+  - Sleeping: follow Awakening Signs
+  - Ready: awakening ritual will be added later
+- Active Companion card can show `Evolution I ready` when the seal is prepared.
+
+### Preserved
+
+- Evolution Wording Alignment from v0.7b.
+- Restore Dashboard Render Hotfix from v0.7a.
+- Remove EXP Foundation from v0.7.
+- Active Companion Card Polish from v0.6b.
+- Companion Evolution Seals from v0.6.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No Evolution I image reveal.
+- No Moonlit Fragment consumption.
+- No Evolution II / III / Apex Crest requirement UI.
+- No asset renaming.
+- No localStorage migration.
+
+---
+
 ## v0.7b — Evolution Wording Alignment
 
 **Status:** Patch candidate.

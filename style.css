@@ -2332,4 +2332,56 @@
   }
 }
 
+/* v0.7c — Evolution I Awakening Signs UI */
+.awakening-signs {
+  display: grid;
+  gap: 6px;
+  margin-top: 2px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(216, 226, 223, 0.62);
+}
+
+.awakening-signs-title {
+  color: var(--deep-tide);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.awakening-sign {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.awakening-sign strong {
+  color: var(--deep-tide);
+  font-size: 0.76rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.awakening-sign.complete strong {
+  color: #6d4a00;
+}
+
+.evolution-slot.ready {
+  border-style: solid;
+  border-color: rgba(215, 168, 79, 0.42);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(215, 168, 79, 0.16), transparent 8rem),
+    rgba(255, 253, 247, 0.78);
+}
+
+.evolution-slot-status.ready {
+  color: #6d4a00;
+  border-color: rgba(215, 168, 79, 0.38);
+  background: rgba(255, 243, 213, 0.78);
+}
+
 
