@@ -1249,7 +1249,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
           </span>
           <span class="awakening-ledger">
-            Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
+            Available ${progress.moonlitFragmentsAvailable} · Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
           </span>
           <span class="awakening-sign ${progress.firstRippleUnlocked ? "complete" : ""}">
             <span>First Ripple</span>

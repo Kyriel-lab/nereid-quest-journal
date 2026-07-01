@@ -1,5 +1,39 @@
 # Changelog
 
+## v0.9a-ui — Fragment Ledger Visibility Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Made the Moonlit Fragment ledger line visible inside Evolution I Awakening Signs.
+- Updated ledger copy from:
+  - `Earned X · Spent Y`
+- To:
+  - `Available X · Earned Y · Spent Z`
+- Added full-width styling so the ledger line does not disappear in the narrow Evolution I slot.
+
+### Preserved
+
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Evolution I Render Hotfix from v0.7d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolve button.
+- No Awakening Ritual action.
+- No Moonlit Fragment spending action yet.
+- No Evolution I unlock state.
+- No Evolution I image reveal.
+- No asset changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.9a — Moonlit Fragment Spend Ledger
 
 **Status:** Patch candidate.
