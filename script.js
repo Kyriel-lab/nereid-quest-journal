@@ -687,7 +687,6 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       state.customQuests = [...normalizeCustomQuests(state.customQuests), quest];
 
       saveState("Quest added from library.");
-      bindSaveDataEvents();
 
     renderAll();
     }
@@ -1485,18 +1484,32 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     function bindSaveDataEvents() {
-      elements.exportSaveButton?.addEventListener("click", exportSaveData);
+      const exportButton = elements.exportSaveButton || document.getElementById("exportSaveButton");
+      const importButton = elements.importSaveButton || document.getElementById("importSaveButton");
+      const importInput = elements.importSaveInput || document.getElementById("importSaveInput");
 
-      elements.importSaveButton?.addEventListener("click", () => {
-        elements.importSaveInput?.click();
-      });
+      if (exportButton && exportButton.dataset.boundSaveExport !== "true") {
+        exportButton.addEventListener("click", exportSaveData);
+        exportButton.dataset.boundSaveExport = "true";
+      }
 
-      elements.importSaveInput?.addEventListener("change", (event) => {
-        const [file] = event.target.files || [];
-        importSaveData(file);
-        event.target.value = "";
-      });
+      if (importButton && importButton.dataset.boundSaveImport !== "true") {
+        importButton.addEventListener("click", () => {
+          importInput?.click();
+        });
+        importButton.dataset.boundSaveImport = "true";
+      }
+
+      if (importInput && importInput.dataset.boundSaveInput !== "true") {
+        importInput.addEventListener("change", (event) => {
+          const [file] = event.target.files || [];
+          importSaveData(file);
+          event.target.value = "";
+        });
+        importInput.dataset.boundSaveInput = "true";
+      }
     }
+
 
     function toggleQuest(id) {
       const alreadyCompleted = state.completedQuestIds.includes(id);
@@ -1616,5 +1629,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     elements.saveButton.addEventListener("click", saveDay);
     elements.endButton.addEventListener("click", endDay);
     elements.resetButton.addEventListener("click", resetToday);
+    bindSaveDataEvents();
+
 
     renderAll();

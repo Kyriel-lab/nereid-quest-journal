@@ -1,5 +1,36 @@
 # Changelog
 
+## v0.8a — Save Data Button Bind Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Save Data buttons not responding after v0.8.
+- Bound `Export Save` and `Import Save` controls explicitly after the app event listeners are attached.
+- Made save-data button binding idempotent to prevent duplicate listeners.
+- Added direct DOM fallbacks for save-data controls.
+
+### Preserved
+
+- Save Data Safety Foundation from v0.8.
+- Evolution I Render Hotfix from v0.7d.
+- Evolution I Awakening Signs UI from v0.7c.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No save format changes.
+- No save merge.
+- No localStorage migration.
+- No gameplay changes.
+- No evolution changes.
+- No asset changes.
+
+---
+
 ## v0.8 — Save Data Safety Foundation
 
 **Status:** Patch candidate.
