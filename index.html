@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nereid Quest Journal v0.2-dev</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-progress-level="0">
+  <div class="ambient-orb orb-one" aria-hidden="true"></div>
+  <div class="ambient-orb orb-two" aria-hidden="true"></div>
+  <div class="ambient-orb orb-three" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <section class="topbar" aria-label="Journal header">
+      <div class="hero-card">
+        <div class="eyebrow">✦ Daily Quest Board</div>
+        <h1 class="hero-title">Nereid Quest Journal</h1>
+        <p class="hero-copy">Welcome back, Kyriel. Small rituals still count.</p>
+        <div class="soft-divider">A quiet board for today’s tide</div>
+      </div>
+
+      <aside class="date-card">
+        <div>
+          <small>Today</small>
+          <div class="date-text" id="dateText">Wednesday, July 1</div>
+        </div>
+        <div class="season-pill">Nereid Season · <span id="questCountText">4 quests</span></div>
+      </aside>
+    </section>
+
+    <section class="layout">
+      <div class="column left-column">
+        <section class="card primary-card" aria-label="Today's quests">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark">☾</span>
+              <div>
+                <h2 class="card-title">Today’s Quests</h2>
+                <p class="card-subtitle">Complete your small rituals today.</p>
+              </div>
+            </div>
+            <span class="mini-badge" id="questsWaitingText">4 waiting</span>
+          </div>
+
+          <div class="quest-list" id="questList"></div>
+
+          <div class="add-quest-panel" aria-label="Add a custom quest">
+            <div class="add-quest-title">Add a small quest</div>
+            <div class="add-quest-form">
+              <input id="customQuestInput" class="quest-input" type="text" maxlength="80" placeholder="Add a small quest..." />
+              <select id="customQuestType" class="quest-select" aria-label="Quest type">
+                <option value="Study Quest">Study Quest</option>
+                <option value="Skill Quest">Skill Quest</option>
+                <option value="Care Quest">Care Quest</option>
+                <option value="Home Quest">Home Quest</option>
+              </select>
+              <button id="addQuestButton" class="add-quest-button" type="button">Add Quest</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card support-card" aria-label="Daily reflection">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark">✎</span>
+              <div>
+                <h2 class="card-title">Daily Reflection</h2>
+                <p class="card-subtitle">How did today feel?</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="journal-field-wrap">
+            <textarea id="reflectionInput" placeholder="Write a short note..."></textarea>
+          </div>
+
+          <div class="actions">
+            <button class="button quiet" id="resetButton" type="button">Reset Today</button>
+            <button class="button secondary" id="saveButton" type="button">Save Day</button>
+            <button class="button primary" id="endButton" type="button">End Day</button>
+          </div>
+
+          <div class="toast" id="toast" aria-live="polite"></div>
+        </section>
+
+        <section class="card daily-entry-card" id="dailyEntryCard" aria-label="Daily entry summary" hidden>
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark gold">✧</span>
+              <div>
+                <h2 class="card-title">Daily Entry</h2>
+                <p class="card-subtitle">A page saved from today’s tide.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="entry-date-stamp" id="entryDateStamp">Wednesday, July 1</div>
+          <h3 class="entry-status-title" id="entryStatusTitle">The day has been saved.</h3>
+          <p class="entry-status-copy" id="entryStatusCopy">Small rituals still count.</p>
+
+          <div class="entry-summary-grid" aria-label="Daily summary">
+            <div class="entry-summary-chip">
+              <span>Quests</span>
+              <strong id="entryQuestSummary">0 / 4</strong>
+            </div>
+            <div class="entry-summary-chip">
+              <span>Bond</span>
+              <strong id="entryBondSummary">+0</strong>
+            </div>
+            <div class="entry-summary-chip">
+              <span>EXP</span>
+              <strong id="entryExpSummary">+0</strong>
+            </div>
+            <div class="entry-summary-chip" id="entryRewardChip">
+              <span>Reward</span>
+              <strong id="entryRewardSummary">Locked</strong>
+            </div>
+          </div>
+
+          <div class="entry-reflection empty" id="entryReflectionText">No reflection written yet.</div>
+        </section>
+      </div>
+
+      <div class="column right-column">
+        <section class="card companion-card" aria-label="Companion">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark">✦</span>
+              <div>
+                <h2 class="card-title">Companion</h2>
+                <p class="card-subtitle">A gentle light for today’s rituals.</p>
+              </div>
+            </div>
+            <span class="mini-badge" id="moodBadge">Calm</span>
+          </div>
+
+          <div class="companion-visual">
+            <div class="aura-ring" aria-hidden="true"></div>
+            <div class="sparkle s1" aria-hidden="true"></div>
+            <div class="sparkle s2" aria-hidden="true"></div>
+            <div class="sparkle s3" aria-hidden="true"></div>
+            <div class="sparkle s4" aria-hidden="true"></div>
+            <img
+              class="companion-image"
+              src="assets/lantern-jelly-dormant.png"
+              alt="Lantern Jelly dormant companion"
+              loading="eager"
+            />
+          </div>
+
+          <h3 class="companion-name">Lantern Jelly</h3>
+          <p class="companion-role">
+            Dormant Form · A small lantern-like jelly companion that glows brighter when daily rituals are completed.
+          </p>
+
+          <div class="stat-row">
+            <span>Mood</span>
+            <strong id="companionMood">Calm</strong>
+          </div>
+          <div class="stat-row">
+            <span>Bond</span>
+            <strong><span id="bondValue">0</span> / 100</strong>
+          </div>
+          <div class="stat-row">
+            <span>EXP</span>
+            <strong id="expValue">0</strong>
+          </div>
+        </section>
+
+        <section class="card support-card" aria-label="Daily progress">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark">〰</span>
+              <div>
+                <h2 class="card-title">Daily Progress</h2>
+                <p class="card-subtitle" id="progressCount">0 / 4 quests completed</p>
+              </div>
+            </div>
+            <span class="mini-badge" id="progressPercent">0%</span>
+          </div>
+
+          <div class="progress-track" aria-label="Daily progress bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <p class="feedback-text" id="feedbackText">The shore is quiet.</p>
+        </section>
+
+        <section class="card support-card reward-card" id="rewardCard" aria-label="Today's reward">
+          <div class="card-header">
+            <div class="heading-wrap">
+              <span class="section-mark gold">✧</span>
+              <div>
+                <h2 class="card-title">Today’s Reward</h2>
+                <p class="card-subtitle">A small shard of moonlit progress.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="reward-title">Moonlit Fragment</h3>
+          <p class="reward-copy" id="rewardCopy">Complete all daily quests to claim.</p>
+          <div class="status-line" id="rewardStatus">Status: Locked</div>
+        </section>
+      </div>
+    </section>
+
+    <p class="footer-note">v0.2-dev Project Folder · Daily Entry Feel · Official Lantern Jelly Asset · Stored locally in this browser</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
