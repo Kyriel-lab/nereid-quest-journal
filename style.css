@@ -2449,4 +2449,39 @@
   white-space: normal;
 }
 
+/* v0.9b — Evolution I Awakening Ritual */
+.evolution-slot.awakened {
+  border-color: rgba(170, 131, 46, 0.45);
+  background: linear-gradient(180deg, rgba(255, 248, 227, 0.9), rgba(244, 252, 253, 0.84));
+}
+
+.evolution-slot-status.awakened {
+  color: var(--accent-strong);
+  border-color: rgba(170, 131, 46, 0.38);
+  background: rgba(255, 244, 205, 0.82);
+}
+
+.ritual-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(170, 131, 46, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 244, 205, 0.86);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ritual-button:focus-visible {
+  outline: 2px solid rgba(170, 131, 46, 0.7);
+  outline-offset: 2px;
+}
+
 

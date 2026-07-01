@@ -382,13 +382,79 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }).format(new Date());
     }
 
-    function createDefaultState(history = [], spentMoonlitFragments = 0) {
+    function normalizeCompanionEvolution(rawEvolution = null) {
+      const rawLanternJelly = rawEvolution?.lanternJelly || {};
+      const rawUnlockedForms = Array.isArray(rawLanternJelly.unlockedForms)
+        ? rawLanternJelly.unlockedForms
+        : ["dormant"];
+
+      const unlockedForms = Array.from(new Set(["dormant", ...rawUnlockedForms.filter((form) => typeof form === "string")]));
+      const currentForm = unlockedForms.includes(rawLanternJelly.currentForm)
+        ? rawLanternJelly.currentForm
+        : "dormant";
+
+      return {
+        lanternJelly: {
+          currentForm,
+          unlockedForms
+        }
+      };
+    }
+
+    function getLanternJellyEvolutionState() {
+      return normalizeCompanionEvolution(state.companionEvolution).lanternJelly;
+    }
+
+    function isLanternJellyEvolutionIUnlocked() {
+      return getLanternJellyEvolutionState().unlockedForms.includes("evolution-1");
+    }
+
+    function canAwakenEvolutionI(stats = getCurrentStats()) {
+      const progress = getEvolutionIProgress(stats);
+
+      return progress.ready && !isLanternJellyEvolutionIUnlocked();
+    }
+
+    function awakenEvolutionI() {
+      if (!canAwakenEvolutionI()) {
+        showToast("Awakening signs are not fully aligned yet.");
+        return;
+      }
+
+      const confirmed = window.confirm(
+        "Begin Evolution I awakening?\n\nThis will spend 3 Moonlit Fragments and unlock Lantern Jelly’s Evolution I form."
+      );
+
+      if (!confirmed) {
+        showToast("Awakening cancelled.");
+        return;
+      }
+
+      const currentEvolution = normalizeCompanionEvolution(state.companionEvolution);
+      const lanternJelly = currentEvolution.lanternJelly;
+      const unlockedForms = Array.from(new Set([...lanternJelly.unlockedForms, "evolution-1"]));
+
+      state.spentMoonlitFragments = Math.max(0, Number(state.spentMoonlitFragments) || 0) + EVOLUTION_I_REQUIREMENTS.moonlitFragments;
+      state.companionEvolution = {
+        ...currentEvolution,
+        lanternJelly: {
+          currentForm: "evolution-1",
+          unlockedForms
+        }
+      };
+
+      saveState("Evolution I awakened.");
+      renderAll();
+    }
+
+    function createDefaultState(history = [], spentMoonlitFragments = 0, companionEvolution = null) {
       return {
         date: getTodayKey(),
         completedQuestIds: [],
         customQuests: [],
         history: normalizeHistoryEntries(history),
         spentMoonlitFragments: Math.max(0, Number(spentMoonlitFragments) || 0),
+        companionEvolution: normalizeCompanionEvolution(companionEvolution),
         reflection: "",
         lastSavedAt: "",
         ended: false
@@ -458,12 +524,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         const history = normalizeHistoryEntries(parsed.history);
 
         const spentMoonlitFragments = Math.max(0, Number(parsed.spentMoonlitFragments) || 0);
+        const companionEvolution = normalizeCompanionEvolution(parsed.companionEvolution);
 
         if (parsed.date !== getTodayKey()) {
-          return createDefaultState(history, spentMoonlitFragments);
+          return createDefaultState(history, spentMoonlitFragments, companionEvolution);
         }
 
-        const base = createDefaultState(history, spentMoonlitFragments);
+        const base = createDefaultState(history, spentMoonlitFragments, companionEvolution);
         const customQuests = normalizeCustomQuests(parsed.customQuests);
         const validQuestIds = new Set([...DEFAULT_QUESTS, ...customQuests].map((quest) => quest.id));
 
@@ -475,7 +542,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           completedQuestIds: Array.isArray(parsed.completedQuestIds)
             ? parsed.completedQuestIds.filter((id) => validQuestIds.has(id))
             : [],
-          spentMoonlitFragments
+          spentMoonlitFragments,
+          companionEvolution
         };
       } catch (error) {
         console.warn("Could not load Nereid Quest Journal state:", error);
@@ -746,15 +814,26 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       }
 
+      const lanternJellyEvolution = getLanternJellyEvolutionState();
+      const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
+
       if (elements.companionCurrentForm) {
-        elements.companionCurrentForm.textContent = "Dormant Form · Revealed";
+        elements.companionCurrentForm.textContent = evolutionIUnlocked
+          ? "Evolution I · Awakened"
+          : "Dormant Form · Revealed";
       }
 
       const evolutionIProgress = getEvolutionIProgress(stats);
-      const evolutionIStatus = evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping";
-      const evolutionIHint = evolutionIProgress.ready
-        ? "Awakening ritual pending."
-        : "Awakening signs are still aligning.";
+      const evolutionIStatus = evolutionIUnlocked
+        ? "Evolution II sleeping"
+        : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping");
+      const evolutionIHint = evolutionIUnlocked
+        ? "A deeper awakening remains sealed."
+        : (
+            evolutionIProgress.ready
+              ? "Awakening ritual pending."
+              : "Awakening signs are still aligning."
+          );
 
       if (elements.companionEvolutionSeal) {
         elements.companionEvolutionSeal.textContent = evolutionIStatus;
@@ -1276,18 +1355,40 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       const evolutionIProgress = getEvolutionIProgress(stats);
 
+      const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
+
       const slotsMarkup = active.slots.map((slot) => {
+        const isDormant = slot.id === "lantern-jelly-dormant";
         const isEvolutionI = slot.id === "lantern-jelly-stage-1";
-        const slotStatus = isEvolutionI && evolutionIProgress.ready ? "ready" : slot.status;
-        const statusLabel = isEvolutionI && evolutionIProgress.ready ? "Ready" : slot.statusLabel;
+        const slotStatus = isEvolutionI
+          ? (evolutionIUnlocked ? "awakened" : (evolutionIProgress.ready ? "ready" : slot.status))
+          : slot.status;
+        const statusLabel = isEvolutionI
+          ? (evolutionIUnlocked ? "Awakened" : (evolutionIProgress.ready ? "Ready" : slot.statusLabel))
+          : slot.statusLabel;
+        const slotLabel = isEvolutionI && evolutionIUnlocked ? "Evolution I" : slot.label;
+        const slotCopy = isEvolutionI && evolutionIUnlocked
+          ? "A new form has surfaced from the lantern light."
+          : slot.copy;
         const hint = isEvolutionI
           ? (
-              evolutionIProgress.ready
-                ? "Evolution I is ready. Awakening ritual can begin."
-                : "Evolution I is still sleeping. Follow its Awakening Signs to prepare the seal."
+              evolutionIUnlocked
+                ? "Evolution I has awakened. Its image will be added in a later asset pass."
+                : (
+                    evolutionIProgress.ready
+                      ? "Evolution I is ready. Awakening ritual can begin."
+                      : "Evolution I is still sleeping. Follow its Awakening Signs to prepare the seal."
+                  )
             )
-          : slot.hint;
-        const awakeningMarkup = isEvolutionI ? createAwakeningSignsMarkup(evolutionIProgress) : "";
+          : (
+              isDormant && evolutionIUnlocked
+                ? "Dormant Form remains revealed in the archive."
+                : slot.hint
+            );
+        const awakeningMarkup = isEvolutionI && !evolutionIUnlocked ? createAwakeningSignsMarkup(evolutionIProgress) : "";
+        const ritualMarkup = isEvolutionI && !evolutionIUnlocked && evolutionIProgress.ready
+          ? `<span class="ritual-button" role="button" tabindex="0" data-ritual="evolution-1">Begin Awakening Ritual</span>`
+          : "";
         const thumb = slot.asset
           ? `<img src="${slot.asset}" alt="${active.name} ${slot.label}">`
           : (slot.icon || "✧");
@@ -1295,9 +1396,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         return `
           <button class="evolution-slot ${slotStatus}" type="button" data-hint="${hint}">
             <span class="evolution-slot-thumb">${thumb}</span>
-            <span class="evolution-slot-label">${slot.label}</span>
-            <span class="evolution-slot-copy">${slot.copy}</span>
+            <span class="evolution-slot-label">${slotLabel}</span>
+            <span class="evolution-slot-copy">${slotCopy}</span>
             ${awakeningMarkup}
+            ${ritualMarkup}
             <span class="evolution-slot-status ${slotStatus}">${statusLabel}</span>
           </button>
         `;
@@ -1314,6 +1416,22 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       activeCard.querySelector(".evolution-active-name").textContent = active.name;
       activeCard.querySelector(".evolution-active-description").textContent = active.description;
+
+      activeCard.querySelectorAll(".ritual-button").forEach((ritualButton) => {
+        ritualButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          awakenEvolutionI();
+        });
+
+        ritualButton.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            awakenEvolutionI();
+          }
+        });
+      });
 
       activeCard.querySelectorAll(".evolution-slot").forEach((slotButton) => {
         slotButton.addEventListener("click", () => {

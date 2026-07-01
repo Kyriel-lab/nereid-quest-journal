@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.9b — Evolution I Awakening Ritual
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added Lantern Jelly evolution state:
+  - `currentForm`
+  - `unlockedForms`
+- Added normalization for the new companion evolution state while preserving the existing `localStorage` key.
+- Added one `Begin Awakening Ritual` control inside the Evolution I slot when all Awakening Signs are aligned.
+- Added confirmation before awakening Evolution I.
+- Awakening Evolution I now:
+  - spends 3 available Moonlit Fragments through `spentMoonlitFragments`
+  - unlocks `evolution-1`
+  - sets Lantern Jelly current form to `evolution-1`
+- Active Companion card now shows:
+  - `Evolution I · Awakened`
+  - `Evolution II sleeping`
+- Evolution I slot now shows:
+  - `Evolution I`
+  - `Awakened`
+  - `A new form has surfaced from the lantern light.`
+
+### Preserved
+
+- Fragment Ledger Visibility Hotfix from v0.9a-ui.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Evolution Ready State Foundation from v0.8.
+- Evolution I Render Hotfix from v0.7d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution I image reveal.
+- No new asset integration.
+- No animation.
+- No Evolution II requirement logic.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.9a-ui — Fragment Ledger Visibility Hotfix
 
 **Status:** Patch candidate.
