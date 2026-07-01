@@ -2420,4 +2420,14 @@
   font-weight: 700;
 }
 
+/* v0.9a — Moonlit Fragment Spend Ledger */
+.awakening-ledger {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
 

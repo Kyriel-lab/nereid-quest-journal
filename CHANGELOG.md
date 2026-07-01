@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.9a — Moonlit Fragment Spend Ledger
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added a Moonlit Fragment spend ledger foundation.
+- Added `spentMoonlitFragments` to journal state while preserving the existing `localStorage` key.
+- Split Moonlit Fragment logic into:
+  - earned fragments from perfect-day history
+  - spent fragments from state
+  - available fragments for evolution requirements
+- `getMoonlitFragmentTotal()` now returns available fragments.
+- Evolution I requirements now use available Moonlit Fragments.
+- Awakening Signs now show:
+  - available / required Moonlit Fragments
+  - earned / spent ledger copy
+
+### Preserved
+
+- Evolution Ready State Foundation from v0.8.
+- Evolution I Render Hotfix from v0.7d.
+- Evolution I Awakening Signs UI from v0.7c.
+- Remove EXP Foundation from v0.7.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolve button.
+- No Awakening Ritual action.
+- No Moonlit Fragment spending action yet.
+- No Evolution I unlock state.
+- No Evolution I image reveal.
+- No asset changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v0.8 — Evolution Ready State Foundation
 
 **Status:** Patch candidate.

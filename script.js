@@ -382,12 +382,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }).format(new Date());
     }
 
-    function createDefaultState(history = []) {
+    function createDefaultState(history = [], spentMoonlitFragments = 0) {
       return {
         date: getTodayKey(),
         completedQuestIds: [],
         customQuests: [],
         history: normalizeHistoryEntries(history),
+        spentMoonlitFragments: Math.max(0, Number(spentMoonlitFragments) || 0),
         reflection: "",
         lastSavedAt: "",
         ended: false
@@ -456,11 +457,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
         const history = normalizeHistoryEntries(parsed.history);
 
+        const spentMoonlitFragments = Math.max(0, Number(parsed.spentMoonlitFragments) || 0);
+
         if (parsed.date !== getTodayKey()) {
-          return createDefaultState(history);
+          return createDefaultState(history, spentMoonlitFragments);
         }
 
-        const base = createDefaultState(history);
+        const base = createDefaultState(history, spentMoonlitFragments);
         const customQuests = normalizeCustomQuests(parsed.customQuests);
         const validQuestIds = new Set([...DEFAULT_QUESTS, ...customQuests].map((quest) => quest.id));
 
@@ -471,7 +474,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           customQuests,
           completedQuestIds: Array.isArray(parsed.completedQuestIds)
             ? parsed.completedQuestIds.filter((id) => validQuestIds.has(id))
-            : []
+            : [],
+          spentMoonlitFragments
         };
       } catch (error) {
         console.warn("Could not load Nereid Quest Journal state:", error);
@@ -700,7 +704,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
 
-    function getMoonlitFragmentTotal() {
+    function getMoonlitFragmentEarnedTotal() {
       const history = Array.isArray(state.history) ? state.history : [];
 
       return history.reduce((total, entry) => {
@@ -710,6 +714,26 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
         return total + ((entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0);
       }, 0);
+    }
+
+    function getMoonlitFragmentSpentTotal() {
+      return Math.max(0, Number(state.spentMoonlitFragments) || 0);
+    }
+
+    function getMoonlitFragmentTotal() {
+      return Math.max(0, getMoonlitFragmentEarnedTotal() - getMoonlitFragmentSpentTotal());
+    }
+
+    function getMoonlitFragmentLedger() {
+      const earned = getMoonlitFragmentEarnedTotal();
+      const spent = Math.min(getMoonlitFragmentSpentTotal(), earned);
+      const available = Math.max(0, earned - spent);
+
+      return {
+        earned,
+        spent,
+        available
+      };
     }
 
     function renderCompanion(stats) {
@@ -1185,7 +1209,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     function getEvolutionIProgress(stats) {
       const currentStats = stats || getCurrentStats();
       const bond = Math.max(0, currentStats?.bond || 0);
-      const moonlitFragments = getMoonlitFragmentTotal();
+      const moonlitLedger = getMoonlitFragmentLedger();
+      const moonlitFragments = moonlitLedger.available;
       const firstRipple = getAchievementState(EVOLUTION_I_REQUIREMENTS.achievementId);
       const firstRippleUnlocked = Boolean(firstRipple?.unlocked);
 
@@ -1194,6 +1219,9 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         bondRequired: EVOLUTION_I_REQUIREMENTS.bond,
         bondReady: bond >= EVOLUTION_I_REQUIREMENTS.bond,
         moonlitFragments,
+        moonlitFragmentsEarned: moonlitLedger.earned,
+        moonlitFragmentsSpent: moonlitLedger.spent,
+        moonlitFragmentsAvailable: moonlitLedger.available,
         moonlitFragmentsRequired: EVOLUTION_I_REQUIREMENTS.moonlitFragments,
         moonlitFragmentsReady: moonlitFragments >= EVOLUTION_I_REQUIREMENTS.moonlitFragments,
         firstRippleUnlocked,
@@ -1218,7 +1246,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           </span>
           <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
             <span>Moonlit Fragments</span>
-            <strong>${progress.moonlitFragments} / ${progress.moonlitFragmentsRequired}</strong>
+            <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-ledger">
+            Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
           </span>
           <span class="awakening-sign ${progress.firstRippleUnlocked ? "complete" : ""}">
             <span>First Ripple</span>
