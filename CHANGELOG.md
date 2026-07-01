@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.4a — Companion Registry Render Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Companion Registry card showing only the header without companion rows.
+- Ensured `renderCompanionRegistry()` runs during the main render cycle.
+- Companion Registry now renders the four starter companions:
+  - Lantern Jelly
+  - Tideback
+  - Shellfin
+  - Moon Otter
+
+### Preserved
+
+- Companion Registry Foundation from v0.4.
+- Stats Dashboard Hotfix from v0.3a.
+- Flexible Daily Start from v0.2e.
+- Quest Library content from v0.2d.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No new assets.
+- No companion switching.
+- No evolution stages.
+- No stats/history/quest logic changes.
+
+---
+
 ## v0.4 — Companion Registry Foundation
 
 **Status:** Patch candidate.
