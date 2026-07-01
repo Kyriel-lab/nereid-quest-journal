@@ -322,6 +322,9 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       feedbackText: document.getElementById("feedbackText"),
       moodBadge: document.getElementById("moodBadge"),
       companionMood: document.getElementById("companionMood"),
+      companionCurrentForm: document.getElementById("companionCurrentForm"),
+      companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
+      companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -697,11 +700,37 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       document.body.dataset.progressLevel = String(stats.stage);
     }
 
+
+    function getMoonlitFragmentTotal() {
+      const history = Array.isArray(state.history) ? state.history : [];
+
+      return history.reduce((total, entry) => {
+        if (!entry || !entry.totalCount) {
+          return total;
+        }
+
+        return total + ((entry.moonlitFragmentEarned ?? entry.rewardUnlocked) ? 1 : 0);
+      }, 0);
+    }
+
     function renderCompanion(stats) {
       elements.moodBadge.textContent = stats.mood;
       elements.companionMood.textContent = stats.mood;
       elements.bondValue.textContent = stats.bond;
       elements.expValue.textContent = stats.exp;
+
+      if (elements.companionCurrentForm) {
+        elements.companionCurrentForm.textContent = "Dormant Form · Revealed";
+      }
+
+      if (elements.companionEvolutionSeal) {
+        elements.companionEvolutionSeal.textContent = "Stage I sleeping";
+      }
+
+      if (elements.companionMoonlitFragments) {
+        elements.companionMoonlitFragments.textContent = getMoonlitFragmentTotal();
+      }
+
     }
 
     function renderReward(stats) {

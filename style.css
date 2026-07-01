@@ -2285,4 +2285,51 @@
   }
 }
 
+/* v0.6b — Active Companion Card Polish */
+.companion-status-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 8px;
+}
+
+.companion-status-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid rgba(216, 226, 223, 0.66);
+  border-radius: 16px;
+  padding: 9px 10px;
+  background: rgba(255, 253, 247, 0.68);
+}
+
+.companion-status-label {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.companion-status-value {
+  color: var(--deep-tide);
+  font-family: Nunito, Inter, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .companion-status-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .companion-status-value {
+    text-align: left;
+    white-space: normal;
+  }
+}
+
 

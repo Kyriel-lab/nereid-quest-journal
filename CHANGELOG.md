@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.6b — Active Companion Card Polish
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished the Active Companion sidebar card.
+- Added active companion status rows:
+  - Current Form
+  - Evolution Seal
+  - Moonlit Fragments
+- Current Form shows:
+  - `Dormant Form · Revealed`
+- Evolution Seal shows:
+  - `Stage I sleeping`
+- Moonlit Fragments are counted from Journal History with backward compatibility:
+  - `moonlitFragmentEarned ?? rewardUnlocked`
+
+### Preserved
+
+- Companion Evolution Seals Render Hotfix from v0.6a.
+- Companion Evolution Seals from v0.6.
+- Achievement Foundation from v0.5.
+- Moonlit Fragment Tracking from v0.4c.
+- Active Companion Focus from v0.4b.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No actual evolution.
+- No evolve button.
+- No companion switching.
+- No new form images.
+- No resource costs.
+- No EXP/Bond/Moonlit Fragment unlock rules.
+- No stats, achievements, quest, or history logic changes.
+
+---
+
 ## v0.6a — Evolution Seals Render Hotfix
 
 **Status:** Patch candidate.
