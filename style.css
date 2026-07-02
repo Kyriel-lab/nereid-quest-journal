@@ -2735,4 +2735,14 @@
   line-height: 1.35;
 }
 
+/* v2.4 — Apex Crest Unlock Position Copy */
+.static-crest-signs {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 248, 237, 0.5));
+}
+
+.static-crest-signs > span:not(.static-resonance-title)::before {
+  content: "✦";
+}
+
 

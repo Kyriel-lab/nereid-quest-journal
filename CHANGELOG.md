@@ -1,5 +1,55 @@
 # Changelog
 
+## v2.4 — Apex Crest Unlock Position Copy
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished static Apex Crest card copy.
+- Clarified Apex Crest as a final crest layer unlocked after all normal creature forms awaken.
+- Clarified Apex Crest marks ultimate resonance without becoming Evolution IV.
+- Added static planned Crest Layer copy:
+  - Requires all normal forms awakened
+  - Evolution III required
+  - Crest ritual not available yet
+  - No Evolution IV path
+
+### Preserved
+
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.2a Static Manifestation Requirement Copy.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No JavaScript logic changes from v2.3.
+- No Apex Crest requirement calculation.
+- No Apex Crest ritual.
+- No Apex Crest unlock state.
+- No Apex Crest asset reveal.
+- No Manifestation logic changes.
+- No Companion Card changes.
+- No Achievements changes.
+- No Quest / Stats / Achievements render changes.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.3 — Resonant Manifestation Static Copy Polish
 
 **Status:** Patch candidate.
