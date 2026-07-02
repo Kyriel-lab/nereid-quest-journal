@@ -351,6 +351,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
       companionEvolutionHint: document.getElementById("companionEvolutionHint"),
       companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
+      manifestationBranchCard: document.getElementById("manifestationBranchCard"),
+      manifestationBranchName: document.getElementById("manifestationBranchName"),
+      manifestationBranchCopy: document.getElementById("manifestationBranchCopy"),
+      manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -424,6 +428,27 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           unlockedForms
         }
       };
+    }
+
+    function normalizeCompanionResonance(rawResonance = null) {
+      const rawLanternJelly = rawResonance?.lanternJelly || {};
+
+      return {
+        lanternJelly: {
+          manifestationUnlocked: rawLanternJelly.manifestationUnlocked === true,
+          manifestationName: typeof rawLanternJelly.manifestationName === "string" && rawLanternJelly.manifestationName.trim()
+            ? rawLanternJelly.manifestationName.trim()
+            : LANTERN_JELLY_MANIFESTATION.name
+        }
+      };
+    }
+
+    function getLanternJellyResonanceState() {
+      return normalizeCompanionResonance(state.companionResonance).lanternJelly;
+    }
+
+    function isLanternJellyManifestationUnlocked() {
+      return getLanternJellyResonanceState().manifestationUnlocked === true;
     }
 
     function getLanternJellyEvolutionState() {
@@ -556,7 +581,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderAll();
     }
 
-    function createDefaultState(history = [], spentMoonlitFragments = 0, companionEvolution = null) {
+    function createDefaultState(history = [], spentMoonlitFragments = 0, companionEvolution = null, companionResonance = null) {
       return {
         date: getTodayKey(),
         completedQuestIds: [],
@@ -564,6 +589,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         history: normalizeHistoryEntries(history),
         spentMoonlitFragments: Math.max(0, Number(spentMoonlitFragments) || 0),
         companionEvolution: normalizeCompanionEvolution(companionEvolution),
+        companionResonance: normalizeCompanionResonance(companionResonance),
         reflection: "",
         lastSavedAt: "",
         ended: false
@@ -634,12 +660,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
         const spentMoonlitFragments = Math.max(0, Number(parsed.spentMoonlitFragments) || 0);
         const companionEvolution = normalizeCompanionEvolution(parsed.companionEvolution);
+        const companionResonance = normalizeCompanionResonance(parsed.companionResonance);
 
         if (parsed.date !== getTodayKey()) {
-          return createDefaultState(history, spentMoonlitFragments, companionEvolution);
+          return createDefaultState(history, spentMoonlitFragments, companionEvolution, companionResonance);
         }
 
-        const base = createDefaultState(history, spentMoonlitFragments, companionEvolution);
+        const base = createDefaultState(history, spentMoonlitFragments, companionEvolution, companionResonance);
         const customQuests = normalizeCustomQuests(parsed.customQuests);
         const validQuestIds = new Set([...DEFAULT_QUESTS, ...customQuests].map((quest) => quest.id));
 
@@ -652,7 +679,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             ? parsed.completedQuestIds.filter((id) => validQuestIds.has(id))
             : [],
           spentMoonlitFragments,
-          companionEvolution
+          companionEvolution,
+          companionResonance
         };
       } catch (error) {
         console.warn("Could not load Nereid Quest Journal state:", error);
@@ -1054,6 +1082,33 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     
+    function renderMoonlitResonance() {
+      const resonance = getLanternJellyResonanceState();
+      const manifestationUnlocked = isLanternJellyManifestationUnlocked();
+
+      if (elements.manifestationBranchName) {
+        elements.manifestationBranchName.textContent = resonance.manifestationName;
+      }
+
+      if (elements.manifestationBranchCopy) {
+        elements.manifestationBranchCopy.textContent = manifestationUnlocked
+          ? "Lantern Jelly’s human-like spirit persona has manifested through deep resonance."
+          : "A human-like spirit persona expressed through Lantern Jelly’s deepest resonance.";
+      }
+
+      if (elements.manifestationBranchStatus) {
+        elements.manifestationBranchStatus.textContent = manifestationUnlocked ? "Manifested" : "Sleeping";
+        elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchStatus.classList.toggle("manifested", manifestationUnlocked);
+      }
+
+      if (elements.manifestationBranchCard) {
+        elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchCard.classList.toggle("manifested", manifestationUnlocked);
+      }
+    }
+
+
     function renderReward(stats) {
       elements.rewardCard.classList.toggle("unlocked", stats.rewardUnlocked);
       elements.rewardStatus.classList.toggle("unlocked", stats.rewardUnlocked);
@@ -1468,6 +1523,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       bond: 600,
       moonlitFragments: 8,
       achievementId: "moonlit-constellation"
+    };
+
+    const LANTERN_JELLY_MANIFESTATION = {
+      name: "Astrael Lanternveil",
+      branchLabel: "Resonant Manifestation"
     };
 
     function getAchievementState(achievementId) {
@@ -2045,6 +2105,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       safeRender("renderQuestLibrary", () => renderQuestLibrary());
       safeRender("renderProgress", () => renderProgress(stats));
       safeRender("renderCompanion", () => renderCompanion(stats));
+      safeRender("renderMoonlitResonance", () => renderMoonlitResonance());
       safeRender("renderReward", () => renderReward(stats));
       safeRender("renderDailyEntry", () => renderDailyEntry(stats));
       safeRender("renderHistory", () => renderHistory());

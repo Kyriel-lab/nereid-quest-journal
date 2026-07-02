@@ -1,5 +1,56 @@
 # Changelog
 
+## v2.1 — Resonant Manifestation State Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added standalone Resonant Manifestation state foundation under:
+  - `companionResonance.lanternJelly`
+- Added normalized state fields:
+  - `manifestationUnlocked`
+  - `manifestationName`
+- Locked Lantern Jelly manifestation name in state/UI:
+  - `Astrael Lanternveil`
+- Added safe migration for older local saves that do not yet have `companionResonance`.
+- Added `normalizeCompanionResonance()`.
+- Added `getLanternJellyResonanceState()`.
+- Added `isLanternJellyManifestationUnlocked()`.
+- Added `renderMoonlitResonance()`.
+- Moonlit Resonance placeholder now displays:
+  - `Resonant Manifestation`
+  - `Astrael Lanternveil`
+  - `Sleeping`
+
+### Preserved
+
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Manifestation unlock requirements.
+- No Manifestation ritual.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.0 — Moonlit Resonance UI Foundation
 
 **Status:** Patch candidate.

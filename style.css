@@ -2667,4 +2667,22 @@
   }
 }
 
+/* v2.1 — Resonant Manifestation State Foundation */
+.resonance-branch-name {
+  margin: 0 0 8px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.resonance-branch-card.manifested {
+  border-color: rgba(104, 85, 156, 0.28);
+  background: rgba(250, 247, 255, 0.78);
+}
+
+.resonance-status.manifested {
+  color: var(--text);
+  background: rgba(246, 240, 252, 0.95);
+  border-color: rgba(104, 85, 156, 0.28);
+}
+
 
