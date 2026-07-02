@@ -365,6 +365,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
       manifestationBranchSigns: document.getElementById("manifestationBranchSigns"),
       manifestationRitualButton: document.getElementById("manifestationRitualButton"),
+      manifestationPortraitFrame: document.getElementById("manifestationPortraitFrame"),
+      manifestationPortrait: document.getElementById("manifestationPortrait"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -1223,6 +1225,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         elements.manifestationRitualButton.hidden = !manifestationReady;
       }
 
+      if (elements.manifestationPortraitFrame) {
+        elements.manifestationPortraitFrame.hidden = !manifestationUnlocked;
+      }
+
+      if (elements.manifestationPortrait) {
+        elements.manifestationPortrait.src = manifestationUnlocked ? LANTERN_JELLY_MANIFESTATION.image : "";
+      }
+
       if (elements.manifestationBranchCard) {
         elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
         elements.manifestationBranchCard.classList.toggle("ready", manifestationReady);
@@ -1649,7 +1659,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     const LANTERN_JELLY_MANIFESTATION = {
       name: "Astrael Lanternveil",
-      branchLabel: "Resonant Manifestation"
+      branchLabel: "Resonant Manifestation",
+      image: "assets/lantern-jelly-manifestation.png"
     };
 
     const MANIFESTATION_REQUIREMENTS = {
