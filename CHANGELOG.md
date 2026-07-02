@@ -1,56 +1,5 @@
 # Changelog
 
-## v2.2 — Resonant Manifestation Requirement Signs
-
-**Status:** Patch candidate.
-
-### Added / Changed
-
-- Added `Resonant Memory` achievement:
-  - Earn 21 Moonlit Fragments from perfect days.
-- Added `MANIFESTATION_REQUIREMENTS`:
-  - Evolution III awakened
-  - Bond ≥ 900
-  - Available Moonlit Fragments ≥ 10
-  - Resonant Memory unlocked
-- Added `getManifestationProgress()`.
-- Added `createManifestationSignsMarkup()`.
-- Updated `renderMoonlitResonance()` to show Resonance Signs for Astrael Lanternveil.
-- Resonant Manifestation card can now display:
-  - `Sleeping`
-  - `Ready`
-  - `Manifested` later when future ritual logic exists
-- No ritual button is added in this version.
-
-### Preserved
-
-- v2.1 Resonant Manifestation State Foundation.
-- v2.0 Moonlit Resonance UI Foundation.
-- v1.9 Evolution Track Completion Lock.
-- Evolution III Asset Integration from v1.8.
-- Evolution III Awakening Ritual from v1.7.
-- Evolution I / II / III rituals and assets.
-- Moonlit Fragment Spend Ledger.
-- Bond lifetime logic.
-- Existing `localStorage` key:
-  - `nereidQuestJournal_v01`
-
-### Not Changed
-
-- No Manifestation ritual.
-- No Manifestation unlock action.
-- No Manifestation asset reveal.
-- No Companion Card manifestation image swap.
-- No Apex Crest requirements.
-- No Apex Crest ritual.
-- No fragment earning/spending changes.
-- No Bond logic changes.
-- No Evolution I / II / III changes.
-- No Save Data / export / import branch.
-- No EXP restoration.
-
----
-
 ## v2.1 — Resonant Manifestation State Foundation
 
 **Status:** Patch candidate.
