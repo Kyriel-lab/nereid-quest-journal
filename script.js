@@ -485,6 +485,44 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderAll();
     }
 
+    function canAwakenEvolutionIII(stats = getCurrentStats()) {
+      const progress = getEvolutionIIIProgress(stats);
+
+      return progress.ready && !isLanternJellyEvolutionIIIUnlocked();
+    }
+
+    function awakenEvolutionIII() {
+      if (!canAwakenEvolutionIII()) {
+        showToast("Evolution III signs are not fully aligned yet.");
+        return;
+      }
+
+      const confirmed = window.confirm(
+        "Begin Evolution III awakening?\n\nThis will spend 8 Moonlit Fragments and unlock Lantern Jelly’s Evolution III form."
+      );
+
+      if (!confirmed) {
+        showToast("Third awakening cancelled.");
+        return;
+      }
+
+      const currentEvolution = normalizeCompanionEvolution(state.companionEvolution);
+      const lanternJelly = currentEvolution.lanternJelly;
+      const unlockedForms = Array.from(new Set([...lanternJelly.unlockedForms, "evolution-3"]));
+
+      state.spentMoonlitFragments = Math.max(0, Number(state.spentMoonlitFragments) || 0) + EVOLUTION_III_REQUIREMENTS.moonlitFragments;
+      state.companionEvolution = {
+        ...currentEvolution,
+        lanternJelly: {
+          currentForm: "evolution-3",
+          unlockedForms
+        }
+      };
+
+      saveState("Evolution III awakened.");
+      renderAll();
+    }
+
     function awakenEvolutionI() {
       if (!canAwakenEvolutionI()) {
         showToast("Awakening signs are not fully aligned yet.");
@@ -887,24 +925,33 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       const lanternJellyEvolution = getLanternJellyEvolutionState();
       const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
       const evolutionIIUnlocked = isLanternJellyEvolutionIIUnlocked();
+      const evolutionIIIUnlocked = isLanternJellyEvolutionIIIUnlocked();
 
       if (elements.companionCurrentForm) {
-        elements.companionCurrentForm.textContent = evolutionIIUnlocked
-          ? "Evolution II · Awakened"
+        elements.companionCurrentForm.textContent = evolutionIIIUnlocked
+          ? "Evolution III · Awakened"
           : (
-              evolutionIUnlocked
-                ? "Evolution I · Awakened"
-                : "Dormant Form · Revealed"
+              evolutionIIUnlocked
+                ? "Evolution II · Awakened"
+                : (
+                    evolutionIUnlocked
+                      ? "Evolution I · Awakened"
+                      : "Dormant Form · Revealed"
+                  )
             );
       }
 
       if (elements.companionRole) {
-        elements.companionRole.textContent = evolutionIIUnlocked
-          ? "Evolution II · A deeper lantern form has awakened."
+        elements.companionRole.textContent = evolutionIIIUnlocked
+          ? "Evolution III · The final lantern evolution has awakened. Image pending future asset pass."
           : (
-              evolutionIUnlocked
-                ? "Evolution I · A newly awakened lantern spirit, glowing with deeper ritual light."
-                : "Dormant Form · A small lantern-like jelly companion that glows brighter when daily rituals are completed."
+              evolutionIIUnlocked
+                ? "Evolution II · A deeper lantern form has awakened."
+                : (
+                    evolutionIUnlocked
+                      ? "Evolution I · A newly awakened lantern spirit, glowing with deeper ritual light."
+                      : "Dormant Form · A small lantern-like jelly companion that glows brighter when daily rituals are completed."
+                  )
             );
       }
 
@@ -921,42 +968,54 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           elements.companionImage.src = nextImage;
         }
 
-        elements.companionImage.alt = evolutionIIUnlocked
-          ? "Lantern Jelly Evolution II awakened form"
+        elements.companionImage.alt = evolutionIIIUnlocked
+          ? "Lantern Jelly Evolution III awakened form using Evolution II image pending asset integration"
           : (
-              evolutionIUnlocked
-                ? "Lantern Jelly Evolution I awakened form"
-                : "Lantern Jelly dormant form"
+              evolutionIIUnlocked
+                ? "Lantern Jelly Evolution II awakened form"
+                : (
+                    evolutionIUnlocked
+                      ? "Lantern Jelly Evolution I awakened form"
+                      : "Lantern Jelly dormant form"
+                  )
             );
       }
 
       const evolutionIProgress = getEvolutionIProgress(stats);
       const evolutionIIProgress = getEvolutionIIProgress(stats);
       const evolutionIIIProgress = getEvolutionIIIProgress(stats);
-      const evolutionIStatus = evolutionIIUnlocked
-        ? (evolutionIIIProgress.ready ? "Evolution III ready" : "Evolution III sleeping")
+      const evolutionIStatus = evolutionIIIUnlocked
+        ? "Apex Crest sleeping"
         : (
-            evolutionIUnlocked
-              ? (evolutionIIProgress.ready ? "Evolution II ready" : "Evolution II sleeping")
-              : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping")
+            evolutionIIUnlocked
+              ? (evolutionIIIProgress.ready ? "Evolution III ready" : "Evolution III sleeping")
+              : (
+                  evolutionIUnlocked
+                    ? (evolutionIIProgress.ready ? "Evolution II ready" : "Evolution II sleeping")
+                    : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping")
+                )
           );
-      const evolutionIHint = evolutionIIUnlocked
-        ? (
-            evolutionIIIProgress.ready
-              ? "The third lantern is ready to awaken."
-              : "The third lantern is still gathering light."
-          )
+      const evolutionIHint = evolutionIIIUnlocked
+        ? "A final crest remains beyond the evolution path."
         : (
-            evolutionIUnlocked
+            evolutionIIUnlocked
               ? (
-                  evolutionIIProgress.ready
-                    ? "The second lantern is ready to awaken."
-                    : "A deeper ritual is forming."
+                  evolutionIIIProgress.ready
+                    ? "The third lantern is ready to awaken."
+                    : "The third lantern is still gathering light."
                 )
               : (
-                  evolutionIProgress.ready
-                    ? "Awakening ritual pending."
-                    : "Awakening signs are still aligning."
+                  evolutionIUnlocked
+                    ? (
+                        evolutionIIProgress.ready
+                          ? "The second lantern is ready to awaken."
+                          : "A deeper ritual is forming."
+                      )
+                    : (
+                        evolutionIProgress.ready
+                          ? "Awakening ritual pending."
+                          : "Awakening signs are still aligning."
+                      )
                 )
           );
 
@@ -1652,6 +1711,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         const isEvolutionI = slot.id === "lantern-jelly-stage-1";
         const isEvolutionII = slot.id === "lantern-jelly-stage-2";
         const isEvolutionIII = slot.id === "lantern-jelly-stage-3";
+        const isApex = slot.id === "lantern-jelly-apex";
 
         const slotStatus = isEvolutionI
           ? (evolutionIUnlocked ? "awakened" : (evolutionIProgress.ready ? "ready" : slot.status))
@@ -1664,7 +1724,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                   )
                 : (
                     isEvolutionIII && evolutionIIUnlocked
-                      ? (evolutionIIIProgress.ready ? "ready" : "sealed")
+                      ? (
+                          evolutionIIIUnlocked
+                            ? "awakened"
+                            : (evolutionIIIProgress.ready ? "ready" : "sealed")
+                        )
                       : slot.status
                   )
             );
@@ -1679,7 +1743,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                   )
                 : (
                     isEvolutionIII && evolutionIIUnlocked
-                      ? (evolutionIIIProgress.ready ? "Ready" : "Sleeping")
+                      ? (
+                          evolutionIIIUnlocked
+                            ? "Awakened"
+                            : (evolutionIIIProgress.ready ? "Ready" : "Sleeping")
+                        )
                       : slot.statusLabel
                   )
             );
@@ -1688,7 +1756,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           : (
               isEvolutionII && evolutionIIUnlocked
                 ? "Evolution II"
-                : slot.label
+                : (
+                    isEvolutionIII && evolutionIIIUnlocked
+                      ? "Evolution III"
+                      : slot.label
+                  )
             );
         const slotCopy = isEvolutionI && evolutionIUnlocked
           ? "A new form has surfaced from the lantern light."
@@ -1696,23 +1768,31 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
               isEvolutionII && evolutionIIUnlocked
                 ? "A deeper lantern has opened within the current."
                 : (
-                    isDormant && evolutionIUnlocked
-                      ? "Previous form archived."
+                    isEvolutionIII && evolutionIIIUnlocked
+                      ? "The final lantern evolution has opened. Image pending future asset pass."
                       : (
-                          isEvolutionII && evolutionIUnlocked
-                            ? (
-                                evolutionIIProgress.ready
-                                  ? "The second lantern is ready to awaken."
-                                  : "A deeper ritual is forming."
-                              )
+                          isDormant && evolutionIUnlocked
+                            ? "Previous form archived."
                             : (
-                                isEvolutionIII && evolutionIIUnlocked
+                                isEvolutionII && evolutionIUnlocked
                                   ? (
-                                      evolutionIIIProgress.ready
-                                        ? "The third lantern is ready to awaken."
-                                        : "The third lantern is still gathering light."
+                                      evolutionIIProgress.ready
+                                        ? "The second lantern is ready to awaken."
+                                        : "A deeper ritual is forming."
                                     )
-                                  : slot.copy
+                                  : (
+                                      isEvolutionIII && evolutionIIUnlocked
+                                        ? (
+                                            evolutionIIIProgress.ready
+                                              ? "The third lantern is ready to awaken."
+                                              : "The third lantern is still gathering light."
+                                          )
+                                        : (
+                                            isApex && evolutionIIIUnlocked
+                                              ? "A final crest remains beyond the evolution path."
+                                              : slot.copy
+                                          )
+                                    )
                               )
                         )
                   )
@@ -1741,14 +1821,22 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 : (
                     isEvolutionIII && evolutionIIUnlocked
                       ? (
-                          evolutionIIIProgress.ready
-                            ? "Evolution III is ready, but its ritual will be added later."
-                            : "Evolution III requirements are forming."
+                          evolutionIIIUnlocked
+                            ? "Evolution III has awakened. Its image will be added in a later asset pass."
+                            : (
+                                evolutionIIIProgress.ready
+                                  ? "Evolution III is ready. Third awakening ritual can begin."
+                                  : "Evolution III requirements are forming."
+                              )
                         )
                       : (
-                          isDormant && evolutionIUnlocked
-                            ? "Dormant Form remains revealed in the archive."
-                            : slot.hint
+                          isApex && evolutionIIIUnlocked
+                            ? "Apex Crest remains sealed beyond the normal evolution track."
+                            : (
+                                isDormant && evolutionIUnlocked
+                                  ? "Dormant Form remains revealed in the archive."
+                                  : slot.hint
+                              )
                         )
                   )
             );
@@ -1760,14 +1848,22 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           : (
               isEvolutionII && !evolutionIIUnlocked && evolutionIIProgress.ready
                 ? `<span class="ritual-button second-ritual" role="button" tabindex="0" data-ritual="evolution-2">Begin Second Awakening Ritual</span>`
-                : ""
+                : (
+                    isEvolutionIII && !evolutionIIIUnlocked && evolutionIIIProgress.ready
+                      ? `<span class="ritual-button third-ritual" role="button" tabindex="0" data-ritual="evolution-3">Begin Third Awakening Ritual</span>`
+                      : ""
+                  )
             );
-        const slotAsset = isEvolutionII && evolutionIIUnlocked
+        const slotAsset = isEvolutionIII && evolutionIIIUnlocked
           ? LANTERN_JELLY_ASSETS.evolution2
           : (
-              isEvolutionI && evolutionIUnlocked
-                ? LANTERN_JELLY_ASSETS.evolution1
-                : slot.asset
+              isEvolutionII && evolutionIIUnlocked
+                ? LANTERN_JELLY_ASSETS.evolution2
+                : (
+                    isEvolutionI && evolutionIUnlocked
+                      ? LANTERN_JELLY_ASSETS.evolution1
+                      : slot.asset
+                  )
             );
         const thumb = slotAsset
           ? `<img src="${slotAsset}" alt="${active.name} ${slotLabel}">`
@@ -1787,12 +1883,16 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         `;
       }).join("");
 
-      const currentFormMeta = evolutionIIUnlocked
-        ? "Evolution II · Awakened"
+      const currentFormMeta = evolutionIIIUnlocked
+        ? "Evolution III · Awakened"
         : (
-            evolutionIUnlocked
-              ? "Evolution I · Awakened"
-              : active.currentForm
+            evolutionIIUnlocked
+              ? "Evolution II · Awakened"
+              : (
+                  evolutionIUnlocked
+                    ? "Evolution I · Awakened"
+                    : active.currentForm
+                )
           );
 
       activeCard.innerHTML = `
@@ -1809,6 +1909,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       activeCard.querySelectorAll(".ritual-button").forEach((ritualButton) => {
         const runRitual = () => {
+          if (ritualButton.dataset.ritual === "evolution-3") {
+            awakenEvolutionIII();
+            return;
+          }
+
           if (ritualButton.dataset.ritual === "evolution-2") {
             awakenEvolutionII();
             return;

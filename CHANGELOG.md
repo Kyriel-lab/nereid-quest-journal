@@ -1,5 +1,56 @@
 # Changelog
 
+## v1.7 — Evolution III Awakening Ritual
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added guarded Evolution III awakening ritual.
+- Added:
+  - `canAwakenEvolutionIII()`
+  - `awakenEvolutionIII()`
+- Evolution III ritual appears only when all Evolution III signs are aligned.
+- The third ritual:
+  - confirms before action
+  - spends 8 available Moonlit Fragments through the existing spend ledger
+  - unlocks `evolution-3`
+  - sets Lantern Jelly current form to `evolution-3`
+- Active Companion card can now show:
+  - `Evolution III · Awakened`
+  - `Apex Crest sleeping`
+- Evolution III slot can now show:
+  - `Evolution III`
+  - `Awakened`
+  - `The final lantern evolution has opened. Image pending future asset pass.`
+- Apex Crest remains sealed beyond the normal evolution track.
+
+### Preserved
+
+- Evolution III Requirement Foundation from v1.6.
+- Evolution Track Cleanup & Canon Lock from v1.5.
+- Evolution II Requirement Source Hotfix from v1.4a.
+- Evolution II Asset Integration from v1.4.
+- Evolution II Awakening Ritual from v1.3.
+- Evolution I Asset Integration from v1.0.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution III image reveal.
+- No Evolution III asset integration.
+- No Apex Crest requirement logic.
+- No Apex Crest ritual.
+- No Evolution I / II ritual logic changes.
+- No fragment earning logic changes.
+- No Bond logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.6 — Evolution III Requirement Foundation
 
 **Status:** Patch candidate.

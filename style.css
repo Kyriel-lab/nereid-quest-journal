@@ -2550,4 +2550,11 @@
   background: rgba(255, 248, 227, 0.84);
 }
 
+/* v1.7 — Evolution III Awakening Ritual */
+.ritual-button.third-ritual {
+  background: rgba(246, 240, 252, 0.92);
+  border-color: rgba(92, 72, 130, 0.28);
+  color: var(--text);
+}
+
 
