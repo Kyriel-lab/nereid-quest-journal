@@ -1,5 +1,52 @@
 # Changelog
 
+## v1.9 — Evolution Track Completion Lock
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Locked the normal Lantern Jelly evolution track after validated Evolution III asset integration:
+  - Dormant Form
+  - Evolution I
+  - Evolution II
+  - Evolution III
+- Clarified Evolution III as the final normal evolution.
+- Clarified Apex Crest as a separate layer beyond the normal evolution track, not Evolution IV.
+- Companion Card now labels the post-form progression row as `Next Layer` instead of `Next Evolution`.
+- Polished post-Evolution III copy:
+  - `Evolution III · The final normal evolution has awakened.`
+  - `The final normal evolution has opened.`
+  - `A final crest remains beyond the normal evolution track.`
+- Fixed Companion Card next-layer badge styling so readiness follows the current next layer, not only Evolution I.
+
+### Preserved
+
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution III Requirement Foundation from v1.6.
+- Evolution II Asset Integration from v1.4.
+- Evolution II Awakening Ritual from v1.3.
+- Evolution I Asset Integration from v1.0.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No Resonant Manifestation UI.
+- No Resonant Manifestation logic.
+- No Evolution I / II / III ritual logic changes.
+- No fragment spending changes.
+- No Bond logic changes.
+- No asset changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.8 — Evolution III Asset Integration
 
 **Status:** Patch candidate.

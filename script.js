@@ -300,9 +300,9 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             label: "Apex Crest",
             status: "apex",
             statusLabel: "Later",
-            copy: "A final crest remains beyond the evolution path.",
+            copy: "A final crest remains beyond the normal evolution track.",
             icon: "☾",
-            hint: "Apex Crest is a final crest, not an Evolution IV form."
+            hint: "Apex Crest is a final crest beyond the normal evolution track, not Evolution IV."
           }
         ]
       },
@@ -944,7 +944,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (elements.companionRole) {
         elements.companionRole.textContent = evolutionIIIUnlocked
-          ? "Evolution III · The final lantern evolution has awakened."
+          ? "Evolution III · The final normal evolution has awakened."
           : (
               evolutionIIUnlocked
                 ? "Evolution II · A deeper lantern form has awakened."
@@ -1001,7 +1001,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 )
           );
       const evolutionIHint = evolutionIIIUnlocked
-        ? "A final crest remains beyond the evolution path."
+        ? "A final crest remains beyond the normal evolution track."
         : (
             evolutionIIUnlocked
               ? (
@@ -1024,15 +1024,27 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 )
           );
 
+      const nextLayerReady = evolutionIIIUnlocked
+        ? false
+        : (
+            evolutionIIUnlocked
+              ? evolutionIIIProgress.ready
+              : (
+                  evolutionIUnlocked
+                    ? evolutionIIProgress.ready
+                    : evolutionIProgress.ready
+                )
+          );
+
       if (elements.companionEvolutionSeal) {
         elements.companionEvolutionSeal.textContent = evolutionIStatus;
-        elements.companionEvolutionSeal.classList.toggle("ready", evolutionIProgress.ready);
-        elements.companionEvolutionSeal.classList.toggle("sleeping", !evolutionIProgress.ready);
+        elements.companionEvolutionSeal.classList.toggle("ready", nextLayerReady);
+        elements.companionEvolutionSeal.classList.toggle("sleeping", !nextLayerReady);
       }
 
       if (elements.companionEvolutionHint) {
         elements.companionEvolutionHint.textContent = evolutionIHint;
-        elements.companionEvolutionHint.classList.toggle("ready", evolutionIProgress.ready);
+        elements.companionEvolutionHint.classList.toggle("ready", nextLayerReady);
       }
 
       if (elements.companionMoonlitFragments) {
@@ -1774,7 +1786,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 ? "A deeper lantern has opened within the current."
                 : (
                     isEvolutionIII && evolutionIIIUnlocked
-                      ? "The final lantern evolution has opened."
+                      ? "The final normal evolution has opened."
                       : (
                           isDormant && evolutionIUnlocked
                             ? "Previous form archived."
@@ -1794,7 +1806,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                                           )
                                         : (
                                             isApex && evolutionIIIUnlocked
-                                              ? "A final crest remains beyond the evolution path."
+                                              ? "A final crest remains beyond the normal evolution track."
                                               : slot.copy
                                           )
                                     )
