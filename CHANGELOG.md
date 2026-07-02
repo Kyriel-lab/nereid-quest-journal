@@ -1,5 +1,50 @@
 # Changelog
 
+## v2.0 — Moonlit Resonance UI Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added new `Moonlit Resonance` section below `Companion Evolution`.
+- Added two non-interactive placeholder branch cards:
+  - `Resonant Manifestation`
+  - `Apex Crest`
+- Clarified UI architecture:
+  - Companion Evolution = normal creature form track.
+  - Moonlit Resonance = special post-evolution branches.
+- Resonant Manifestation is presented as a persona branch, not an evolution form.
+- Apex Crest is presented as a crest layer beyond the normal evolution track, not Evolution IV.
+- Added responsive styling for the new Moonlit Resonance card grid.
+
+### Preserved
+
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution III Requirement Foundation from v1.6.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Resonant Manifestation unlock logic.
+- No Resonant Manifestation asset reveal.
+- No Resonant Manifestation ritual.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No Apex Crest asset reveal.
+- No fragment spending changes.
+- No Bond logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.9 — Evolution Track Completion Lock
 
 **Status:** Patch candidate.
