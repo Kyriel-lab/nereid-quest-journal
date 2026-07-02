@@ -2667,44 +2667,4 @@
   }
 }
 
-/* v2.1 — Resonant Manifestation State Foundation */
-.resonance-branch-name {
-  margin: 0 0 8px;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.resonance-branch-card.manifested {
-  border-color: rgba(104, 85, 156, 0.28);
-  background: rgba(250, 247, 255, 0.78);
-}
-
-.resonance-status.manifested {
-  color: var(--text);
-  background: rgba(246, 240, 252, 0.95);
-  border-color: rgba(104, 85, 156, 0.28);
-}
-
-/* v2.2a — Static Manifestation Requirement Copy */
-.static-resonance-signs {
-  display: grid;
-  gap: 6px;
-  margin-top: 12px;
-  padding: 11px 12px;
-  border: 1px solid rgba(117, 103, 150, 0.16);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.58);
-  color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.35;
-}
-
-.static-resonance-title {
-  color: var(--text);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 
