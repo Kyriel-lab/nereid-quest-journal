@@ -2685,4 +2685,25 @@
   border-color: rgba(104, 85, 156, 0.28);
 }
 
+/* v2.2 — Resonant Manifestation Requirement Signs */
+.resonance-branch-signs {
+  margin-top: 12px;
+}
+
+.resonance-branch-card.ready {
+  border-color: rgba(196, 153, 76, 0.36);
+  background: rgba(255, 251, 241, 0.82);
+}
+
+.resonance-status.ready {
+  color: var(--text);
+  background: rgba(255, 246, 223, 0.95);
+  border-color: rgba(196, 153, 76, 0.36);
+}
+
+.manifestation-signs {
+  margin-top: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+
 

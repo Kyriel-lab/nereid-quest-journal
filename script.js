@@ -226,6 +226,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         getProgress: (stats) => stats.moonlitFragments
       },
       {
+        id: "resonant-memory",
+        name: "Resonant Memory",
+        description: "Earn 21 Moonlit Fragments from perfect days.",
+        target: 21,
+        icon: "☌",
+        getProgress: (stats) => stats.moonlitFragments
+      },
+      {
         id: "korean-spark",
         name: "Korean Spark",
         description: "Complete 5 Study quests.",
@@ -355,6 +363,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       manifestationBranchName: document.getElementById("manifestationBranchName"),
       manifestationBranchCopy: document.getElementById("manifestationBranchCopy"),
       manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
+      manifestationBranchSigns: document.getElementById("manifestationBranchSigns"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -1082,9 +1091,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     
-    function renderMoonlitResonance() {
+    function renderMoonlitResonance(stats = getCurrentStats()) {
       const resonance = getLanternJellyResonanceState();
       const manifestationUnlocked = isLanternJellyManifestationUnlocked();
+      const manifestationProgress = getManifestationProgress(stats);
+      const manifestationReady = manifestationProgress.ready && !manifestationUnlocked;
 
       if (elements.manifestationBranchName) {
         elements.manifestationBranchName.textContent = resonance.manifestationName;
@@ -1097,13 +1108,23 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
 
       if (elements.manifestationBranchStatus) {
-        elements.manifestationBranchStatus.textContent = manifestationUnlocked ? "Manifested" : "Sleeping";
-        elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchStatus.textContent = manifestationUnlocked
+          ? "Manifested"
+          : (manifestationReady ? "Ready" : "Sleeping");
+        elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
+        elements.manifestationBranchStatus.classList.toggle("ready", manifestationReady);
         elements.manifestationBranchStatus.classList.toggle("manifested", manifestationUnlocked);
       }
 
+      if (elements.manifestationBranchSigns) {
+        elements.manifestationBranchSigns.innerHTML = manifestationUnlocked
+          ? ""
+          : createManifestationSignsMarkup(manifestationProgress);
+      }
+
       if (elements.manifestationBranchCard) {
-        elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
+        elements.manifestationBranchCard.classList.toggle("ready", manifestationReady);
         elements.manifestationBranchCard.classList.toggle("manifested", manifestationUnlocked);
       }
     }
@@ -1530,6 +1551,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       branchLabel: "Resonant Manifestation"
     };
 
+    const MANIFESTATION_REQUIREMENTS = {
+      bond: 900,
+      moonlitFragments: 10,
+      achievementId: "resonant-memory"
+    };
+
     function getAchievementState(achievementId) {
       if (typeof getAchievements === "function") {
         const achievements = getAchievements();
@@ -1762,6 +1789,68 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
 
     
+    function getManifestationProgress(stats) {
+      const currentStats = stats || getCurrentStats();
+      const bond = getLifetimeBondTotal(currentStats);
+      const moonlitLedger = getMoonlitFragmentLedger();
+      const moonlitFragments = moonlitLedger.available;
+      const achievementStats = calculateAchievementStats();
+      const resonantMemoryUnlocked = isAchievementUnlockedFromStats(MANIFESTATION_REQUIREMENTS.achievementId, achievementStats);
+      const evolutionIIIUnlocked = isLanternJellyEvolutionIIIUnlocked();
+
+      return {
+        evolutionIIIUnlocked,
+        bond,
+        bondRequired: MANIFESTATION_REQUIREMENTS.bond,
+        bondReady: bond >= MANIFESTATION_REQUIREMENTS.bond,
+        moonlitFragments,
+        moonlitFragmentsEarned: moonlitLedger.earned,
+        moonlitFragmentsSpent: moonlitLedger.spent,
+        moonlitFragmentsAvailable: moonlitLedger.available,
+        moonlitFragmentsRequired: MANIFESTATION_REQUIREMENTS.moonlitFragments,
+        moonlitFragmentsReady: moonlitFragments >= MANIFESTATION_REQUIREMENTS.moonlitFragments,
+        resonantMemoryUnlocked,
+        ready:
+          evolutionIIIUnlocked &&
+          bond >= MANIFESTATION_REQUIREMENTS.bond &&
+          moonlitFragments >= MANIFESTATION_REQUIREMENTS.moonlitFragments &&
+          resonantMemoryUnlocked
+      };
+    }
+
+    function createManifestationSignsMarkup(progress) {
+      const alignmentCopy = progress.ready
+        ? "Astrael Lanternveil is ready to manifest."
+        : "Astrael Lanternveil is still beyond the veil.";
+
+      return `
+        <div class="awakening-signs manifestation-signs ${progress.ready ? "ready" : "sleeping"}" aria-label="Resonant Manifestation requirement signs">
+          <span class="awakening-signs-title">Resonance Signs</span>
+          <span class="awakening-sign ${progress.evolutionIIIUnlocked ? "complete" : ""}">
+            <span>Evolution III</span>
+            <strong>${progress.evolutionIIIUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
+            <span>Bond</span>
+            <strong>${progress.bond} / ${progress.bondRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
+            <span>Moonlit Fragments</span>
+            <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-ledger">
+            Available ${progress.moonlitFragmentsAvailable} · Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
+          </span>
+          <span class="awakening-sign ${progress.resonantMemoryUnlocked ? "complete" : ""}">
+            <span>Resonant Memory</span>
+            <strong>${progress.resonantMemoryUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-alignment">${alignmentCopy}</span>
+        </div>
+      `;
+    }
+
+
     function renderEvolutionSeals(stats = getCurrentStats()) {
       const evolutionSealsList = elements.evolutionSealsList || document.getElementById("evolutionSealsList");
 
@@ -2105,7 +2194,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       safeRender("renderQuestLibrary", () => renderQuestLibrary());
       safeRender("renderProgress", () => renderProgress(stats));
       safeRender("renderCompanion", () => renderCompanion(stats));
-      safeRender("renderMoonlitResonance", () => renderMoonlitResonance());
+      safeRender("renderMoonlitResonance", () => renderMoonlitResonance(stats));
       safeRender("renderReward", () => renderReward(stats));
       safeRender("renderDailyEntry", () => renderDailyEntry(stats));
       safeRender("renderHistory", () => renderHistory());
