@@ -364,6 +364,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       manifestationBranchCopy: document.getElementById("manifestationBranchCopy"),
       manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
       manifestationBranchSigns: document.getElementById("manifestationBranchSigns"),
+      manifestationRitualButton: document.getElementById("manifestationRitualButton"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -550,6 +551,37 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
           moonlitFragments >= MANIFESTATION_REQUIREMENTS.moonlitFragments &&
           resonantMemoryUnlocked
       };
+    }
+
+    function canAwakenManifestation(stats = getCurrentStats()) {
+      const progress = getManifestationProgress(stats);
+
+      return progress.ready && !isLanternJellyManifestationUnlocked();
+    }
+
+    function awakenManifestation() {
+      const stats = getCurrentStats();
+      const progress = getManifestationProgress(stats);
+
+      if (!progress.ready || isLanternJellyManifestationUnlocked()) {
+        return;
+      }
+
+      const confirmed = window.confirm(
+        "Begin Resonant Manifestation?\n\nThis will spend 10 Moonlit Fragments and unlock Astrael Lanternveil."
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      state.spentMoonlitFragments = (state.spentMoonlitFragments || 0) + MANIFESTATION_REQUIREMENTS.moonlitFragments;
+      state.companionResonance = normalizeCompanionResonance(state.companionResonance);
+      state.companionResonance.lanternJelly.manifestationUnlocked = true;
+      state.companionResonance.lanternJelly.manifestationName = LANTERN_JELLY_MANIFESTATION.name;
+
+      saveState("Astrael Lanternveil manifested.");
+      renderAll();
     }
 
     function createManifestationSignsMarkup(progress) {
@@ -1185,6 +1217,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         elements.manifestationBranchSigns.innerHTML = manifestationUnlocked
           ? ""
           : createManifestationSignsMarkup(manifestationProgress);
+      }
+
+      if (elements.manifestationRitualButton) {
+        elements.manifestationRitualButton.hidden = !manifestationReady;
       }
 
       if (elements.manifestationBranchCard) {
@@ -2326,5 +2362,9 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     elements.saveButton.addEventListener("click", saveDay);
     elements.endButton.addEventListener("click", endDay);
     elements.resetButton.addEventListener("click", resetToday);
+
+    if (elements.manifestationRitualButton) {
+      elements.manifestationRitualButton.addEventListener("click", awakenManifestation);
+    }
 
     renderAll();

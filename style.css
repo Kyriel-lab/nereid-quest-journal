@@ -2775,4 +2775,10 @@
   margin-top: 0;
 }
 
+/* v3.1 — Manifestation Ritual */
+.manifestation-ritual-button {
+  margin-top: 12px;
+  align-self: flex-start;
+}
+
 

@@ -1,5 +1,61 @@
 # Changelog
 
+## v3.1 — Manifestation Ritual
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added Resonant Manifestation ritual for Astrael Lanternveil.
+- Added `canAwakenManifestation()`.
+- Added `awakenManifestation()`.
+- Added `Begin Resonant Manifestation` button.
+- The button appears only when Manifestation requirements are ready:
+  - Evolution III awakened
+  - Bond ≥ 900
+  - Available Moonlit Fragments ≥ 10
+  - Resonant Memory unlocked
+- Ritual confirmation spends 10 Moonlit Fragments and unlocks the Manifestation state.
+- After the ritual, Resonant Manifestation status becomes `Manifested`.
+- Manifestation state persists through the existing localStorage state.
+
+### Preserved
+
+- v3.0 Manifestation Dynamic Signs Activation.
+- v2.9 Manifestation Signs HTML Hook.
+- v2.8 Manifestation Signs Markup Helper.
+- v2.7 Manifestation Progress Helper.
+- v2.6 Manifestation Requirement Constant.
+- v2.5 Resonant Memory Achievement.
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Companion Card resonance badge.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v3.0 — Manifestation Dynamic Signs Activation
 
 **Status:** Patch candidate.
