@@ -1,5 +1,54 @@
 # Changelog
 
+## v1.5 — Evolution Track Cleanup & Canon Lock
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished and locked evolution track copy after the validated v1.4a baseline.
+- Clarified the current canon path:
+  - Dormant Form
+  - Evolution I
+  - Evolution II
+  - Evolution III sleeping
+  - Apex Crest later
+- Clarified Dormant Form as the revealed base form.
+- Clarified Evolution III as sealed with no requirements, button, ritual, or asset reveal.
+- Clarified Apex Crest as a final crest beyond the evolution path, not an Evolution IV form.
+- Removed older ambiguous user-facing phrasing where needed.
+
+### Stable Baseline Note
+
+- `v1.4a — Evolution II Requirement Source Hotfix` is the validated Evolution II baseline.
+- v1.5 does not change ritual, fragment, Bond, asset, or state logic.
+
+### Preserved
+
+- Evolution II Asset Integration from v1.4.
+- Evolution II Requirement Source Hotfix from v1.4a.
+- Evolution II Awakening Ritual from v1.3.
+- Evolution II Requirement Signs from v1.2.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution III requirements.
+- No Evolution III ritual.
+- No Evolution III asset.
+- No Apex Crest logic.
+- No Evolution I / II ritual logic changes.
+- No fragment logic changes.
+- No Bond logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.4a — Evolution II Requirement Source Hotfix
 
 **Status:** Patch candidate.

@@ -255,45 +255,45 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             label: "Dormant Form",
             status: "revealed",
             statusLabel: "Revealed",
-            copy: "Current form",
+            copy: "Current form in the evolution track.",
             asset: "assets/lantern-jelly-dormant.png",
-            hint: "Lantern Jelly is currently resting in its Dormant Form."
+            hint: "Dormant Form is the revealed base form of Lantern Jelly."
           },
           {
             id: "lantern-jelly-stage-1",
             label: "Sealed Evolution I",
             status: "sealed",
             statusLabel: "Sleeping",
-            copy: "A future form sleeps behind this seal.",
+            copy: "The first lantern awakening sleeps behind this seal.",
             icon: "✧",
-            hint: "This form is still sealed. Keep journaling to awaken it later."
+            hint: "This evolution is sealed. Keep journaling to awaken it later."
           },
           {
             id: "lantern-jelly-stage-2",
             label: "Sealed Evolution II",
             status: "sealed",
             statusLabel: "Sleeping",
-            copy: "The next tide of growth is hidden.",
+            copy: "The second lantern awakening is hidden.",
             icon: "✧",
-            hint: "This form is still sealed. Keep journaling to awaken it later."
+            hint: "This evolution is sealed. Keep journaling to awaken it later."
           },
           {
             id: "lantern-jelly-stage-3",
             label: "Sealed Evolution III",
             status: "sealed",
             statusLabel: "Sleeping",
-            copy: "A deeper awakening remains unrevealed.",
+            copy: "The third lantern remains sealed.",
             icon: "✧",
-            hint: "This form is still sealed. Keep journaling to awaken it later."
+            hint: "This evolution is sealed. Keep journaling to awaken it later."
           },
           {
             id: "lantern-jelly-apex",
             label: "Apex Crest",
             status: "apex",
             statusLabel: "Later",
-            copy: "A distant crest beyond the current archive.",
+            copy: "A final crest remains beyond the evolution path.",
             icon: "☾",
-            hint: "The Apex Crest remains beyond the current archive."
+            hint: "Apex Crest is a final crest, not an Evolution IV form."
           }
         ]
       },
