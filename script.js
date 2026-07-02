@@ -2,7 +2,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     const LANTERN_JELLY_ASSETS = {
       dormant: "assets/lantern-jelly-dormant.png",
       evolution1: "assets/lantern-jelly-evolution-1.png",
-      evolution2: "assets/lantern-jelly-evolution-2.png"
+      evolution2: "assets/lantern-jelly-evolution-2.png",
+      evolution3: "assets/lantern-jelly-evolution-3.png"
     };
 
 
@@ -943,7 +944,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (elements.companionRole) {
         elements.companionRole.textContent = evolutionIIIUnlocked
-          ? "Evolution III · The final lantern evolution has awakened. Image pending future asset pass."
+          ? "Evolution III · The final lantern evolution has awakened."
           : (
               evolutionIIUnlocked
                 ? "Evolution II · A deeper lantern form has awakened."
@@ -956,12 +957,16 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       }
 
       if (elements.companionImage) {
-        const nextImage = evolutionIIUnlocked
-          ? LANTERN_JELLY_ASSETS.evolution2
+        const nextImage = evolutionIIIUnlocked
+          ? LANTERN_JELLY_ASSETS.evolution3
           : (
-              evolutionIUnlocked
-                ? LANTERN_JELLY_ASSETS.evolution1
-                : LANTERN_JELLY_ASSETS.dormant
+              evolutionIIUnlocked
+                ? LANTERN_JELLY_ASSETS.evolution2
+                : (
+                    evolutionIUnlocked
+                      ? LANTERN_JELLY_ASSETS.evolution1
+                      : LANTERN_JELLY_ASSETS.dormant
+                  )
             );
 
         if (elements.companionImage.getAttribute("src") !== nextImage) {
@@ -969,7 +974,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         }
 
         elements.companionImage.alt = evolutionIIIUnlocked
-          ? "Lantern Jelly Evolution III awakened form using Evolution II image pending asset integration"
+          ? "Lantern Jelly Evolution III awakened form"
           : (
               evolutionIIUnlocked
                 ? "Lantern Jelly Evolution II awakened form"
@@ -1769,7 +1774,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                 ? "A deeper lantern has opened within the current."
                 : (
                     isEvolutionIII && evolutionIIIUnlocked
-                      ? "The final lantern evolution has opened. Image pending future asset pass."
+                      ? "The final lantern evolution has opened."
                       : (
                           isDormant && evolutionIUnlocked
                             ? "Previous form archived."
@@ -1822,7 +1827,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                     isEvolutionIII && evolutionIIUnlocked
                       ? (
                           evolutionIIIUnlocked
-                            ? "Evolution III has awakened. Its image will be added in a later asset pass."
+                            ? "Evolution III has awakened."
                             : (
                                 evolutionIIIProgress.ready
                                   ? "Evolution III is ready. Third awakening ritual can begin."
@@ -1855,7 +1860,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                   )
             );
         const slotAsset = isEvolutionIII && evolutionIIIUnlocked
-          ? LANTERN_JELLY_ASSETS.evolution2
+          ? LANTERN_JELLY_ASSETS.evolution3
           : (
               isEvolutionII && evolutionIIUnlocked
                 ? LANTERN_JELLY_ASSETS.evolution2

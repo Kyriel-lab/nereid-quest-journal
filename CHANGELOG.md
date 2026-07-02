@@ -1,5 +1,49 @@
 # Changelog
 
+## v1.8 — Evolution III Asset Integration
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Integrated official Lantern Jelly Evolution III asset:
+  - Source: `Nereid_Evolution_III_Asset_Pack_v1.0/01_Lantern_Jelly_EvoIII_Astral_Abyss_Oracle.png`
+  - App path: `assets/lantern-jelly-evolution-3.png`
+- Added Evolution III asset mapping to `LANTERN_JELLY_ASSETS`.
+- Companion Card now switches to Evolution III image after Evolution III awakens.
+- Evolution III slot now reveals the Evolution III image after unlock.
+- Removed Evolution III placeholder copy:
+  - `Image pending future asset pass.`
+- Evolution III awakened copy is now:
+  - `Evolution III · The final lantern evolution has awakened.`
+  - `The final lantern evolution has opened.`
+
+### Preserved
+
+- Evolution III Awakening Ritual from v1.7.
+- Evolution III Requirement Foundation from v1.6.
+- Evolution Track Cleanup & Canon Lock from v1.5.
+- Evolution II Requirement Source Hotfix from v1.4a.
+- Evolution II Asset Integration from v1.4.
+- Evolution I Asset Integration from v1.0.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution III ritual logic changes.
+- No fragment spending changes.
+- No Bond logic changes.
+- No Evolution I / II changes.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No Resonant Manifestation UI.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.7 — Evolution III Awakening Ritual
 
 **Status:** Patch candidate.
