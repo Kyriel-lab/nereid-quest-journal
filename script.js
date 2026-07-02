@@ -363,6 +363,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       manifestationBranchName: document.getElementById("manifestationBranchName"),
       manifestationBranchCopy: document.getElementById("manifestationBranchCopy"),
       manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
+      manifestationBranchSigns: document.getElementById("manifestationBranchSigns"),
       bondValue: document.getElementById("bondValue"),
       expValue: document.getElementById("expValue"),
       rewardCard: document.getElementById("rewardCard"),
@@ -1154,9 +1155,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
     
-    function renderMoonlitResonance() {
+    function renderMoonlitResonance(stats = getCurrentStats()) {
       const resonance = getLanternJellyResonanceState();
       const manifestationUnlocked = isLanternJellyManifestationUnlocked();
+      const manifestationProgress = getManifestationProgress(stats);
+      const manifestationReady = manifestationProgress.ready && !manifestationUnlocked;
 
       if (elements.manifestationBranchName) {
         elements.manifestationBranchName.textContent = resonance.manifestationName;
@@ -1165,17 +1168,28 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       if (elements.manifestationBranchCopy) {
         elements.manifestationBranchCopy.textContent = manifestationUnlocked
           ? "Lantern Jelly’s human-like spirit persona has manifested through deep resonance."
-          : "A human-like spirit persona expressed through Lantern Jelly’s deepest resonance.";
+          : "Astrael Lanternveil is a human-like spirit persona expressed through Lantern Jelly’s deepest resonance. It does not replace the creature form.";
       }
 
       if (elements.manifestationBranchStatus) {
-        elements.manifestationBranchStatus.textContent = manifestationUnlocked ? "Manifested" : "Sleeping";
-        elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchStatus.textContent = manifestationUnlocked
+          ? "Manifested"
+          : (manifestationReady ? "Ready" : "Sleeping");
+        elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
+        elements.manifestationBranchStatus.classList.toggle("ready", manifestationReady);
         elements.manifestationBranchStatus.classList.toggle("manifested", manifestationUnlocked);
       }
 
+      if (elements.manifestationBranchSigns) {
+        elements.manifestationBranchSigns.hidden = manifestationUnlocked;
+        elements.manifestationBranchSigns.innerHTML = manifestationUnlocked
+          ? ""
+          : createManifestationSignsMarkup(manifestationProgress);
+      }
+
       if (elements.manifestationBranchCard) {
-        elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked);
+        elements.manifestationBranchCard.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
+        elements.manifestationBranchCard.classList.toggle("ready", manifestationReady);
         elements.manifestationBranchCard.classList.toggle("manifested", manifestationUnlocked);
       }
     }
@@ -2183,7 +2197,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       safeRender("renderQuestLibrary", () => renderQuestLibrary());
       safeRender("renderProgress", () => renderProgress(stats));
       safeRender("renderCompanion", () => renderCompanion(stats));
-      safeRender("renderMoonlitResonance", () => renderMoonlitResonance());
+      safeRender("renderMoonlitResonance", () => renderMoonlitResonance(stats));
       safeRender("renderReward", () => renderReward(stats));
       safeRender("renderDailyEntry", () => renderDailyEntry(stats));
       safeRender("renderHistory", () => renderHistory());

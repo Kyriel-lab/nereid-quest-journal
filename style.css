@@ -2750,4 +2750,29 @@
   background: rgba(255, 255, 255, 0.62);
 }
 
+/* v2.9 — Manifestation Signs HTML Hook */
+.resonance-branch-signs[hidden] {
+  display: none;
+}
+
+.resonance-branch-signs {
+  margin-top: 12px;
+}
+
+/* v3.0 — Manifestation Dynamic Signs Activation */
+.resonance-branch-card.ready {
+  border-color: rgba(196, 153, 76, 0.36);
+  background: rgba(255, 251, 241, 0.82);
+}
+
+.resonance-status.ready {
+  color: var(--text);
+  background: rgba(255, 246, 223, 0.95);
+  border-color: rgba(196, 153, 76, 0.36);
+}
+
+.resonance-branch-signs .awakening-signs {
+  margin-top: 0;
+}
+
 

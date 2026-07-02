@@ -1,5 +1,121 @@
 # Changelog
 
+## v3.0 — Manifestation Dynamic Signs Activation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Activated dynamic Resonant Manifestation requirement signs in the Moonlit Resonance card.
+- Connected the hidden `manifestationBranchSigns` hook to:
+  - `getManifestationProgress()`
+  - `createManifestationSignsMarkup()`
+- Resonant Manifestation card now updates status dynamically:
+  - `Sleeping`
+  - `Ready`
+  - `Manifested` later when future ritual logic exists
+- The dynamic signs show:
+  - Evolution III
+  - Bond
+  - Moonlit Fragments
+  - Fragment ledger
+  - Resonant Memory
+  - Alignment copy
+- Static planned copy remains in place as context; dynamic signs now provide the actual readiness view.
+
+### Preserved
+
+- v2.9 Manifestation Signs HTML Hook.
+- v2.8 Manifestation Signs Markup Helper.
+- v2.7 Manifestation Progress Helper.
+- v2.6 Manifestation Requirement Constant.
+- v2.5 Resonant Memory Achievement.
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
+## v2.9 — Manifestation Signs HTML Hook
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added hidden HTML hook inside the Resonant Manifestation card:
+  - `manifestationBranchSigns`
+- Added minimal CSS for the future signs container.
+- The hook is hidden by default and does not change current Moonlit Resonance behavior.
+- This patch only prepares the UI insertion point for future dynamic Resonance Signs.
+
+### Preserved
+
+- v2.8 Manifestation Signs Markup Helper.
+- v2.7 Manifestation Progress Helper.
+- v2.6 Manifestation Requirement Constant.
+- v2.5 Resonant Memory Achievement.
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.2a Static Manifestation Requirement Copy.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No JavaScript logic changes from v2.8.
+- No renderAll changes.
+- No renderMoonlitResonance changes.
+- No element refs added.
+- No calls to `getManifestationProgress()`.
+- No calls to `createManifestationSignsMarkup()`.
+- No dynamic Manifestation signs rendered in UI.
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.8 — Manifestation Signs Markup Helper
 
 **Status:** Patch candidate.
