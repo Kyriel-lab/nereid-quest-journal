@@ -1,5 +1,53 @@
 # Changelog
 
+## v1.6 — Evolution III Requirement Foundation
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added `Moonlit Constellation` achievement:
+  - Earn 14 Moonlit Fragments from perfect days.
+- Added Evolution III requirement foundation:
+  - Evolution II awakened
+  - Bond 600
+  - Available Moonlit Fragments 8
+  - Moonlit Constellation unlocked
+- Added Evolution III progress helper and signs markup.
+- Evolution III slot now shows requirement signs after Evolution II awakens.
+- Companion Card can now show:
+  - `Evolution III sleeping`
+  - `Evolution III ready`
+- No Evolution III ritual button is added yet.
+
+### Preserved
+
+- Evolution Track Cleanup & Canon Lock from v1.5.
+- Evolution II Requirement Source Hotfix from v1.4a.
+- Evolution II Asset Integration from v1.4.
+- Evolution II Awakening Ritual from v1.3.
+- Evolution II Requirement Signs from v1.2.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution III ritual.
+- No Evolution III button.
+- No Evolution III unlock state changes.
+- No Evolution III asset integration.
+- No Apex Crest logic.
+- No Evolution I / II ritual logic changes.
+- No fragment logic changes.
+- No Bond logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.5 — Evolution Track Cleanup & Canon Lock
 
 **Status:** Patch candidate.

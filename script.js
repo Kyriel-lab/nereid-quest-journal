@@ -217,6 +217,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         getProgress: (stats) => stats.moonlitFragments
       },
       {
+        id: "moonlit-constellation",
+        name: "Moonlit Constellation",
+        description: "Earn 14 Moonlit Fragments from perfect days.",
+        target: 14,
+        icon: "✺",
+        getProgress: (stats) => stats.moonlitFragments
+      },
+      {
         id: "korean-spark",
         name: "Korean Spark",
         description: "Complete 5 Study quests.",
@@ -433,6 +441,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     function isLanternJellyEvolutionIIUnlocked() {
       return getLanternJellyEvolutionState().unlockedForms.includes("evolution-2");
+    }
+
+    function isLanternJellyEvolutionIIIUnlocked() {
+      return getLanternJellyEvolutionState().unlockedForms.includes("evolution-3");
     }
 
     function canAwakenEvolutionII(stats = getCurrentStats()) {
@@ -920,15 +932,20 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       const evolutionIProgress = getEvolutionIProgress(stats);
       const evolutionIIProgress = getEvolutionIIProgress(stats);
+      const evolutionIIIProgress = getEvolutionIIIProgress(stats);
       const evolutionIStatus = evolutionIIUnlocked
-        ? "Evolution III sleeping"
+        ? (evolutionIIIProgress.ready ? "Evolution III ready" : "Evolution III sleeping")
         : (
             evolutionIUnlocked
               ? (evolutionIIProgress.ready ? "Evolution II ready" : "Evolution II sleeping")
               : (evolutionIProgress.ready ? "Evolution I ready" : "Evolution I sleeping")
           );
       const evolutionIHint = evolutionIIUnlocked
-        ? "The third lantern remains sealed."
+        ? (
+            evolutionIIIProgress.ready
+              ? "The third lantern is ready to awaken."
+              : "The third lantern is still gathering light."
+          )
         : (
             evolutionIUnlocked
               ? (
@@ -1371,6 +1388,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       achievementId: "lantern-rite"
     };
 
+    const EVOLUTION_III_REQUIREMENTS = {
+      bond: 600,
+      moonlitFragments: 8,
+      achievementId: "moonlit-constellation"
+    };
+
     function getAchievementState(achievementId) {
       if (typeof getAchievements === "function") {
         const achievements = getAchievements();
@@ -1540,6 +1563,67 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       `;
     }
 
+    function getEvolutionIIIProgress(stats) {
+      const currentStats = stats || getCurrentStats();
+      const bond = getLifetimeBondTotal(currentStats);
+      const moonlitLedger = getMoonlitFragmentLedger();
+      const moonlitFragments = moonlitLedger.available;
+      const achievementStats = calculateAchievementStats();
+      const moonlitConstellationUnlocked = isAchievementUnlockedFromStats(EVOLUTION_III_REQUIREMENTS.achievementId, achievementStats);
+      const evolutionIIUnlocked = isLanternJellyEvolutionIIUnlocked();
+
+      return {
+        evolutionIIUnlocked,
+        bond,
+        bondRequired: EVOLUTION_III_REQUIREMENTS.bond,
+        bondReady: bond >= EVOLUTION_III_REQUIREMENTS.bond,
+        moonlitFragments,
+        moonlitFragmentsEarned: moonlitLedger.earned,
+        moonlitFragmentsSpent: moonlitLedger.spent,
+        moonlitFragmentsAvailable: moonlitLedger.available,
+        moonlitFragmentsRequired: EVOLUTION_III_REQUIREMENTS.moonlitFragments,
+        moonlitFragmentsReady: moonlitFragments >= EVOLUTION_III_REQUIREMENTS.moonlitFragments,
+        moonlitConstellationUnlocked,
+        ready:
+          evolutionIIUnlocked &&
+          bond >= EVOLUTION_III_REQUIREMENTS.bond &&
+          moonlitFragments >= EVOLUTION_III_REQUIREMENTS.moonlitFragments &&
+          moonlitConstellationUnlocked
+      };
+    }
+
+    function createEvolutionIIISignsMarkup(progress) {
+      const alignmentCopy = progress.ready
+        ? "The third lantern is ready to awaken."
+        : "The third lantern is still gathering light.";
+
+      return `
+        <div class="awakening-signs evolution-iii ${progress.ready ? "ready" : "sleeping"}" aria-label="Evolution III requirement signs">
+          <span class="awakening-signs-title">Evolution III Signs</span>
+          <span class="awakening-sign ${progress.evolutionIIUnlocked ? "complete" : ""}">
+            <span>Evolution II</span>
+            <strong>${progress.evolutionIIUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
+            <span>Bond</span>
+            <strong>${progress.bond} / ${progress.bondRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
+            <span>Moonlit Fragments</span>
+            <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-ledger">
+            Available ${progress.moonlitFragmentsAvailable} · Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
+          </span>
+          <span class="awakening-sign ${progress.moonlitConstellationUnlocked ? "complete" : ""}">
+            <span>Moonlit Constellation</span>
+            <strong>${progress.moonlitConstellationUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-signs-copy">${alignmentCopy}</span>
+        </div>
+      `;
+    }
+
 
     
     function renderEvolutionSeals(stats = getCurrentStats()) {
@@ -1557,9 +1641,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       const evolutionIProgress = getEvolutionIProgress(stats);
       const evolutionIIProgress = getEvolutionIIProgress(stats);
+      const evolutionIIIProgress = getEvolutionIIIProgress(stats);
 
       const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
       const evolutionIIUnlocked = isLanternJellyEvolutionIIUnlocked();
+      const evolutionIIIUnlocked = isLanternJellyEvolutionIIIUnlocked();
 
       const slotsMarkup = active.slots.map((slot) => {
         const isDormant = slot.id === "lantern-jelly-dormant";
@@ -1576,7 +1662,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                       ? "awakened"
                       : (evolutionIIProgress.ready ? "ready" : "sealed")
                   )
-                : slot.status
+                : (
+                    isEvolutionIII && evolutionIIUnlocked
+                      ? (evolutionIIIProgress.ready ? "ready" : "sealed")
+                      : slot.status
+                  )
             );
         const statusLabel = isEvolutionI
           ? (evolutionIUnlocked ? "Awakened" : (evolutionIProgress.ready ? "Ready" : slot.statusLabel))
@@ -1587,7 +1677,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                       ? "Awakened"
                       : (evolutionIIProgress.ready ? "Ready" : "Sleeping")
                   )
-                : slot.statusLabel
+                : (
+                    isEvolutionIII && evolutionIIUnlocked
+                      ? (evolutionIIIProgress.ready ? "Ready" : "Sleeping")
+                      : slot.statusLabel
+                  )
             );
         const slotLabel = isEvolutionI && evolutionIUnlocked
           ? "Evolution I"
@@ -1613,7 +1707,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                               )
                             : (
                                 isEvolutionIII && evolutionIIUnlocked
-                                  ? "The third lantern remains sealed."
+                                  ? (
+                                      evolutionIIIProgress.ready
+                                        ? "The third lantern is ready to awaken."
+                                        : "The third lantern is still gathering light."
+                                    )
                                   : slot.copy
                               )
                         )
@@ -1641,13 +1739,22 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                         )
                   )
                 : (
-                    isDormant && evolutionIUnlocked
-                      ? "Dormant Form remains revealed in the archive."
-                      : slot.hint
+                    isEvolutionIII && evolutionIIUnlocked
+                      ? (
+                          evolutionIIIProgress.ready
+                            ? "Evolution III is ready, but its ritual will be added later."
+                            : "Evolution III requirements are forming."
+                        )
+                      : (
+                          isDormant && evolutionIUnlocked
+                            ? "Dormant Form remains revealed in the archive."
+                            : slot.hint
+                        )
                   )
             );
         const awakeningMarkup = isEvolutionI && !evolutionIUnlocked ? createAwakeningSignsMarkup(evolutionIProgress) : "";
         const evolutionIIMarkup = isEvolutionII && evolutionIUnlocked && !evolutionIIUnlocked ? createEvolutionIISignsMarkup(evolutionIIProgress) : "";
+        const evolutionIIIMarkup = isEvolutionIII && evolutionIIUnlocked && !evolutionIIIUnlocked ? createEvolutionIIISignsMarkup(evolutionIIIProgress) : "";
         const ritualMarkup = isEvolutionI && !evolutionIUnlocked && evolutionIProgress.ready
           ? `<span class="ritual-button" role="button" tabindex="0" data-ritual="evolution-1">Begin Awakening Ritual</span>`
           : (
@@ -1673,6 +1780,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
             <span class="evolution-slot-copy">${slotCopy}</span>
             ${awakeningMarkup}
             ${evolutionIIMarkup}
+            ${evolutionIIIMarkup}
             ${ritualMarkup}
             <span class="evolution-slot-status ${slotStatus}">${statusLabel}</span>
           </button>

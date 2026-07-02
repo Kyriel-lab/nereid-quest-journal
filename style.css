@@ -2539,4 +2539,15 @@
   object-fit: cover;
 }
 
+/* v1.6 — Evolution III Requirement Foundation */
+.awakening-signs.evolution-iii {
+  border-color: rgba(92, 72, 130, 0.22);
+  background: rgba(247, 244, 252, 0.74);
+}
+
+.awakening-signs.evolution-iii.ready {
+  border-color: rgba(170, 131, 46, 0.42);
+  background: rgba(255, 248, 227, 0.84);
+}
+
 
