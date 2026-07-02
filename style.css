@@ -2707,4 +2707,32 @@
   text-transform: uppercase;
 }
 
+/* v2.3 — Resonant Manifestation Static Copy Polish */
+.static-resonance-signs {
+  gap: 7px;
+  padding: 12px 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(248, 245, 255, 0.52));
+}
+
+.static-resonance-signs > span:not(.static-resonance-title) {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.static-resonance-signs > span:not(.static-resonance-title)::before {
+  content: "✧";
+  color: var(--accent);
+  font-size: 0.72rem;
+  opacity: 0.82;
+}
+
+.static-resonance-signs small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
 

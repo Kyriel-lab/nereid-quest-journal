@@ -1,5 +1,53 @@
 # Changelog
 
+## v2.3 — Resonant Manifestation Static Copy Polish
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished static Resonant Manifestation card copy.
+- Clarified that `Astrael Lanternveil` is a human-like spirit persona and does not replace Lantern Jelly’s creature form.
+- Polished static requirement preview wording:
+  - `Planned Resonance Signs`
+  - `Resonant Memory milestone`
+  - `Static preview only · no ritual yet`
+- Added light CSS polish for the static requirement block.
+
+### Preserved
+
+- v2.2b Resonance Initialization Hotfix.
+- v2.2a Static Manifestation Requirement Copy.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No JavaScript logic changes from v2.2b.
+- No Achievements changes.
+- No dynamic Manifestation requirement calculation.
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.2b — Resonance Initialization Hotfix
 
 **Status:** Patch candidate.
