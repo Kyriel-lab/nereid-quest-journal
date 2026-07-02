@@ -1399,6 +1399,32 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
     }
 
 
+    function getLifetimeBondTotal(currentStats = getCurrentStats()) {
+      const todayBond = Math.max(0, Number(currentStats?.bond) || 0);
+      const history = Array.isArray(state.history) ? state.history : [];
+      const historyBond = history.reduce((total, entry) => {
+        if (!entry || !entry.totalCount) {
+          return total;
+        }
+
+        return total + Math.max(0, Number(entry.bond) || 0);
+      }, 0);
+
+      return historyBond + todayBond;
+    }
+
+    function isAchievementUnlockedFromStats(achievementId, stats = calculateAchievementStats()) {
+      const achievement = ACHIEVEMENTS.find((item) => item.id === achievementId);
+
+      if (!achievement) {
+        return false;
+      }
+
+      const progress = Math.max(0, Number(achievement.getProgress(stats)) || 0);
+      return progress >= achievement.target;
+    }
+
+
     function getEvolutionIProgress(stats) {
       const currentStats = stats || getCurrentStats();
       const bond = Math.max(0, currentStats?.bond || 0);
@@ -1455,11 +1481,11 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
     function getEvolutionIIProgress(stats) {
       const currentStats = stats || getCurrentStats();
-      const bond = Math.max(0, currentStats?.bond || 0);
+      const bond = getLifetimeBondTotal(currentStats);
       const moonlitLedger = getMoonlitFragmentLedger();
       const moonlitFragments = moonlitLedger.available;
-      const lanternRite = getAchievementState(EVOLUTION_II_REQUIREMENTS.achievementId);
-      const lanternRiteUnlocked = Boolean(lanternRite?.unlocked);
+      const achievementStats = calculateAchievementStats();
+      const lanternRiteUnlocked = isAchievementUnlockedFromStats(EVOLUTION_II_REQUIREMENTS.achievementId, achievementStats);
       const evolutionIUnlocked = isLanternJellyEvolutionIUnlocked();
 
       return {

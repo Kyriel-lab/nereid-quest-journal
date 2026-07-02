@@ -1,5 +1,44 @@
 # Changelog
 
+## v1.4a — Evolution II Requirement Source Hotfix
+
+**Status:** Patch candidate.
+
+### Fixed
+
+- Fixed Evolution II Bond requirement source.
+  - Evolution II now checks lifetime Bond from saved history plus today's completed Bond.
+  - Bond is a milestone requirement and is not spent by evolution rituals.
+- Fixed Lantern Rite requirement source.
+  - Evolution II now checks `Lantern Rite` directly from lifetime achievement stats.
+  - `Lantern Rite` unlocks from 7 earned Moonlit Fragments in history.
+- Preserved Moonlit Fragment spending behavior:
+  - Evolution II still spends only 5 available Moonlit Fragments.
+  - Bond is never consumed.
+
+### Preserved
+
+- Evolution II Asset Integration from v1.4.
+- Evolution II Awakening Ritual from v1.3.
+- Evolution II Requirement Signs from v1.2.
+- Evolution I Asset Integration from v1.0.
+- Evolution I Awakening Ritual from v0.9b.
+- Moonlit Fragment Spend Ledger from v0.9a.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Evolution II asset changes.
+- No Evolution II ritual flow changes.
+- No fragment earning logic changes.
+- No evolution state shape changes.
+- No Evolution III requirement logic.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v1.4 — Evolution II Asset Integration
 
 **Status:** Patch candidate.
