@@ -2803,4 +2803,18 @@
   object-fit: cover;
 }
 
+/* v3.3 — Companion Card Resonance Badge */
+.companion-resonance-status-row[hidden] {
+  display: none;
+}
+
+.companion-resonance-status-row {
+  border-color: rgba(168, 134, 74, 0.22);
+  background: rgba(255, 250, 238, 0.72);
+}
+
+.companion-resonance-badge {
+  color: var(--text);
+}
+
 

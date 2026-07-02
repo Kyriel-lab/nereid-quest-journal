@@ -356,6 +356,8 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       companionRole: document.querySelector(".companion-role"),
       companionImage: document.getElementById("companionImage"),
       companionCurrentForm: document.getElementById("companionCurrentForm"),
+      companionResonanceRow: document.getElementById("companionResonanceRow"),
+      companionResonanceBadge: document.getElementById("companionResonanceBadge"),
       companionEvolutionSeal: document.getElementById("companionEvolutionSeal"),
       companionEvolutionHint: document.getElementById("companionEvolutionHint"),
       companionMoonlitFragments: document.getElementById("companionMoonlitFragments"),
@@ -1075,6 +1077,19 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
                       : "Dormant Form · Revealed"
                   )
             );
+      }
+
+      const resonanceState = getLanternJellyResonanceState();
+      const manifestationUnlocked = isLanternJellyManifestationUnlocked();
+
+      if (elements.companionResonanceRow) {
+        elements.companionResonanceRow.hidden = !manifestationUnlocked;
+      }
+
+      if (elements.companionResonanceBadge) {
+        elements.companionResonanceBadge.textContent = manifestationUnlocked
+          ? `Manifested · ${resonanceState.manifestationName}`
+          : "";
       }
 
       if (elements.companionRole) {
