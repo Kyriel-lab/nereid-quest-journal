@@ -1,5 +1,54 @@
 # Changelog
 
+## v2.5 — Resonant Memory Achievement
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added standalone achievement:
+  - `Resonant Memory`
+  - Earn 21 Moonlit Fragments from perfect days.
+- Resonant Memory uses the existing Moonlit Fragment earned count.
+- This patch only adds the achievement milestone and does not connect it to Manifestation readiness yet.
+
+### Preserved
+
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.2a Static Manifestation Requirement Copy.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No renderAll changes.
+- No Manifestation requirement calculation.
+- No `MANIFESTATION_REQUIREMENTS`.
+- No `getManifestationProgress()`.
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.4 — Apex Crest Unlock Position Copy
 
 **Status:** Patch candidate.

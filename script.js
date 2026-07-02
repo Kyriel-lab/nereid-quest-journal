@@ -226,6 +226,14 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         getProgress: (stats) => stats.moonlitFragments
       },
       {
+        id: "resonant-memory",
+        name: "Resonant Memory",
+        description: "Earn 21 Moonlit Fragments from perfect days.",
+        target: 21,
+        icon: "☌",
+        getProgress: (stats) => stats.moonlitFragments
+      },
+      {
         id: "korean-spark",
         name: "Korean Spark",
         description: "Complete 5 Study quests.",
