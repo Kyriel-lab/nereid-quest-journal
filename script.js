@@ -519,6 +519,38 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       renderAll();
     }
 
+    function getManifestationProgress(stats) {
+      const currentStats = stats || getCurrentStats();
+      const bond = getLifetimeBondTotal(currentStats);
+      const moonlitLedger = getMoonlitFragmentLedger();
+      const moonlitFragments = moonlitLedger.available;
+      const achievementStats = calculateAchievementStats();
+      const resonantMemoryUnlocked = isAchievementUnlockedFromStats(
+        MANIFESTATION_REQUIREMENTS.achievementId,
+        achievementStats
+      );
+      const evolutionIIIUnlocked = isLanternJellyEvolutionIIIUnlocked();
+
+      return {
+        evolutionIIIUnlocked,
+        bond,
+        bondRequired: MANIFESTATION_REQUIREMENTS.bond,
+        bondReady: bond >= MANIFESTATION_REQUIREMENTS.bond,
+        moonlitFragments,
+        moonlitFragmentsEarned: moonlitLedger.earned,
+        moonlitFragmentsSpent: moonlitLedger.spent,
+        moonlitFragmentsAvailable: moonlitLedger.available,
+        moonlitFragmentsRequired: MANIFESTATION_REQUIREMENTS.moonlitFragments,
+        moonlitFragmentsReady: moonlitFragments >= MANIFESTATION_REQUIREMENTS.moonlitFragments,
+        resonantMemoryUnlocked,
+        ready:
+          evolutionIIIUnlocked &&
+          bond >= MANIFESTATION_REQUIREMENTS.bond &&
+          moonlitFragments >= MANIFESTATION_REQUIREMENTS.moonlitFragments &&
+          resonantMemoryUnlocked
+      };
+    }
+
     function canAwakenEvolutionIII(stats = getCurrentStats()) {
       const progress = getEvolutionIIIProgress(stats);
 

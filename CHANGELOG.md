@@ -1,5 +1,60 @@
 # Changelog
 
+## v2.7 — Manifestation Progress Helper
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Added standalone `getManifestationProgress()` helper for Astrael Lanternveil.
+- The helper calculates:
+  - Evolution III awakened
+  - Lifetime Bond progress
+  - Available / earned / spent Moonlit Fragments
+  - Resonant Memory unlocked
+  - Manifestation readiness
+- The helper uses the existing `MANIFESTATION_REQUIREMENTS` constant.
+- This patch only adds the helper and does not connect it to Moonlit Resonance UI yet.
+
+### Preserved
+
+- v2.6 Manifestation Requirement Constant.
+- v2.5 Resonant Memory Achievement.
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.2a Static Manifestation Requirement Copy.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No renderAll changes.
+- No renderMoonlitResonance changes.
+- No dynamic Manifestation signs.
+- No `createManifestationSignsMarkup()`.
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.6 — Manifestation Requirement Constant
 
 **Status:** Patch candidate.
