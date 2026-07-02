@@ -2745,4 +2745,9 @@
   content: "✦";
 }
 
+/* v2.8 — Manifestation Signs Markup Helper */
+.manifestation-signs {
+  background: rgba(255, 255, 255, 0.62);
+}
+
 

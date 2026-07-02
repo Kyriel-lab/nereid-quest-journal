@@ -551,6 +551,38 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       };
     }
 
+    function createManifestationSignsMarkup(progress) {
+      const alignmentCopy = progress.ready
+        ? "Astrael Lanternveil is ready to manifest."
+        : "Astrael Lanternveil is still beyond the veil.";
+
+      return `
+        <div class="awakening-signs manifestation-signs ${progress.ready ? "ready" : "sleeping"}" aria-label="Resonant Manifestation requirement signs">
+          <span class="awakening-signs-title">Resonance Signs</span>
+          <span class="awakening-sign ${progress.evolutionIIIUnlocked ? "complete" : ""}">
+            <span>Evolution III</span>
+            <strong>${progress.evolutionIIIUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-sign ${progress.bondReady ? "complete" : ""}">
+            <span>Bond</span>
+            <strong>${progress.bond} / ${progress.bondRequired}</strong>
+          </span>
+          <span class="awakening-sign ${progress.moonlitFragmentsReady ? "complete" : ""}">
+            <span>Moonlit Fragments</span>
+            <strong>${progress.moonlitFragmentsAvailable} / ${progress.moonlitFragmentsRequired}</strong>
+          </span>
+          <span class="awakening-ledger">
+            Available ${progress.moonlitFragmentsAvailable} · Earned ${progress.moonlitFragmentsEarned} · Spent ${progress.moonlitFragmentsSpent}
+          </span>
+          <span class="awakening-sign ${progress.resonantMemoryUnlocked ? "complete" : ""}">
+            <span>Resonant Memory</span>
+            <strong>${progress.resonantMemoryUnlocked ? "✓" : "Sleeping"}</strong>
+          </span>
+          <span class="awakening-alignment">${alignmentCopy}</span>
+        </div>
+      `;
+    }
+
     function canAwakenEvolutionIII(stats = getCurrentStats()) {
       const progress = getEvolutionIIIProgress(stats);
 
