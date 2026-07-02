@@ -1,5 +1,51 @@
 # Changelog
 
+## v2.2a — Static Manifestation Requirement Copy
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Replaces the rejected dynamic v2.2 approach with a static-only safe patch.
+- Added static planned Resonant Manifestation requirement copy inside the Moonlit Resonance card:
+  - Evolution III awakened
+  - Bond ≥ 900
+  - Available Moonlit Fragments ≥ 10
+  - Resonant Memory
+- Added static CSS styling for the planned requirement block.
+
+### Preserved
+
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No JavaScript logic changes from v2.1.
+- No Achievements changes.
+- No dynamic Manifestation requirement calculation.
+- No Manifestation ritual.
+- No Manifestation unlock action.
+- No Manifestation asset reveal.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v2.1 — Resonant Manifestation State Foundation
 
 **Status:** Patch candidate.
