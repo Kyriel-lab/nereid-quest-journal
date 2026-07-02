@@ -1538,6 +1538,12 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       branchLabel: "Resonant Manifestation"
     };
 
+    const MANIFESTATION_REQUIREMENTS = {
+      bond: 900,
+      moonlitFragments: 10,
+      achievementId: "resonant-memory"
+    };
+
     function getAchievementState(achievementId) {
       if (typeof getAchievements === "function") {
         const achievements = getAchievements();
