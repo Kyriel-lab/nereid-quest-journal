@@ -366,6 +366,7 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
       manifestationBranchCopy: document.getElementById("manifestationBranchCopy"),
       manifestationBranchStatus: document.getElementById("manifestationBranchStatus"),
       manifestationBranchSigns: document.getElementById("manifestationBranchSigns"),
+      manifestationStaticSigns: document.getElementById("manifestationStaticSigns"),
       manifestationRitualButton: document.getElementById("manifestationRitualButton"),
       manifestationPortraitFrame: document.getElementById("manifestationPortraitFrame"),
       manifestationPortrait: document.getElementById("manifestationPortrait"),
@@ -1216,13 +1217,13 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
 
       if (elements.manifestationBranchCopy) {
         elements.manifestationBranchCopy.textContent = manifestationUnlocked
-          ? "Lantern Jelly’s human-like spirit persona has manifested through deep resonance."
+          ? "Astrael Lanternveil has fully manifested as Lantern Jelly’s completed Resonant Manifestation branch. The creature form remains preserved."
           : "Astrael Lanternveil is a human-like spirit persona expressed through Lantern Jelly’s deepest resonance. It does not replace the creature form.";
       }
 
       if (elements.manifestationBranchStatus) {
         elements.manifestationBranchStatus.textContent = manifestationUnlocked
-          ? "Manifested"
+          ? "Manifested · Complete"
           : (manifestationReady ? "Ready" : "Sleeping");
         elements.manifestationBranchStatus.classList.toggle("sleeping", !manifestationUnlocked && !manifestationReady);
         elements.manifestationBranchStatus.classList.toggle("ready", manifestationReady);
@@ -1234,6 +1235,10 @@ const STORAGE_KEY = "nereidQuestJournal_v01";
         elements.manifestationBranchSigns.innerHTML = manifestationUnlocked
           ? ""
           : createManifestationSignsMarkup(manifestationProgress);
+      }
+
+      if (elements.manifestationStaticSigns) {
+        elements.manifestationStaticSigns.hidden = manifestationUnlocked;
       }
 
       if (elements.manifestationRitualButton) {

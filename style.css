@@ -2817,4 +2817,20 @@
   color: var(--text);
 }
 
+/* v3.4 — Manifestation Completion Lock */
+.static-resonance-signs[hidden] {
+  display: none;
+}
+
+.resonance-branch-card.manifested {
+  border-color: rgba(168, 134, 74, 0.32);
+  background: linear-gradient(180deg, rgba(255, 251, 242, 0.94), rgba(238, 247, 255, 0.8));
+}
+
+.resonance-status.manifested {
+  color: var(--text);
+  background: rgba(255, 246, 223, 0.95);
+  border-color: rgba(168, 134, 74, 0.34);
+}
+
 

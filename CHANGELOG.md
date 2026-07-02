@@ -1,5 +1,61 @@
 # Changelog
 
+## v3.4 — Manifestation Completion Lock
+
+**Status:** Patch candidate.
+
+### Added / Changed
+
+- Polished completed Manifestation copy after Astrael Lanternveil is manifested.
+- Updated Manifestation status display to:
+  - `Manifested · Complete`
+- Static planned requirement preview now hides after Manifestation is complete.
+- Added completion styling for the manifested Resonant Manifestation card.
+- Locks the canon presentation:
+  - Manifestation is a completed resonance branch.
+  - Manifestation does not replace the creature form.
+  - Companion Card image remains the normal creature evolution image.
+
+### Preserved
+
+- v3.3 Companion Card Resonance Badge.
+- v3.2 Manifestation Asset Integration.
+- v3.1 Manifestation Ritual.
+- v3.0 Manifestation Dynamic Signs Activation.
+- v2.9 Manifestation Signs HTML Hook.
+- v2.8 Manifestation Signs Markup Helper.
+- v2.7 Manifestation Progress Helper.
+- v2.6 Manifestation Requirement Constant.
+- v2.5 Resonant Memory Achievement.
+- v2.4 Apex Crest Unlock Position Copy.
+- v2.3 Resonant Manifestation Static Copy Polish.
+- v2.2b Resonance Initialization Hotfix.
+- v2.1 Resonant Manifestation State Foundation.
+- v2.0 Moonlit Resonance UI Foundation.
+- v1.9 Evolution Track Completion Lock.
+- Evolution III Asset Integration from v1.8.
+- Evolution III Awakening Ritual from v1.7.
+- Evolution I / II / III rituals and assets.
+- Moonlit Fragment Spend Ledger.
+- Bond lifetime logic.
+- Existing `localStorage` key:
+  - `nereidQuestJournal_v01`
+
+### Not Changed
+
+- No Manifestation ritual logic changes.
+- No Manifestation asset behavior changes.
+- No Companion Card manifestation image swap.
+- No Apex Crest requirements.
+- No Apex Crest ritual.
+- No fragment earning/spending logic changes.
+- No Bond logic changes.
+- No Evolution I / II / III logic changes.
+- No Save Data / export / import branch.
+- No EXP restoration.
+
+---
+
 ## v3.3 — Companion Card Resonance Badge
 
 **Status:** Patch candidate.
